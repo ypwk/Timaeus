@@ -1,2 +1,0 @@
-# GenshinDamageCalculator
-Genshin Damage Calculator
