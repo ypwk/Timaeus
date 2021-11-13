@@ -1,0 +1,8 @@
+.background-transparent{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.character-screen-portrait-size{
+    max-width: 20em;
+    max-height: 20em;
+}

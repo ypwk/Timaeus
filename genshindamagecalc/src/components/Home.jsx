@@ -4,8 +4,8 @@ class Home extends React.Component{
     render(){
         return(
             <div style={{ padding: 20 }}>
-                <h2>Home View</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adip.</p>
+                <h2>Welcome to Timaeus</h2>
+                <p>poop</p>
             </div>);
     }
 }

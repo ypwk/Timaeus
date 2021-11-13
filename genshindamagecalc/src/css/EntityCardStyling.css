@@ -1,0 +1,8 @@
+.background-transparent{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.portrait-size{
+    max-width: 8em;
+    max-height: 10em;
+}
