@@ -2,7 +2,19 @@ import React from 'react';
 import EntityCard from './EntityCard';
 import {characterData} from '../data/characterData.js';
 import "../css/CharacterScreenStyling.css";
+
+/**
+ * This React Component is an approximation for the character screen in Genshin. 
+ * 
+ * On the right side, it uses EntityCards to render an array of characters so that users can select a specific character. 
+ * On the left side, it renders specific information for selected characters, and allows users to edit their character's builds.  
+ * 
+ * State:
+ * - ccData
+ *    current character data - the data belonging to the character that is currently selected. 
+ */
 class CharacterScreen extends React.Component{
+
     constructor(props){
         super(props);
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
@@ -10,6 +22,7 @@ class CharacterScreen extends React.Component{
             ccData: characterData[0]
         };
     }
+
     render(){
         return <div className="">
             <div className="row w-100">
@@ -84,7 +97,7 @@ class CharacterScreen extends React.Component{
     }
 
     /**
-     * 
+     * Returns a representation of the selected character's data. 
      */
     renderSelectedCharacterData(){
         return (<div className="pt-2">

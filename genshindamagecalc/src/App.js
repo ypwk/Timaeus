@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { CharacterScreen, ArtifactScreen, EnvironmentScreen, SideBar, Home } from './components';
+import { CharacterScreen, InventoryScreen, EnvironmentScreen, SideBar, Home } from './components';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/character/" element={<CharacterScreen />} />
-          <Route path="/artifact/" element={<ArtifactScreen />} />
+          <Route path="/artifact/" element={<InventoryScreen />} />
           <Route path="/environment/" element={<EnvironmentScreen />} />
         </Routes>
       </Router>

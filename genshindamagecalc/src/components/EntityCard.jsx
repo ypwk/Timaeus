@@ -1,5 +1,21 @@
 import React from 'react';
 import "../css/EntityCardStyling.css";
+
+/**
+ * This React Component represents any renderable card (e.g. the ones used in the CharacterScreen, ArtifactScreen,
+ * and EnvironmentScreen)
+ * 
+ * It has a variety of different modes, each of which will render differently.
+ * - portrait
+ *    renders a simple portrait of a given character
+ * - add
+ *    renders an add button for adding custom character.
+ * 
+ * Props:
+ * onClick is a method passed from a parent component used for this component.
+ * mode is the mode that this card is rendering in.
+ * data is the data that represents the character or artifact that is being rendered. 
+ */
 class EntityCard extends React.Component{
   constructor(props){
     super(props);
