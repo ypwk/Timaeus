@@ -1,9 +1,8 @@
-const os = require('os');
-const storage = require('electron-json-storage');
+import localForage from 'localforage';
 /**
- * Manages storage utilities using electron-json-storage.
+ * Manages storage utilities using localforage.
  * Github:
- * https://github.com/electron-userland/electron-json-storage
+ * https://github.com/localForage/localForage
  * 
  * Maintains a representation of the current character data.
  * 
@@ -48,7 +47,15 @@ class storageUtils {
         this.artifactData = [];
         this.weaponData = [];
         this.checkedOut = false;
-        storage.setDataPath(os.tmpdir());
+        //initialize localForage
+        localForage.config({ //configure localForage
+            driver      : localForage.WEBSQL, // Force WebSQL; same as using setDriver()
+            name        : 'TimaeusGenshinDamageCalculator',
+            version     : 1.0,
+            size        : 4980736, // Size of database, in bytes. WebSQL-only for now.
+            storeName   : 'keyvaluepairs', // Should be alphanumeric, with underscores.
+            description : 'Storage for Timaeus'
+        });
     }
     
     /**
@@ -58,37 +65,66 @@ class storageUtils {
      */
     fetchData(callback){
         //get character data
-        storage.getMany(['character', 'artifact', 'weapon'], function(error, data){
-            if (error) throw error;
-            this.characterData = data.character;
-            this.artifactData = data.artifact;
-            this.weaponData = data.weapon;
-        })
+        localForage.getItem('character')
+            .then((value) => {
+                this.characterData = value;
+            }).catch((error) => {
+                throw error;
+            });
+
+        //get artifact data
+        localForage.getItem('artifact')
+            .then((value) => {
+                this.artifactData = value;
+            }).catch((error) => {
+                throw error;
+            });
+        
+        //get weapon data
+        localForage.getItem('weapon')
+            .then((value) => {
+                this.weaponData = value;
+            }).catch((error) => {
+                throw error;
+            });
         this.checkedOut = true;
         callback();
     }
 
     /**
-     * fetches data from system
+     * saves data to system
      * 
      * @param {*} callback is for a loading spinner
      */
     saveData(callback){
-        if(checkedOut === false){
-            throw 'storageUtils: cannot save data that has not yet been fetched.';
+        if(this.checkedOut === false){ 
+            throw 'storageUtils: trying to save data that has not been fetched.';
         }
-        storage.set('character', this.characterData, function(error){
-            if (error) throw error;
-            this.characterData = [];
-        });
-        storage.set('artifact', this.artifactData, function(error){
-            if (error) throw error;
-            this.artifactData = [];
-        });
-        storage.set('weapon', this.weaponData, function(error){
-            if (error) throw error;
-            this.weaponData = [];
-        });
+
+        //save character data
+        localForage.setItem('character', this.characterData)
+            .then((value) => {
+                this.characterData = [];
+            }).catch((error) => {
+                throw error;
+            });
+        
+        //save artifact data
+        localForage.setItem('artifact', this.artifactData)
+            .then((value) => {
+                this.artifactData = [];
+            }).catch((error) => {
+                throw error;
+            });
+        
+        //save weapon data
+        localForage.setItem('weapon', this.weaponData)
+            .then((value) => {
+                this.weaponData = [];
+            }).catch((error) => {
+                throw error;
+            });
+        
         this.checkedOut = false;
         callback();
     }
