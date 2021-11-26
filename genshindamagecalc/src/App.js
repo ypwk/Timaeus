@@ -8,6 +8,9 @@ import storageUtils from "./utils/storageUtils";
 
 function App() {
   const storageHelper = new storageUtils();
+  storageHelper.fetchData(() => {
+    
+  });
   return (
     <div className="App" class="scrollbar">
       <Router>

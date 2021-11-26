@@ -56,8 +56,28 @@ class storageUtils {
             storeName   : 'keyvaluepairs', // Should be alphanumeric, with underscores.
             description : 'Storage for Timaeus'
         });
+        //check if this is the first time starting up.
+        localForage.getItem('firsttimeflag')
+            .then((value) => {
+                if(value === null){
+                    this.init();
+                }
+            }).catch((error) => {
+
+            })
     }
     
+    /**
+     * Initializes items on first startup
+     */
+    init(){
+        console.log("First time, initializing storage components.")
+        localForage.setItem('firsttimeflag', true);
+        localForage.setItem('character', this.characterData);
+        localForage.setItem('artifact', this.artifactData);
+        localForage.setItem('weapon', this.weaponData);
+    }
+
     /**
      * fetches data from system
      * 

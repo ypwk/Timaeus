@@ -29,7 +29,7 @@ class EntityCard extends React.Component{
                   className="card background-transparent portrait-size">
         <img
           className="img-fluid rounded"
-          src={process.env.PUBLIC_URL + "/images/character_content/portrait/" + this.props.data.name.toLowerCase() + ".png"}
+          src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.props.data.name.toLowerCase() + "_face.png"}
           alt="ffd"
           />
       </div>

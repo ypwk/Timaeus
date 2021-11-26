@@ -1,0 +1,54 @@
+.customModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1055;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.customModal .customFade .modal-dialog {
+    transition: -webkit-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+    -webkit-transform: translate(0,-25%);
+    transform: translate(0,-25%);
+}
+
+.customFade {
+    opacity: 0;
+    transition: opacity .15s linear;
+}
+
+.customFade.show {
+    opacity: 1;
+}
+
+
+/*
+ * button css
+ */
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+.close:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
