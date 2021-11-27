@@ -2,7 +2,30 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
-.character-screen-portrait-size{
+.character-card-tray{
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll; 
+    text-align: center;
+}
+
+.character-details-tray{
+    height: 100vh;
+    overflow: hidden;
+}
+
+.character-detail-background{
+    background-blend-mode: lighten;
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.col-auto a{
+    display: block;
+    padding: 1em;
+}
+
+.character-detail-img{
     max-width: 20em;
     max-height: 20em;
 }

@@ -1,4 +1,16 @@
 list = [
+    "albedo",
+    "aloy",
+    "amber",
+    "barbara",
+    "beidou",
+    "bennett",
+    "chongyun",
+    "diluc",
+    "diona",
+    "eula",
+    "fischl",
+    "ganyu",
     "hu_tao",
     "jean",
     "kaedehara_kazuha",
@@ -27,12 +39,15 @@ list = [
     "xiangling",
     "xiao",
     "xingqiu",
+    "xinyan",
     "yanfei",
     "yoimiya",
     "zhongli"
 ]
 
+#f = open("index.js", "a")
+#for a in list:
+#    f.write("export { " + a + "_data } from \"./" + a + ".js\"\n")
+#f.close()
 for a in list:
-    f = open(a + ".js", "a")
-    f.write("export const " + a + "_data = ")
-    f.close()
+    print("\"" + a + "\" : charDetailedData." + a + "_data,")

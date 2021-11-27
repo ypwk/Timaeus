@@ -1,6 +1,5 @@
 import React from 'react';
 import "../css/EntityCardStyling.css";
-
 /**
  * This React Component represents any renderable card (e.g. the ones used in the CharacterScreen, ArtifactScreen,
  * and EnvironmentScreen)
@@ -26,27 +25,27 @@ class EntityCard extends React.Component{
   render(){
     if(this.props.mode === "portrait"){ //used as images to click on and drag 
       return <div onClick={this.handleClick}
-                  className="card background-transparent portrait-size">
-        <img
-          className="img-fluid rounded"
-          src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.props.data.name.toLowerCase() + "_face.png"}
-          alt="ffd"
-          />
+                  className="card background-transparent portrait-size m-0">
+          <img
+            className="rounded img-fluid"
+            src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.props.data.name + "_face.png"}
+            alt={this.props.data.name}
+            />
       </div>
     }
     else if(this.props.mode === "add"){ //used to add a new character
       return <div onClick={this.handleClick}
-                  className="card background-transparent portrait-size">
+                  className="card background-transparent portrait-size m-0">
         <img
-          className="img-fluid rounded"
+          className="rounded img-fluid"
           src={process.env.PUBLIC_URL + "/images/add_image.png"}
           alt="add a new character"
           />
       </div>
     }
-      return <div className="card">
+      return <div className="card m-0">
       <img
-          className="img-fluid rounded"
+          className="rounded img-fluid"
           src= {this.props.data.image}
           alt="arg"
           />

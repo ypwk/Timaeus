@@ -3,6 +3,15 @@
 }
 
 .portrait-size{
-    max-width: 8em;
-    max-height: 10em;
+    text-align: center;
+    position: relative;
+    width: 6em;  /* Container's dimensions */
+    height: 6em;
+}
+
+.center-cropped {
+    position: absolute;
+    bottom: 0;
+    object-fit: contain; /* Do not scale the image */
+    width: 100%;
 }

@@ -1,4 +1,5 @@
 import localForage from 'localforage';
+import { useLayoutEffect } from 'react';
 /**
  * Manages storage utilities using localforage.
  * Github:
@@ -15,6 +16,7 @@ import localForage from 'localforage';
  *   constellation
  *   talents (list)
  *   artifacts (list by id)
+ *   weapon (id)
  *   id
  * 
  * Artifact:
@@ -65,6 +67,8 @@ class storageUtils {
             }).catch((error) => {
 
             })
+        
+        
     }
     
     /**
@@ -83,40 +87,25 @@ class storageUtils {
      * 
      * @param {*} callback is for a loading spinner
      */
-    fetchData(callback){
-        //get character data
-        localForage.getItem('character')
-            .then((value) => {
-                this.characterData = value;
-            }).catch((error) => {
-                throw error;
-            });
-
-        //get artifact data
-        localForage.getItem('artifact')
-            .then((value) => {
-                this.artifactData = value;
-            }).catch((error) => {
-                throw error;
-            });
-        
-        //get weapon data
-        localForage.getItem('weapon')
-            .then((value) => {
-                this.weaponData = value;
-            }).catch((error) => {
-                throw error;
-            });
-        this.checkedOut = true;
-        callback();
+    async fetchData(){
+        try{
+            let data = await localForage.getItem('character');
+            this.characterData = data;
+            data = await localForage.getItem('artifact');
+            this.artifactData = data;
+            data = await localForage.getItem('weapon');
+            this.weaponData = data;
+        } catch (err){
+            throw err;
+        }
     }
 
     /**
-     * saves data to system
+     * saves data to system and closes editing
      * 
      * @param {*} callback is for a loading spinner
      */
-    saveData(callback){
+    saveAndClose(callback){
         if(this.checkedOut === false){ 
             throw 'storageUtils: trying to save data that has not been fetched.';
         }
@@ -147,6 +136,31 @@ class storageUtils {
         
         this.checkedOut = false;
         callback();
+    }
+
+    /**
+     * Saves data to system
+     * @param {} nameOfData refers to the name of the data type to store (character, weapon, artifact)
+     */
+    saveData(nameOfData){
+        if(nameOfData === "character"){
+            localForage.setItem('character', this.characterData)
+            .catch((error) => {
+                throw error;
+            });
+        } else if(nameOfData === "weapon"){
+            localForage.setItem('weapon', this.weaponData)
+            .catch((error) => {
+                throw error;
+            });
+        } else if(nameOfData === "artifact"){
+            localForage.setItem('artifact', this.artifactData)
+            .catch((error) => {
+                throw error;
+            });
+        } else {
+            throw "storageUtils: Requested data type is not supported. (options are character, weapon, and artifact)"
+        }
     }
 }
 

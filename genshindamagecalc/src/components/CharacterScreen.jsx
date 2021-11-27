@@ -2,9 +2,9 @@ import React from 'react';
 import EntityCard from './EntityCard';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel"
+import * as charDetailedData from "../data/character/index";
 
 import "../css/CharacterScreenStyling.css";
 
@@ -24,38 +24,38 @@ class CharacterScreen extends React.Component{
     constructor(props){
         super(props);
         this.storageUtils = this.props.storageUtil;
+        this.creationModalSelection = 0;
+
+        //binding
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
         this.saveModalThenClose = this.saveModalThenClose.bind(this);
+
+        //references
+        this.creationModalMenuRef = React.createRef();
+
+        //init state
         if(this.storageUtils.characterData !== undefined){
+            console.log(this.storageUtils.characterData);
             this.state = {
                 ccData: this.storageUtils.characterData[0],
+                showModal: false
             };
         } else {
             this.state = {
                 ccData: null,
+                showModal: false
             };
-        }
-        this.state = {
-            showModal: false
-        }
-        
+        }    
     }
 
     render(){
-        return <div className="">
-            <div className="row w-100">
-                <div className="col">
-                    <div className="container p-0">
-                        <table className="table p-0">
-                            <tbody>
-                                {this.renderCharacterCards()}
-                            </tbody>
-                        </table>
-                    </div>
-                
+        return <div className="overflow-hidden p-0">
+            <div className="row">
+                <div className="d-inline col-auto character-card-tray">
+                    {this.renderCharacterCards()}
                 </div>
-                <div className="col">
+                <div className="d-inline col character-details-tray">
                     {this.renderSelectedCharacterData()}
                 </div>
             </div>
@@ -63,51 +63,12 @@ class CharacterScreen extends React.Component{
                 <Modal.Header closeButton>
                     <Modal.Title>Create New Character Profile</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-                            <FormControl
-                            placeholder="Username"
-                            aria-label="Username"
-                            aria-describedby="basic-addon1"
-                            />
-                        </InputGroup>
-
-                        <InputGroup className="mb-3">
-                            <FormControl
-                            placeholder="Recipient's username"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
-                            />
-                            <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
-                        </InputGroup>
-
-                        <Form.Label htmlFor="basic-url">Your vanity URL</Form.Label>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text id="basic-addon3">
-                            https://example.com/users/
-                            </InputGroup.Text>
-                            <FormControl id="basic-url" aria-describedby="basic-addon3" />
-                        </InputGroup>
-
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text>$</InputGroup.Text>
-                            <FormControl aria-label="Amount (to the nearest dollar)" />
-                            <InputGroup.Text>.00</InputGroup.Text>
-                        </InputGroup>
-
-                        <InputGroup>
-                            <InputGroup.Text>With textarea</InputGroup.Text>
-                            <FormControl as="textarea" aria-label="With textarea" />
-                        </InputGroup>
-                    </>
-                </Modal.Body>
+                <Modal.Body>{this.renderModalBody()}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.toggleModalState}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={this.toggleModalState}>
+                    <Button variant="primary" onClick={this.saveModalThenClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -126,37 +87,33 @@ class CharacterScreen extends React.Component{
         var currentRowCounter = 0;
         var location = 0;
         for(var a = 0; a < this.storageUtils.characterData.length; a++){
-            if(count === 6){
-                rTableData[currentRowCounter] = <tr className="p-0" key={currentRowCounter}>{cRow}</tr>; //push rows of EntityCards
+            if(count === 3){
+                rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
                 currentRowCounter++;
                 cRow = [];
                 count = 0;
             }
-            cRow.push(<td className="p-0" id={location}>
+            cRow.push(<div className="col-auto" id={location}>
                 <EntityCard mode="portrait" data={this.storageUtils.characterData[location]} onClick={this.handleCharacterCardClick}/>
-            </td>);
+            </div>);
             count++;
             location++;
         }
-        if(count === 6){
-            rTableData[currentRowCounter] = <tr className="p-0" key={currentRowCounter}>{cRow}</tr>; //push rows of EntityCards
+        if(count === 3){
+            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
             currentRowCounter++;
             cRow = []; //add extra add button
-            cRow.push(<td className="p-0" id={location}>
+            cRow.push(<div className="col-auto" id={location}>
                 <EntityCard mode="add" onClick={this.handleCharacterCardClick}/>
-            </td>);
-            rTableData[currentRowCounter] = <tr className="p-0" key={currentRowCounter}>{cRow}</tr>; //push rows of EntityCards
+            </div>);
+            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
         } else { //add extra add button
-            cRow.push(<td className="p-0" id={location}>
+            cRow.push(<div className=" col-auto" id={location}>
                 <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
-            </td>);
-            rTableData[currentRowCounter] = <tr className="p-0" key={currentRowCounter}>{cRow}</tr>; //push remaining EntityCards
+            </div>);
+            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push remaining EntityCards
         }
-        return <table className="table p-0">
-            <tbody>
-                {rTableData}
-            </tbody>
-        </table>
+        return (<div className="container">{rTableData}</div>);
     }
 
     /**
@@ -175,23 +132,20 @@ class CharacterScreen extends React.Component{
      */
     renderSelectedCharacterData(){
         if(this.state.ccData !== undefined){
-            return (<div className="pt-2">
-                <h1>{this.state.ccData.name}</h1>
-                <div onClick={this.handleClick}
-                    className="card background-transparent character-screen-portrait-size float-end">
-                    <img
-                        className="img-fluid rounded"
-                        src={process.env.PUBLIC_URL + "/images/character_content/splash/" + this.state.ccData.name.toLowerCase() + "_splash.png"}
-                        alt="ffd"
-                        />
-                </div>
+            return (
+            <div className="pt-2 h-100 character-detail-background">
+                <h1>{this.formatCharacterName(this.state.ccData.name)}</h1>
+                <img className="character-detail-img float-end border border-dark rounded"
+                    src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.state.ccData.name + "_face.png"}/>
                 <p>
                     Level: {this.state.ccData.level} <br></br>
                     Ascension: {this.state.ccData.ascension} <br></br>
-                    Talents: {this.state.ccData.talents}
+                    Talents: {this.state.ccData.talents[0]} {this.state.ccData.talents[1]} {this.state.ccData.talents[2]} <br></br>
+                    Weapon: {this.state.ccData.weapon} <br></br>
                 </p>
             </div>)
         } else {
+            console.log("piss" + this.state.ccData);
             return (<div className="pt-2">
                 <h1>You have not created any character profiles!</h1>
                 <p>
@@ -201,12 +155,87 @@ class CharacterScreen extends React.Component{
         }
     }
 
+    /**
+     * Toggles the modal state.
+     */
     toggleModalState(){
         this.setState({showModal: !this.state.showModal});
     }
 
+    /**
+     * Saves the content in the modal (appending it to characterData),
+     * then closes it. 
+     */
     saveModalThenClose(){
+        //let data = data_names[character_name_list[this.creationModalSelection]];
+        let new_char_file = {
+            "name": character_name_list[this.creationModalSelection],
+            "level": 1,
+            "ascension": 1,
+            "constellation": 0,
+            "talents": [1, 1, 1],
+            "artifacts": [],
+            "weapon": -1
+        }
+        this.storageUtils.characterData.push(new_char_file);
+        this.storageUtils.saveData("character");
+        this.setState({ccData: new_char_file});
+        this.toggleModalState();
     }
+
+    /**
+     * Renders the modal body.
+     */
+    renderModalBody() {
+        //Format names and add them to the Form.
+        let characterNameList = [];
+        for(let i = 0; i < character_name_list.length; i++){
+            characterNameList.push(<option value={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+        }
+        return (
+            <>
+                <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.creationModalMenuOnSelect(e)}>
+                    <Form.Select aria-label="Select character input box">
+                        {characterNameList}
+                    </Form.Select>
+                </FloatingLabel>
+            </>
+        )
+    }
+
+    /**
+     * Sets the creationModalSelection value when the creation modal is set.
+     * 
+     * @param {*} e is the onChange event
+     */
+    creationModalMenuOnSelect(e){
+        this.creationModalSelection = e.target.value;
+    }
+
+    /**
+     * Returns a formatted version of a character name
+     * Ex: kamisato_ayaka is turned into Kamisato Ayaka
+     * 
+     * @param {} raw_name is the raw name string obtained from storage
+     * @returns 
+     */
+    formatCharacterName(raw_name){
+        let delimited_arr = raw_name.split("_");
+        let finalizedNameString = "";
+        for(let a = 0; a < delimited_arr.length; a++){
+            finalizedNameString = finalizedNameString 
+            + delimited_arr[a].charAt(0).toUpperCase() 
+            + delimited_arr[a].slice(1);
+            if(a !== delimited_arr.length - 1){
+                finalizedNameString += " ";
+            }
+        }
+        return finalizedNameString;
+    }
+
+    loadFile(filePath) {
+        
+      }
 }
 
 export default CharacterScreen;
