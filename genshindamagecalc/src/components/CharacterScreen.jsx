@@ -30,15 +30,21 @@ class CharacterScreen extends React.Component{
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
         this.saveModalThenClose = this.saveModalThenClose.bind(this);
+        this.handleCharacterLevelChanged = this.handleCharacterLevelChanged.bind(this);
+        this.handleCharacterConstellationChanged = this.handleCharacterConstellationChanged.bind(this);
+        this.handleCharacterAscensionChanged = this.handleCharacterAscensionChanged.bind(this);
 
         //references
         this.creationModalMenuRef = React.createRef();
-
+        this.characterLevelInputRef = React.createRef();
+        this.characterConstellationInputRef = React.createRef();
+        this.characterAscensionInputRef = React.createRef();
+        this.characterLevelByAscensionRef = React.createRef();
+        this.charData = this.storageUtils.characterData;
         //init state
-        if(this.storageUtils.characterData !== undefined){
-            console.log(this.storageUtils.characterData);
+        if(this.charData !== undefined && this.charData.length > 0){
             this.state = {
-                ccData: this.storageUtils.characterData[0],
+                ccData: 0,
                 showModal: false
             };
         } else {
@@ -81,35 +87,37 @@ class CharacterScreen extends React.Component{
      * @returns a table containing all the EntityCards needed to render in the CharacterScreen.
      */
     renderCharacterCards(){
-        var rTableData = [];
-        var cRow = [];
-        var count = 0;
-        var currentRowCounter = 0;
-        var location = 0;
-        for(var a = 0; a < this.storageUtils.characterData.length; a++){
+        let rTableData = [];
+        let cRow = [];
+        let count = 0;
+        let currentRowCounter = 0;
+        let location = 0;
+        let totalCount = 0;
+        for(var a = 0; a < this.charData.length; a++){
             if(count === 3){
                 rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
                 currentRowCounter++;
                 cRow = [];
                 count = 0;
             }
-            cRow.push(<div className="col-auto" id={location}>
-                <EntityCard mode="portrait" data={this.storageUtils.characterData[location]} onClick={this.handleCharacterCardClick}/>
+            cRow.push(<div className="col-auto" id={location} key={a}>
+                <EntityCard mode="portrait" data={this.charData[location]} onClick={this.handleCharacterCardClick} card_id={totalCount}/>
             </div>);
             count++;
+            totalCount++;
             location++;
         }
         if(count === 3){
             rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
             currentRowCounter++;
             cRow = []; //add extra add button
-            cRow.push(<div className="col-auto" id={location}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick}/>
+            cRow.push(<div className="col-auto" id={location} key={a}>
+                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/>
             </div>);
             rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
         } else { //add extra add button
-            cRow.push(<div className=" col-auto" id={location}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+            cRow.push(<div className=" col-auto" id={location} key={a}>
+                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/> 
             </div>);
             rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push remaining EntityCards
         }
@@ -131,21 +139,78 @@ class CharacterScreen extends React.Component{
      * Returns a representation of the selected character's data. 
      */
     renderSelectedCharacterData(){
-        if(this.state.ccData !== undefined){
+        if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
+            const levelByAscension = [20, 40, 50, 60, 70, 80, 90]
+            /*if(this.charData[this.state.ccData].level < levelByAscension[this.charData[this.state.ccData].ascension] && this.charData[this.state.ccData].ascension > 0){
+                this.setState({ccData: levelByAscension[this.state.ccData.ascension - 1]});
+                this.storageUtils.characterData = this.charData;
+                this.storageUtils.saveData("character");
+            }*/
+            //<img src={process.env.PUBLIC_URL + "/images/ascension_star.png"}></img>
             return (
-            <div className="pt-2 h-100 character-detail-background">
-                <h1>{this.formatCharacterName(this.state.ccData.name)}</h1>
-                <img className="character-detail-img float-end border border-dark rounded"
-                    src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.state.ccData.name + "_face.png"}/>
-                <p>
-                    Level: {this.state.ccData.level} <br></br>
-                    Ascension: {this.state.ccData.ascension} <br></br>
-                    Talents: {this.state.ccData.talents[0]} {this.state.ccData.talents[1]} {this.state.ccData.talents[2]} <br></br>
-                    Weapon: {this.state.ccData.weapon} <br></br>
-                </p>
+            <div className="row pt-2 h-100 character-detail-background">
+                <div className="name-width col-3">
+                    <p className="h1 inline text-left">{this.formatCharacterName(this.charData[this.state.ccData].name)}</p>
+                    <img className="character-detail-img border border-dark rounded mb-3"
+                        src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.charData[this.state.ccData].name + "_face.png"}
+                        alt={this.charData[this.state.ccData].name}/>
+                    <div className="input-group form-inline" key={this.state.ccData * 10}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Lvl:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].level} onChange={this.handleCharacterLevelChanged}
+                            aria-label="Character's Level" aria-describedby="basic-addon2" ref={this.characterLevelInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" 
+                            id="basic-addon2" ref={this.characterLevelByAscensionRef}>/ {levelByAscension[this.charData[this.state.ccData].ascension]}</span>
+                        </div>
+                    </div>
+                    <div className="input-group form-inline" key={this.state.ccData * 10 + 1}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Asc:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].ascension} onChange={this.handleCharacterAscensionChanged}
+                            aria-label="Character's Ascension" aria-describedby="basic-addon2" ref={this.characterAscensionInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        </div>
+                    </div>
+                    <div className="input-group form-inline" key={this.state.ccData * 10 + 2}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Cons:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].constellation} onChange={this.handleCharacterConstellationChanged}
+                            aria-label="Character's Constellation" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-9">
+                    <div className="form-check-inline">
+                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox1" value="option1"/>
+                        <label className="ascension-label" htmlFor="inlineCheckbox1">
+                        </label>
+                    </div>
+                    <div className="form-check-inline">
+                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox2" value="option2"/>
+                        <label className="ascension-label" htmlFor="inlineCheckbox2"></label>
+                    </div>
+                    <div className="form-check-inline">
+                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox3" value="option3"/>
+                        <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
+                    </div>
+                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                </div>
             </div>)
         } else {
-            console.log("piss" + this.state.ccData);
             return (<div className="pt-2">
                 <h1>You have not created any character profiles!</h1>
                 <p>
@@ -171,15 +236,16 @@ class CharacterScreen extends React.Component{
         let new_char_file = {
             "name": character_name_list[this.creationModalSelection],
             "level": 1,
-            "ascension": 1,
+            "ascension": 0,
             "constellation": 0,
             "talents": [1, 1, 1],
             "artifacts": [],
-            "weapon": -1
+            "weapon": {}
         }
-        this.storageUtils.characterData.push(new_char_file);
+        this.charData.push(new_char_file);
+        this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
-        this.setState({ccData: new_char_file});
+        this.setState({ccData: this.charData[this.charData.length - 1]});
         this.toggleModalState();
     }
 
@@ -190,7 +256,7 @@ class CharacterScreen extends React.Component{
         //Format names and add them to the Form.
         let characterNameList = [];
         for(let i = 0; i < character_name_list.length; i++){
-            characterNameList.push(<option value={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+            characterNameList.push(<option value={i} key={i}>{this.formatCharacterName(character_name_list[i])}</option>);
         }
         return (
             <>
@@ -217,7 +283,7 @@ class CharacterScreen extends React.Component{
      * Ex: kamisato_ayaka is turned into Kamisato Ayaka
      * 
      * @param {} raw_name is the raw name string obtained from storage
-     * @returns 
+     * @returns formatted character name
      */
     formatCharacterName(raw_name){
         let delimited_arr = raw_name.split("_");
@@ -233,9 +299,82 @@ class CharacterScreen extends React.Component{
         return finalizedNameString;
     }
 
-    loadFile(filePath) {
-        
-      }
+    /**
+     * Handles changes to the character level textbox
+     */
+    handleCharacterLevelChanged(){
+        const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
+        const level = parseInt(this.characterLevelInputRef.current.value);
+        let valid = false;
+        if(this.charData[this.state.ccData].ascension === 0){ //check if provided character level is valid
+            if(level >= 1 && level <= 20){
+                valid = true;
+            }
+        }
+        else {
+            if(level >= levelByAscension[this.charData[this.state.ccData].ascension - 1] && level <= levelByAscension[this.charData[this.state.ccData].ascension]){
+                valid = true;
+            }
+        }
+        if(valid){ //save data if valid
+            this.charData[this.state.ccData].level = level;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+        } else { //show error if invalid
+        }
+    }
+
+    /**
+     * Handles changes to the character constellation textbox
+     */
+    handleCharacterConstellationChanged(){
+        //check validity
+        let valid = false;
+        let constellation = parseInt(this.characterConstellationInputRef.current.value);
+        if(this.characterConstellationInputRef.current.value >= 0 && this.characterConstellationInputRef.current.value <= 6){
+            valid = true;
+        }
+
+        //save if valid
+        if(valid){
+            this.charData[this.state.ccData].constellation = constellation;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+        }
+    }
+
+    /**
+     * Handles changes to the character ascension textbox
+     */
+    handleCharacterAscensionChanged(){
+         //check validity
+         let valid = false;
+         if(this.characterAscensionInputRef.current.value >= 0 
+            && this.characterAscensionInputRef.current.value <= 6 
+            && this.characterAscensionInputRef.current.value !== ""){
+             valid = true;
+         }
+         //change character level if valid
+         if(valid){
+            let ascension = parseInt(this.characterAscensionInputRef.current.value);
+            const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
+            this.charData[this.state.ccData].ascension = ascension;
+            this.characterLevelByAscensionRef.current.textContent = "/ " + levelByAscension[this.charData[this.state.ccData].ascension];
+            if(this.charData[this.state.ccData].level < levelByAscension[this.charData[this.state.ccData].ascension - 1]){
+                this.characterLevelInputRef.current.value = levelByAscension[this.charData[this.state.ccData].ascension - 1];
+                this.charData[this.state.ccData].level = levelByAscension[this.charData[this.state.ccData].ascension - 1];
+            } else if(this.charData[this.state.ccData].level > levelByAscension[this.charData[this.state.ccData].ascension]){
+                this.characterLevelInputRef.current.value = levelByAscension[this.charData[this.state.ccData].ascension];
+                this.charData[this.state.ccData].level = levelByAscension[this.charData[this.state.ccData].ascension];
+            }
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+         }
+         //save if valid
+         if(valid){
+             
+         }
+    }
 }
 
 export default CharacterScreen;

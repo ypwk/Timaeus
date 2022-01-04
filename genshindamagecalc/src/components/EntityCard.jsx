@@ -27,7 +27,7 @@ class EntityCard extends React.Component{
       return <div onClick={this.handleClick}
                   className="card background-transparent portrait-size m-0">
           <img
-            className="rounded img-fluid"
+            className="rounded img-fluid unselectable"
             src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.props.data.name + "_face.png"}
             alt={this.props.data.name}
             />
@@ -37,7 +37,7 @@ class EntityCard extends React.Component{
       return <div onClick={this.handleClick}
                   className="card background-transparent portrait-size m-0">
         <img
-          className="rounded img-fluid"
+          className="rounded img-fluid unselectable"
           src={process.env.PUBLIC_URL + "/images/add_image.png"}
           alt="add a new character"
           />
@@ -45,7 +45,7 @@ class EntityCard extends React.Component{
     }
       return <div className="card m-0">
       <img
-          className="rounded img-fluid"
+          className="rounded img-fluid unselectable"
           src= {this.props.data.image}
           alt="arg"
           />
@@ -60,7 +60,12 @@ class EntityCard extends React.Component{
    * Passes this card's information to the parent module.
    */
   handleOnClick(){
-    this.passedOnClick(this.props.mode, this.props.data);
+    if(this.props.mode === "portrait"){
+      this.passedOnClick(this.props.mode, this.props.card_id);
+    } else {
+      this.passedOnClick(this.props.mode, this.props.data);
+    }
+    
   }
 }
 

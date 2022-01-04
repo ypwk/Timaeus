@@ -34,7 +34,7 @@ class App extends Component {
         </div> );
     }
     else {
-      return ( <div className="App" class="scrollbar h-100">
+      return ( <div className="App scrollbar h-100">
         <Router>
           <SideBar />
           <Routes>

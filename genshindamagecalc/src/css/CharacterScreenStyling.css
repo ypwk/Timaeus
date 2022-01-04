@@ -26,6 +26,18 @@
 }
 
 .character-detail-img{
-    max-width: 20em;
-    max-height: 20em;
+    max-width: 10em;
+    max-height: 10em;
+}
+
+.name-width{
+    max-width: 10em;
+}
+
+.ascension-label{
+    
+}
+
+.ascension-cbox{
+    display: none;
 }
