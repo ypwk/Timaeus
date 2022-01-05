@@ -132,6 +132,10 @@ class CharacterScreen extends React.Component{
             this.setState({ccData: data});
         } if(mode === "add"){
             this.toggleModalState();
+        } if(mode === "weapon"){
+
+        } if(mode === "artifact"){
+
         }
     }
 
@@ -203,11 +207,11 @@ class CharacterScreen extends React.Component{
                         <input className="ascension-cbox" type="checkbox" id="inlineCheckbox3" value="option3"/>
                         <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
                     </div>
-                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
-                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
-                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
-                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
-                    <EntityCard mode="add" onClick={this.handleCharacterCardClick}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]}/> 
                 </div>
             </div>)
         } else {

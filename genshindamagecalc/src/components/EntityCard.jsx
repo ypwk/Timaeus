@@ -42,6 +42,24 @@ class EntityCard extends React.Component{
           alt="add a new character"
           />
       </div>
+    } else if(this.props.mode === "artifact"){
+      return <div onClick={this.handleClick}
+                  className="card background-transparent portrait-size m-0">
+        <img
+          className="rounded img-fluid unselectable"
+          src={process.env.PUBLIC_URL + "/images/add_image.png"}
+          alt="add an artifact"
+          />
+      </div>
+    } else if(this.props.mode === "weapon"){
+      return <div onClick={this.handleClick}
+                  className="card background-transparent portrait-size m-0">
+        <img
+          className="rounded img-fluid unselectable"
+          src={process.env.PUBLIC_URL + "/images/add_image.png"}
+          alt="add a weapon"
+          />
+      </div>
     }
       return <div className="card m-0">
       <img
