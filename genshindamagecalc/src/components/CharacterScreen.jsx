@@ -4,8 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel"
-import * as charDetailedData from "../data/character/index";
-
+import { data_names } from '../data/character/character_name_index';
 import "../css/CharacterScreenStyling.css";
 
 import {character_name_list} from "../data/character/character_name_list"
@@ -28,11 +27,14 @@ class CharacterScreen extends React.Component{
 
         //binding
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
+        this.toggleWeaponModalState = this.toggleWeaponModalState.bind(this);
+        this.toggleArtifactModalState = this.toggleArtifactModalState.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
         this.saveModalThenClose = this.saveModalThenClose.bind(this);
         this.handleCharacterLevelChanged = this.handleCharacterLevelChanged.bind(this);
         this.handleCharacterConstellationChanged = this.handleCharacterConstellationChanged.bind(this);
         this.handleCharacterAscensionChanged = this.handleCharacterAscensionChanged.bind(this);
+        this.handleDeleteButtonClicked = this.handleDeleteButtonClicked.bind(this);
 
         //references
         this.creationModalMenuRef = React.createRef();
@@ -45,12 +47,16 @@ class CharacterScreen extends React.Component{
         if(this.charData !== undefined && this.charData.length > 0){
             this.state = {
                 ccData: 0,
-                showModal: false
+                showModal: false,
+                showWeaponModal: false,
+                showArtifactModal: false
             };
         } else {
             this.state = {
                 ccData: null,
-                showModal: false
+                showModal: false,
+                showWeaponModal: false,
+                showArtifactModal: false
             };
         }    
     }
@@ -70,6 +76,34 @@ class CharacterScreen extends React.Component{
                     <Modal.Title>Create New Character Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{this.renderModalBody()}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.toggleModalState}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={this.saveModalThenClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal onHide={this.toggleWeaponModalState} show={this.state.showWeaponModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Weapon</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{this.renderWeaponModalBody()}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.toggleModalState}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={this.saveModalThenClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal onHide={this.toggleArtifactModalState} show={this.state.showArtifactModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Artifact</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{this.renderArtifactModalBody()}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.toggleModalState}>
                         Close
@@ -133,9 +167,9 @@ class CharacterScreen extends React.Component{
         } if(mode === "add"){
             this.toggleModalState();
         } if(mode === "weapon"){
-
+            this.toggleWeaponModalState();
         } if(mode === "artifact"){
-
+            this.toggleArtifactModalState();
         }
     }
 
@@ -207,11 +241,15 @@ class CharacterScreen extends React.Component{
                         <input className="ascension-cbox" type="checkbox" id="inlineCheckbox3" value="option3"/>
                         <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
                     </div>
+                    <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon[0]}/>
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]}/> 
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]}/> 
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]}/> 
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]}/> 
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]}/> 
+                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]}/>
+                    <Button onClick={this.handleDeleteButtonClicked}>
+                        Delete
+                    </Button>
                 </div>
             </div>)
         } else {
@@ -225,10 +263,24 @@ class CharacterScreen extends React.Component{
     }
 
     /**
-     * Toggles the modal state.
+     * Toggles the modal state for the character modal.
      */
     toggleModalState(){
         this.setState({showModal: !this.state.showModal});
+    }
+
+    /**
+     * Toggles the modal state for the character modal.
+     */
+     toggleWeaponModalState(){
+        this.setState({showWeaponModal: !this.state.showWeaponModal});
+    }
+
+    /**
+     * Toggles the modal state for the character modal.
+     */
+     toggleArtifactModalState(){
+        this.setState({showArtifactModal: !this.state.showArtifactModal});
     }
 
     /**
@@ -246,6 +298,7 @@ class CharacterScreen extends React.Component{
             "artifacts": [],
             "weapon": {}
         }
+        this.creationModalSelection = 0;
         this.charData.push(new_char_file);
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
@@ -257,6 +310,46 @@ class CharacterScreen extends React.Component{
      * Renders the modal body.
      */
     renderModalBody() {
+        //Format names and add them to the Form.
+        let characterNameList = [];
+        for(let i = 0; i < character_name_list.length; i++){
+            characterNameList.push(<option value={i} key={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+        }
+        return (
+            <>
+                <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.creationModalMenuOnSelect(e)}>
+                    <Form.Select aria-label="Select character input box">
+                        {characterNameList}
+                    </Form.Select>
+                </FloatingLabel>
+            </>
+        )
+    }
+
+    /**
+     * Renders the modal body.
+     */
+     renderArtifactModalBody() {
+        //Format names and add them to the Form.
+        let characterNameList = [];
+        for(let i = 0; i < character_name_list.length; i++){
+            characterNameList.push(<option value={i} key={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+        }
+        return (
+            <>
+                <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.creationModalMenuOnSelect(e)}>
+                    <Form.Select aria-label="Select character input box">
+                        {characterNameList}
+                    </Form.Select>
+                </FloatingLabel>
+            </>
+        )
+    }
+
+    /**
+     * Renders the modal body.
+     */
+     renderWeaponModalBody() {
         //Format names and add them to the Form.
         let characterNameList = [];
         for(let i = 0; i < character_name_list.length; i++){
@@ -378,6 +471,28 @@ class CharacterScreen extends React.Component{
          if(valid){
              
          }
+    }
+
+    /**
+     * Handles clicks to the delete character button
+     */
+    handleDeleteButtonClicked(){
+        //remove character from state
+        this.charData.splice(this.state.ccData, 1);
+
+        //handle side effects of removal
+        if(this.charData.length === 0){
+            this.setState({ccData: null});
+        }
+        else if(this.state.ccData == this.charData.length){
+            this.setState({ccData: this.state.ccData - 1});
+        } else {
+            this.setState({ccData: this.state.ccData}); //re-render for fun HAHA
+        }
+
+        //remove character from long term storage
+        this.storageUtils.characterData = this.charData;
+        this.storageUtils.saveData("character");
     }
 }
 
