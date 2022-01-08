@@ -44,111 +44,35 @@ class EntityCard extends React.Component{
       </div>
     } else if(this.props.mode === "artifact"){
       if(this.props.artifact_data === undefined){
-        if(this.props.type == "flower"){
-          return <div onClick={this.handleClick}
-            className="card background-transparent portrait-size m-0">
+        return <div onClick={this.handleClick}
+          className="card background-transparent portrait-size m-0">
               <img
-              className="rounded img-fluid unselectable"
-              src={process.env.PUBLIC_URL + "/images/flower_icon.png"}
-              alt="add an artifact"
-              />
-            </div>
-        }
-        else if(this.props.type == "plume"){
-          return <div onClick={this.handleClick}
-            className="card background-transparent portrait-size m-0">
-              <img
-              className="rounded img-fluid unselectable"
-              src={process.env.PUBLIC_URL + "/images/plume_icon.png"}
-              alt="add an artifact"
-              />
-            </div>
-        }
-        else if(this.props.type == "sands"){
-          return <div onClick={this.handleClick}
-            className="card background-transparent portrait-size m-0">
-              <img
-              className="rounded img-fluid unselectable"
-              src={process.env.PUBLIC_URL + "/images/sands_icon.png"}
-              alt="add an artifact"
-              />
-            </div>
-        }
-        else if(this.props.type == "goblet"){
-          return <div onClick={this.handleClick}
-            className="card background-transparent portrait-size m-0">
-              <img
-              className="rounded img-fluid unselectable"
-              src={process.env.PUBLIC_URL + "/images/goblet_icon.png"}
-              alt="add an artifact"
-              />
-            </div>
-        }
-        else if(this.props.type == "circlet"){
-          return <div onClick={this.handleClick}
-            className="card background-transparent portrait-size m-0">
-              <img
-              className="rounded img-fluid unselectable"
-              src={process.env.PUBLIC_URL + "/images/circlet_icon.png"}
-              alt="add an artifact"
-              />
-            </div>
-        }
+                className="rounded img-fluid unselectable"
+                src={process.env.PUBLIC_URL + "/images/" + this.props.type + "_icon.png"}
+                alt="add an artifact"
+                />
+          </div>
       }
     } else if(this.props.mode === "weapon"){
-      if(this.props.weapon_data === undefined){
-        if(this.props.type == "sword"){
-          return <div onClick={this.handleClick}
-              className="card background-transparent portrait-size m-0">
-                  <img
-                    className="rounded img-fluid unselectable"
-                    src={process.env.PUBLIC_URL + "/images/sword_icon.png"}
-                    alt="add a weapon"
-                    />
-              </div>
-        }
-        if(this.props.type == "claymore"){
-          return <div onClick={this.handleClick}
-              className="card background-transparent portrait-size m-0">
-                  <img
-                    className="rounded img-fluid unselectable"
-                    src={process.env.PUBLIC_URL + "/images/claymore_icon.png"}
-                    alt="add a weapon"
-                    />
-              </div>
-        }
-        if(this.props.type == "polearm"){
-          return <div onClick={this.handleClick}
-              className="card background-transparent portrait-size m-0">
-                  <img
-                    className="rounded img-fluid unselectable"
-                    src={process.env.PUBLIC_URL + "/images/polearm_icon.png"}
-                    alt="add a weapon"
-                    />
-              </div>
-        }
-        if(this.props.type == "catalyst"){
-          return <div onClick={this.handleClick}
-              className="card background-transparent portrait-size m-0">
-                  <img
-                    className="rounded img-fluid unselectable"
-                    src={process.env.PUBLIC_URL + "/images/catalyst_icon.png"}
-                    alt="add a weapon"
-                    />
-              </div>
-        }
-        if(this.props.type == "bow"){
-          return <div onClick={this.handleClick}
-              className="card background-transparent portrait-size m-0">
-                  <img
-                    className="rounded img-fluid unselectable"
-                    src={process.env.PUBLIC_URL + "/images/bow_icon.png"}
-                    alt="add a weapon"
-                    />
-              </div>
-        }
+      if(Object.keys(this.props.weapon_data).length === 0){
+        return <div onClick={this.handleClick}
+          className="card background-transparent portrait-size m-0">
+              <img
+                className="rounded img-fluid unselectable"
+                src={process.env.PUBLIC_URL + "/images/" + this.props.type + "_icon.png"}
+                alt="add a weapon"
+                />
+          </div>
+      } else {
+        return <div onClick={this.handleClick}
+          className="card background-transparent portrait-size m-0">
+              <img
+                className="rounded img-fluid unselectable"
+                src={process.env.PUBLIC_URL + "/images/weapon_content/" + this.props.type + "/" + this.props.weapon_data.name + ".png"}
+                alt={this.props.weapon_data.name}
+                />
+          </div>
       }
-      
     }
       return <div className="card m-0">
       <img

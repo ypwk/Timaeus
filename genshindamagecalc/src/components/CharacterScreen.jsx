@@ -4,9 +4,11 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel"
-import { data_names } from '../data/character/character_name_index';
+
 import "../css/CharacterScreenStyling.css";
 
+import { sword_data, claymore_data, polearm_data, catalyst_data, bow_data, sword_list, claymore_list, polearm_list, catalyst_list, bow_list } from '../data/weapon';
+import { data_names } from '../data/character/character_name_index';
 import {character_name_list} from "../data/character/character_name_list"
 /**
  * This React Component is an approximation for the character screen in Genshin. 
@@ -24,6 +26,8 @@ class CharacterScreen extends React.Component{
         super(props);
         this.storageUtils = this.props.storageUtil;
         this.creationModalSelection = 0;
+        this.weaponModalSelection = 0;
+        this.artifactModalSelection = 0;
 
         //binding
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
@@ -31,17 +35,29 @@ class CharacterScreen extends React.Component{
         this.toggleArtifactModalState = this.toggleArtifactModalState.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
         this.saveModalThenClose = this.saveModalThenClose.bind(this);
+        this.saveWeaponModalThenClose = this.saveWeaponModalThenClose.bind(this);
+        this.saveArtifactModalThenClose = this.saveArtifactModalThenClose.bind(this);
         this.handleCharacterLevelChanged = this.handleCharacterLevelChanged.bind(this);
         this.handleCharacterConstellationChanged = this.handleCharacterConstellationChanged.bind(this);
         this.handleCharacterAscensionChanged = this.handleCharacterAscensionChanged.bind(this);
         this.handleDeleteButtonClicked = this.handleDeleteButtonClicked.bind(this);
+        this.handleWeaponAscensionChanged = this.handleWeaponAscensionChanged.bind(this);
+        this.fetchWeaponLevel = this.fetchWeaponLevel.bind(this);
+        this.fetchWeaponAscension = this.fetchWeaponAscension.bind(this);
+        this.fetchWeaponLevelLimit = this.fetchWeaponLevelLimit.bind(this);
+        this.fetchWeaponRefine = this.fetchWeaponRefine.bind(this);
 
         //references
         this.creationModalMenuRef = React.createRef();
+        this.weaponModalMenuRef = React.createRef();
         this.characterLevelInputRef = React.createRef();
         this.characterConstellationInputRef = React.createRef();
         this.characterAscensionInputRef = React.createRef();
         this.characterLevelByAscensionRef = React.createRef();
+        this.weaponLevelDisplayRef = React.createRef();
+        this.weaponAscensionInputRef = React.createRef();
+        this.weaponLevelInputRef = React.createRef();
+        this.weaponRefineInputRef = React.createRef();
         this.charData = this.storageUtils.characterData;
         //init state
         if(this.charData !== undefined && this.charData.length > 0){
@@ -58,7 +74,8 @@ class CharacterScreen extends React.Component{
                 showWeaponModal: false,
                 showArtifactModal: false
             };
-        }    
+        }
+
     }
 
     render(){
@@ -91,10 +108,10 @@ class CharacterScreen extends React.Component{
                 </Modal.Header>
                 <Modal.Body>{this.renderWeaponModalBody()}</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.toggleModalState}>
+                    <Button variant="secondary" onClick={this.toggleWeaponModalState}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={this.saveModalThenClose}>
+                    <Button variant="primary" onClick={this.saveWeaponModalThenClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -105,10 +122,10 @@ class CharacterScreen extends React.Component{
                 </Modal.Header>
                 <Modal.Body>{this.renderArtifactModalBody()}</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.toggleModalState}>
+                    <Button variant="secondary" onClick={this.toggleArtifactModalState}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={this.saveModalThenClose}>
+                    <Button variant="primary" onClick={this.saveArtifactModalThenClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -179,12 +196,6 @@ class CharacterScreen extends React.Component{
     renderSelectedCharacterData(){
         if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
             const levelByAscension = [20, 40, 50, 60, 70, 80, 90]
-            /*if(this.charData[this.state.ccData].level < levelByAscension[this.charData[this.state.ccData].ascension] && this.charData[this.state.ccData].ascension > 0){
-                this.setState({ccData: levelByAscension[this.state.ccData.ascension - 1]});
-                this.storageUtils.characterData = this.charData;
-                this.storageUtils.saveData("character");
-            }*/
-            //<img src={process.env.PUBLIC_URL + "/images/ascension_star.png"}></img>
             return (
             <div className="row pt-2 h-100 character-detail-background">
                 <div className="name-width col-3">
@@ -241,7 +252,7 @@ class CharacterScreen extends React.Component{
                         <input className="ascension-cbox" type="checkbox" id="inlineCheckbox3" value="option3"/>
                         <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
                     </div>
-                    <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon[0]}/>
+                    <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon}/>
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]}/> 
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]}/> 
                     <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]}/> 
@@ -284,7 +295,7 @@ class CharacterScreen extends React.Component{
     }
 
     /**
-     * Saves the content in the modal (appending it to characterData),
+     * Saves the content in the character modal
      * then closes it. 
      */
     saveModalThenClose(){
@@ -303,7 +314,52 @@ class CharacterScreen extends React.Component{
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
         this.setState({ccData: this.charData[this.charData.length - 1]});
+        console.log(this.charData[this.charData.length - 1])
         this.toggleModalState();
+    }
+
+    /**
+     * Saves the content in the weapon modal to characterData
+     * then closes it. 
+     */
+     saveWeaponModalThenClose(){
+        //let data = data_names[character_name_list[this.creationModalSelection]];
+        let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+        let nlp;
+        if(listPointer === "sword"){
+            listPointer = sword_list;
+            nlp = sword_data;
+        } else if(listPointer === "claymore"){
+            listPointer = claymore_list;
+            nlp = claymore_data;
+        } else if(listPointer === "polearm"){
+            listPointer = polearm_list;
+            nlp = polearm_data;
+        } else if(listPointer === "catalyst"){
+            listPointer = catalyst_list;
+            nlp = catalyst_data;
+        } else if(listPointer === "bow"){
+            listPointer = bow_list;
+            nlp = bow_data;
+        }
+        this.charData[this.state.ccData].weapon = {
+            "name": listPointer[this.weaponModalSelection],
+            "level": this.weaponLevelInputRef.current.value,
+            "ascension": this.weaponAscensionInputRef.current.value,
+            "refine": this.weaponRefineInputRef.current.value
+        };
+        this.weaponModalSelection = 0;
+        this.storageUtils.characterData = this.charData;
+        this.storageUtils.saveData("character");
+        this.toggleWeaponModalState();
+    }
+
+    /**
+     * Saves the content in the artifact modal to characterData,
+     * then closes it. 
+     */
+     saveArtifactModalThenClose(){
+        this.toggleArtifactModalState();
     }
 
     /**
@@ -347,21 +403,74 @@ class CharacterScreen extends React.Component{
     }
 
     /**
-     * Renders the modal body.
+     * Renders the weapon modal body.
      */
      renderWeaponModalBody() {
         //Format names and add them to the Form.
-        let characterNameList = [];
-        for(let i = 0; i < character_name_list.length; i++){
-            characterNameList.push(<option value={i} key={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+        let weaponNameList = [];
+        if(this.state.ccData !== undefined && this.charData[this.state.ccData] !== undefined ){
+            let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+            let nlp;
+            if(listPointer === "sword"){
+                listPointer = sword_list;
+                nlp = sword_data;
+            } else if(listPointer === "claymore"){
+                listPointer = claymore_list;
+                nlp = claymore_data;
+            } else if(listPointer === "polearm"){
+                listPointer = polearm_list;
+                nlp = polearm_data;
+            } else if(listPointer === "catalyst"){
+                listPointer = catalyst_list;
+                nlp = catalyst_data;
+            } else if(listPointer === "bow"){
+                listPointer = bow_list;
+                nlp = bow_data;
+            }
+            for(let i = 0; i < listPointer.length; i++){
+                weaponNameList.push(<option value={i} key={i}>{nlp[listPointer[i]].name}</option>);
+            }
         }
         return (
             <>
-                <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.creationModalMenuOnSelect(e)}>
-                    <Form.Select aria-label="Select character input box">
-                        {characterNameList}
+                <FloatingLabel id="floatingSelect" label="Select Weapon:" className="mb-3" ref={this.weaponModalMenuRef} onChange={e => this.weaponModalMenuOnSelect(e)}>
+                    <Form.Select aria-label="Select weapon input box">
+                        {weaponNameList}
                     </Form.Select>
                 </FloatingLabel>
+                <div className="input-group form-inline">
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2">Level:</span>
+                    </div>
+                    <input type="text" className="form-control" 
+                        defaultValue={this.fetchWeaponLevel()}
+                        aria-label="Weapon's Level" aria-describedby="basic-addon2" ref={this.weaponLevelInputRef}/>
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2" ref={this.weaponLevelDisplayRef}>{this.fetchWeaponLevelLimit()}</span>
+                    </div>
+                </div>
+                <div className="input-group form-inline">
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2">Ascension:</span>
+                    </div>
+                    <input type="text" className="form-control" 
+                        defaultValue={this.fetchWeaponAscension()} onChange={this.handleWeaponAscensionChanged}
+                        aria-label="Weapon's Ascension Level" aria-describedby="basic-addon2" ref={this.weaponAscensionInputRef}/>
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2">/ 6</span>
+                    </div>
+                </div>
+                <div className="input-group form-inline">
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2">Refine:</span>
+                    </div>
+                    <input type="text" className="form-control" 
+                        defaultValue={this.fetchWeaponRefine()}
+                        aria-label="Weapon's Refine Level" aria-describedby="basic-addon2" ref={this.weaponRefineInputRef}/>
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="basic-addon2">/ 5</span>
+                    </div>
+                </div>
             </>
         )
     }
@@ -373,6 +482,24 @@ class CharacterScreen extends React.Component{
      */
     creationModalMenuOnSelect(e){
         this.creationModalSelection = e.target.value;
+    }
+
+    /**
+     * Sets the weaponModalSelection value when the weapon modal is set.
+     * 
+     * @param {*} e is the onChange event
+     */
+    weaponModalMenuOnSelect(e){
+        this.weaponModalSelection = e.target.value;
+    }
+
+    /**
+     * Sets the artifactModalSelection value when the artifact modal is set.
+     * 
+     * @param {*} e is the onChange event
+     */
+    artifactModalMenuOnSelect(e){
+        this.artifactModalSelection = e.target.value;
     }
 
     /**
@@ -394,6 +521,31 @@ class CharacterScreen extends React.Component{
             }
         }
         return finalizedNameString;
+    }
+
+    /**
+     * Handles changes to the weapon ascension level textbox in Modal. 
+     */
+    handleWeaponAscensionChanged(){
+        //check validity
+        let valid = false;
+        if(this.weaponAscensionInputRef.current.value >= 0 
+           && this.weaponAscensionInputRef.current.value <= 6 
+           && this.weaponAscensionInputRef.current.value !== ""){
+            valid = true;
+        }
+        //change character level if valid
+        if(valid){
+           let ascension = parseInt(this.weaponAscensionInputRef.current.value);
+           let currentLevel = parseInt(this.weaponLevelInputRef.current.value);
+           const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
+           this.weaponLevelDisplayRef.current.textContent = "/ " + levelByAscension[ascension];
+           if(currentLevel < levelByAscension[ascension - 1]){
+               this.weaponLevelInputRef.current.value = levelByAscension[ascension - 1];
+           } else if(currentLevel > levelByAscension[ascension]){
+               this.weaponLevelInputRef.current.value = levelByAscension[ascension];
+           }
+        }
     }
 
     /**
@@ -467,10 +619,6 @@ class CharacterScreen extends React.Component{
             this.storageUtils.characterData = this.charData;
             this.storageUtils.saveData("character");
          }
-         //save if valid
-         if(valid){
-             
-         }
     }
 
     /**
@@ -484,7 +632,7 @@ class CharacterScreen extends React.Component{
         if(this.charData.length === 0){
             this.setState({ccData: null});
         }
-        else if(this.state.ccData == this.charData.length){
+        else if(this.state.ccData === this.charData.length){
             this.setState({ccData: this.state.ccData - 1});
         } else {
             this.setState({ccData: this.state.ccData}); //re-render for fun HAHA
@@ -493,6 +641,40 @@ class CharacterScreen extends React.Component{
         //remove character from long term storage
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
+    }
+
+    /**
+     * The following four functions provide proper values for rendering the weapon modal
+     * @returns the proper weapon level, ascension, level, refine for rendering
+     */
+    fetchWeaponLevel(){
+        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+            return this.charData[this.state.ccData].weapon.level;
+        } else {
+            return 1;
+        }
+    }
+    fetchWeaponAscension(){
+        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+            return this.charData[this.state.ccData].weapon.ascension;
+        } else {
+            return 0;
+        }
+    }
+    fetchWeaponLevelLimit(){
+        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+            const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
+            return "/ " + levelByAscension[this.charData[this.state.ccData].weapon.ascension];
+        } else {
+            return "/ 20";
+        }
+    }
+    fetchWeaponRefine(){
+        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+            return this.charData[this.state.ccData].weapon.refine;
+        } else {
+            return 1;
+        }
     }
 }
 
