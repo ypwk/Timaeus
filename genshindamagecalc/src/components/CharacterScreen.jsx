@@ -237,6 +237,39 @@ class CharacterScreen extends React.Component{
                             <span className="input-group-text" id="basic-addon2">/ 6</span>
                         </div>
                     </div>
+                    <div className="input-group form-inline" key={this.state.ccData * 10 + 3}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">NA:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentOneChanged}
+                            aria-label="Character's Normal Attack Talent" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        </div>
+                    </div>
+                    <div className="input-group form-inline" key={this.state.ccData * 10 + 4}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Skill:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentTwoChanged}
+                            aria-label="Character's " aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        </div>
+                    </div>
+                    <div className="input-group form-inline" key={this.state.ccData * 10 + 5}>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Burst:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentThreeChanged}
+                            aria-label="Character's Constellation" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-9">
                     <div className="form-check-inline">
@@ -313,8 +346,7 @@ class CharacterScreen extends React.Component{
         this.charData.push(new_char_file);
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
-        this.setState({ccData: this.charData[this.charData.length - 1]});
-        console.log(this.charData[this.charData.length - 1])
+        this.setState({ccData: this.charData.length - 1});
         this.toggleModalState();
     }
 
