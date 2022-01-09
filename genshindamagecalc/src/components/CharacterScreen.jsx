@@ -9,7 +9,7 @@ import "../css/CharacterScreenStyling.css";
 
 import { sword_data, claymore_data, polearm_data, catalyst_data, bow_data, sword_list, claymore_list, polearm_list, catalyst_list, bow_list } from '../data/weapon';
 import { data_names } from '../data/character/character_name_index';
-import {character_name_list} from "../data/character/character_name_list"
+import { character_name_list } from "../data/character/character_name_list"
 /**
  * This React Component is an approximation for the character screen in Genshin. 
  * 
@@ -24,10 +24,6 @@ class CharacterScreen extends React.Component{
 
     constructor(props){
         super(props);
-        this.storageUtils = this.props.storageUtil;
-        this.creationModalSelection = 0;
-        this.weaponModalSelection = 0;
-        this.artifactModalSelection = 0;
 
         //binding
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
@@ -64,8 +60,13 @@ class CharacterScreen extends React.Component{
         this.weaponAscensionInputRef = React.createRef();
         this.weaponLevelInputRef = React.createRef();
         this.weaponRefineInputRef = React.createRef();
-        this.charData = this.storageUtils.characterData;
+
         //init state
+        this.storageUtils = this.props.storageUtil;
+        this.creationModalSelection = 0;
+        this.weaponModalSelection = 0;
+        this.artifactModalSelection = 0;
+        this.charData = this.storageUtils.characterData;
         if(this.charData !== undefined && this.charData.length > 0){
             this.state = {
                 ccData: 0,
@@ -81,7 +82,6 @@ class CharacterScreen extends React.Component{
                 showArtifactModal: false
             };
         }
-
     }
 
     render(){

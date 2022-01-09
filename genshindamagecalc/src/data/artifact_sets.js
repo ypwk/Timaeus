@@ -1,4 +1,4 @@
-export const artifactData = {
+export const artifact_set_data = {
   "adventurer": {
     id: "adventurer",
     name: "Adventurer",
