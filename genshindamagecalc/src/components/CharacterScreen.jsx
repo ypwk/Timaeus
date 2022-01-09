@@ -40,6 +40,9 @@ class CharacterScreen extends React.Component{
         this.handleCharacterLevelChanged = this.handleCharacterLevelChanged.bind(this);
         this.handleCharacterConstellationChanged = this.handleCharacterConstellationChanged.bind(this);
         this.handleCharacterAscensionChanged = this.handleCharacterAscensionChanged.bind(this);
+        this.handleCharacterTalentOneChanged = this.handleCharacterTalentOneChanged.bind(this);
+        this.handleCharacterTalentTwoChanged = this.handleCharacterTalentTwoChanged.bind(this);
+        this.handleCharacterTalentThreeChanged = this.handleCharacterTalentThreeChanged.bind(this);
         this.handleDeleteButtonClicked = this.handleDeleteButtonClicked.bind(this);
         this.handleWeaponAscensionChanged = this.handleWeaponAscensionChanged.bind(this);
         this.fetchWeaponLevel = this.fetchWeaponLevel.bind(this);
@@ -54,6 +57,9 @@ class CharacterScreen extends React.Component{
         this.characterConstellationInputRef = React.createRef();
         this.characterAscensionInputRef = React.createRef();
         this.characterLevelByAscensionRef = React.createRef();
+        this.characterTalentOneRef = React.createRef();
+        this.characterTalentTwoRef = React.createRef();
+        this.characterTalentThreeRef = React.createRef();
         this.weaponLevelDisplayRef = React.createRef();
         this.weaponAscensionInputRef = React.createRef();
         this.weaponLevelInputRef = React.createRef();
@@ -243,9 +249,9 @@ class CharacterScreen extends React.Component{
                         </div>
                         <input type="text" className="form-control" 
                             defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentOneChanged}
-                            aria-label="Character's Normal Attack Talent" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                            aria-label="Character's Normal Attack Talent" aria-describedby="basic-addon2" ref={this.characterTalentOneRef}/>
                         <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                            <span className="input-group-text" id="basic-addon2">/ 10</span>
                         </div>
                     </div>
                     <div className="input-group form-inline" key={this.state.ccData * 10 + 4}>
@@ -253,10 +259,10 @@ class CharacterScreen extends React.Component{
                             <span className="input-group-text" id="basic-addon2">Skill:</span>
                         </div>
                         <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentTwoChanged}
-                            aria-label="Character's " aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                            defaultValue={this.charData[this.state.ccData].talents[1]} onChange={this.handleCharacterTalentTwoChanged}
+                            aria-label="Character's Elemental Skill Talent" aria-describedby="basic-addon2" ref={this.characterTalentTwoRef}/>
                         <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                            <span className="input-group-text" id="basic-addon2">/ 10</span>
                         </div>
                     </div>
                     <div className="input-group form-inline" key={this.state.ccData * 10 + 5}>
@@ -264,10 +270,10 @@ class CharacterScreen extends React.Component{
                             <span className="input-group-text" id="basic-addon2">Burst:</span>
                         </div>
                         <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentThreeChanged}
-                            aria-label="Character's Constellation" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                            defaultValue={this.charData[this.state.ccData].talents[2]} onChange={this.handleCharacterTalentThreeChanged}
+                            aria-label="Character's Elemental Burst Talent" aria-describedby="basic-addon2" ref={this.characterTalentThreeRef}/>
                         <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                            <span className="input-group-text" id="basic-addon2">/ 10</span>
                         </div>
                     </div>
                 </div>
@@ -675,6 +681,44 @@ class CharacterScreen extends React.Component{
         this.storageUtils.saveData("character");
     }
 
+    /**
+     * Handles changes to the current character's first talent
+     */
+    handleCharacterTalentOneChanged(){
+        console.log('one')
+        let level = parseInt(this.characterTalentOneRef.current.value);
+        if(level <= 10 && level > 0){
+            this.charData[this.state.ccData].talents[0] = level;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+        }
+    }
+
+    /**
+     * Handles changes to the current character's second talent
+     */
+    handleCharacterTalentTwoChanged(){
+        console.log('two')
+        let level = parseInt(this.characterTalentTwoRef.current.value);
+        if(level <= 10 && level > 0){
+            this.charData[this.state.ccData].talents[1] = level;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+        }
+    }
+
+    /**
+     * Handles changes to the current character's third talent
+     */
+    handleCharacterTalentThreeChanged(){
+        console.log('three')
+        let level = parseInt(this.characterTalentThreeRef.current.value);
+        if(level <= 10 && level > 0){
+            this.charData[this.state.ccData].talents[2] = level;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+        }
+    }
     /**
      * The following four functions provide proper values for rendering the weapon modal
      * @returns the proper weapon level, ascension, level, refine for rendering
