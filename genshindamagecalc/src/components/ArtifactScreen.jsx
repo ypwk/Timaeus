@@ -22,8 +22,11 @@ class ArtifactScreen extends React.Component{
     constructor(props){
         super(props);
 
-        this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
+        this.handleArtifactCardClick = this.handleArtifactCardClick.bind(this);
         this.toggleCreationModalState = this.toggleCreationModalState.bind(this);
+        this.handleSubstatButtonsClicked = this.handleSubstatButtonsClicked.bind(this);
+        this.saveCreationModalThenClose = this.saveCreationModalThenClose.bind(this);
+        this.handleDeleteButtonClicked = this.handleDeleteButtonClicked.bind(this);
 
         this.creationModalSetMenuRef = React.createRef();
         this.creationModalPieceMenuRef = React.createRef();
@@ -33,13 +36,18 @@ class ArtifactScreen extends React.Component{
         this.substatRef3 = React.createRef();
         this.substatRef4 = React.createRef();
         this.substatRefs = [this.substatRef1, this.substatRef2, this.substatRef3, this.substatRef4]
+        this.substatValRef1 = React.createRef();
+        this.substatValRef2 = React.createRef();
+        this.substatValRef3 = React.createRef();
+        this.substatValRef4 = React.createRef();
+        this.substatValRefs = [this.substatValRef1, this.substatValRef2, this.substatValRef3, this.substatValRef4]
 
         //init state
         this.storageUtils = this.props.storageUtil;
-        this.creationSetModalSelection = 0;
         this.creationMStatModalSelection = 0;
         this.artiData = this.storageUtils.artifactData;
         this.artifactSetList = Object.keys(artifact_set_data);
+        this.substatValues = [0, 0, 0, 0];
         if(this.artiData !== undefined && this.artiData.length > 0){
             this.state = {
                 caData: 0,
@@ -107,7 +115,7 @@ class ArtifactScreen extends React.Component{
                 count = 0;
             }
             cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="portrait" data={this.artiData[location]} onClick={this.handleCharacterCardClick} card_id={totalCount}/>
+                <EntityCard mode="artifact" data={this.artiData[location]} onClick={this.handleArtifactCardClick} card_id={totalCount}/>
             </div>);
             count++;
             totalCount++;
@@ -118,12 +126,12 @@ class ArtifactScreen extends React.Component{
             currentRowCounter++;
             cRow = []; //add extra add button
             cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/>
+                <EntityCard mode="add" onClick={this.handleArtifactCardClick} card_id={totalCount}/>
             </div>);
             rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
         } else { //add extra add button
             cRow.push(<div className=" col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/> 
+                <EntityCard mode="add" onClick={this.handleArtifactCardClick} card_id={totalCount}/> 
             </div>);
             rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push remaining EntityCards
         }
@@ -133,32 +141,79 @@ class ArtifactScreen extends React.Component{
     /**
      * Handles clicks to EntityCards located on the right of the screen.
      */
-     handleCharacterCardClick(mode, data){
+     handleArtifactCardClick(mode, data){
         if(mode === "portrait"){
-            this.setState({ccData: data});
+            this.setState({caData: data});
         } if(mode === "add"){
             this.toggleCreationModalState();
         } if(mode === "weapon"){
             this.toggleWeaponModalState();
         } if(mode === "artifact"){
-            this.toggleArtifactModalState();
+            this.setState({caData: data});
         }
+    }
+
+    /**
+     * Handles clicks to the delete artifact button
+     */
+     handleDeleteButtonClicked(){
+        //remove character from state
+        this.artiData.splice(this.state.caData, 1);
+
+        //handle side effects of removal
+        if(this.artiData.length === 0){
+            this.setState({caData: null});
+        }
+        else if(this.state.caData === this.artiData.length){
+            this.setState({caData: this.state.caData - 1});
+        } else {
+            this.setState({caData: this.state.caData}); //re-render for fun HAHA
+        }
+
+        //remove artifact from long term storage
+        this.storageUtils.artifactData = this.artiData;
+        this.storageUtils.saveData("artifact");
     }
 
     /**
      * Returns a representation of the selected character's data. 
      */
      renderSelectedArtifactData(){
-        if(this.artiData[this.state.ccData] !== null && this.artiData[this.state.ccData] !== undefined){
-            const levelByAscension = [20, 40, 50, 60, 70, 80, 90]
+        if(this.artiData[this.state.caData] !== null && this.artiData[this.state.caData] !== undefined){
+            let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
+            let subList = this.artiData[this.state.caData].substats.map((e, i) => <p>{this.round(e[1], 1)} {constant_values.substatConv[e[0]]}</p>);
+            let sp_artifact_data = artifact_set_data[this.artiData[this.state.caData].set];
+            let possibleNameList = [
+                sp_artifact_data.sets.flower,
+                sp_artifact_data.sets.plume,
+                sp_artifact_data.sets.sands,
+                sp_artifact_data.sets.goblet,
+                sp_artifact_data.sets.circlet,
+            ]
+            console.log(this.artiData[this.state.caData].main_stat)
+            console.log(constant_values.statConvFormal[this.artiData[this.state.caData].main_stat])
             return (<div className="pt-2">
-            <h1>Artifact AHAH</h1>
+            <h1>{possibleNameList[this.artiData[this.state.caData].type]}</h1>
             <img className="character-detail-img border border-dark rounded mb-3"
-                        src={process.env.PUBLIC_URL + "/images/artifact_content" + this.artiData[this.state.caData].set + "_face.png"}
-                        alt={this.charData[this.state.ccData].name}/>
+                        src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
+                        alt={this.artiData[this.state.caData].name}/>
+            <p className='h3'>
+                Level: +{this.artiData[this.state.caData].level}
+            </p>
+            <p className='h3'>
+                Rarity: {this.artiData[this.state.caData].rarity} stars s hahshhdh
+            </p>
+            <p className='h3'>
+                Main Stat: {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
+                {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
+            </p>
             <p>
                 POOOOOOOPPOOO MAN MAKE ARETRIFACT 
             </p>
+            {subList}
+            <Button onClick={this.handleDeleteButtonClicked}>
+                Delete
+            </Button>
         </div>)
         } else {
             return (<div className="pt-2">
@@ -279,9 +334,9 @@ class ArtifactScreen extends React.Component{
     renderSubstatInterface(){
         let dropDownList = [];
         for(let i = 0; i < constant_values.numSubstatRolls[this.state.creationModalRaritySelection - 1]; i++){
-            let buttonList = constant_values.substatFlavors[this.state.substatSelection[i]][this.state.creationModalRaritySelection - 1]
-                .map(e =>  <Button variant="outline-secondary">{e}</Button> );
             let ph = i;
+            let buttonList = constant_values.substatFlavors[this.state.substatSelection[i]][this.state.creationModalRaritySelection - 1]
+                .map((e, i) =>  <Button variant="outline-secondary" key={ph * 10 + i} onClick={e => this.handleSubstatButtonsClicked(e, i, ph)}>{this.round(e, 1)}</Button> );
             let substatList = constant_values.substatConv.map((e, i) => {
                 if(!this.state.substatSelection.includes(i) || this.state.substatSelection[ph] === i)
                     return <option value={i} key={i}>{e}</option>
@@ -294,7 +349,7 @@ class ArtifactScreen extends React.Component{
                         {substatList}
                     </Form.Select>
                     {buttonList}
-                    <FormControl aria-label="Text input with dropdown button" />
+                    <FormControl aria-label="Text input with dropdown button" ref={this.substatValRefs[i]} defaultValue={this.round(this.substatValues[i], 1)}/>
                 </InputGroup>
             );
         }
@@ -335,6 +390,7 @@ class ArtifactScreen extends React.Component{
             this.substatRefs[tloc].current.value = tval;
             this.setState(state => {
                 state.substatSelection[tloc] = tval;
+                this.substatValRefs[tloc].current.value = 0;
                 return {
                     substatSelection: state.substatSelection,
                     creationPieceModalSelection: parseInt(e.target.value)
@@ -352,15 +408,16 @@ class ArtifactScreen extends React.Component{
      */
     creationModalMStatMenuOnSelect(e){
         this.creationMStatModalSelection = e.target.value;
+        console.log(e.target.value)
         for(let i = 0; i < constant_values.numSubstatRolls[this.state.creationModalRaritySelection - 1]; i++){
             //if the main stat coincides with a substat
             if(this.state.substatSelection[i] === constant_values.possibleMainStats[this.state.creationPieceModalSelection][this.creationMStatModalSelection]){ 
-                console.log("fiuckl")
                 let tval = this.state.substatSelection[i]
                 while(this.state.substatSelection.includes(tval)){//change the substat 
                     tval = (tval + 1) % constant_values.substatConv.length;
                 }
                 this.substatRefs[i].current.value = tval;
+                this.substatValRefs[i].current.value = 0;
                 this.setState(state => {
                     state.substatSelection[i] = tval;
                     return {
@@ -387,38 +444,29 @@ class ArtifactScreen extends React.Component{
      */
     saveCreationModalThenClose() {
         /*
-        *set
- *    level
- *    rarity
- *    main stat
- *    substats
- *     list of substats, each substat is a list of rolls (0 - 3)
- *    id
-        
-        let new_char_file = {
-            "set": Object.keys(artifact_set_data)[this.creationSetModalSelection],
+        *    set
+        *    level
+        *    rarity
+        *    type
+        *    main stat
+        *    substats
+        *     list of substats, each substat is a list of rolls (0 - 3)
+        *    id
+        */
+        let new_arti_file = {
+            "set": Object.keys(artifact_set_data)[this.state.creationSetModalSelection],
             "level": this.creationModalLevelRef.current.value,
-            "rarity": this.creationModalRaritySelection,
+            "type": this.state.creationPieceModalSelection,
+            "rarity": this.state.creationModalRaritySelection,
             "main_stat": this.creationMStatModalSelection,
-            "substats": [
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                []
-            ]
+            "substats": this.state.substatSelection.map((e, i) => [e, this.substatValues[i]])
         }
-        this.creationModalSelection = 0;
-        this.charData.push(new_char_file);
-        this.storageUtils.characterData = this.charData;
-        this.storageUtils.saveData("character");
-        this.setState({ccData: this.charData.length - 1});
-        this.toggleModalState(); */
+        console.log(new_arti_file)
+        this.artiData.push(new_arti_file);
+        this.storageUtils.artifactData = this.artiData;
+        this.storageUtils.saveData("artifact");
+        this.setState({caData: this.artiData.length - 1});
+        this.toggleCreationModalState();
     }
 
     fetchDefaultArtiLevel(){
@@ -435,12 +483,42 @@ class ArtifactScreen extends React.Component{
      * @param {Number} i is the index of the substat set
      */
     substatOnChange(e, i){
+        this.substatValues[i] = 0;
+        this.substatValRefs[i].current.value = 0;
         this.setState(state => {
             state.substatSelection[i] = parseInt(e.target.value);
             return {
                 substatSelection: state.substatSelection
             }
         });
+    }
+
+    /**
+     * onClick for substat creation buttons
+     * @param {*} e is the onClick event
+     * @param {*} i is the selected substat flavor
+     * @param {*} ph is the selected substat
+     */
+    handleSubstatButtonsClicked(e, i, ph){
+        let val = 0;
+        val = parseFloat(this.substatValRefs[ph].current.value) +
+            parseFloat(constant_values.substatFlavors[this.state.substatSelection[ph]][this.state.creationModalRaritySelection - 1][i]);
+        this.substatValues[ph] = val;
+        this.substatValRefs[ph].current.value = this.round(val, 1);
+    }
+
+    /**
+     * Clears all substat values 
+     */
+    clearSubstatVals(){
+        this.substatValRefs.map(e => e.current.value = 0);
+    }
+
+    /**
+     * Rounding Utility
+     */
+    round(value, sigfig){
+        return Number(Math.round( value + 'e' + sigfig ) + 'e-' + sigfig )
     }
 }
 

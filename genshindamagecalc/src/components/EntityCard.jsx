@@ -1,5 +1,6 @@
 import React from 'react';
 import "../css/EntityCardStyling.css";
+import storageUtils from '../utils/storageUtils';
 /**
  * This React Component represents any renderable card (e.g. the ones used in the CharacterScreen, ArtifactScreen,
  * and EnvironmentScreen)
@@ -43,12 +44,32 @@ class EntityCard extends React.Component{
           />
       </div>
     } else if(this.props.mode === "artifact"){
-      if(this.props.artifact_data === undefined){
+      if(this.props.artifact_data === undefined && this.props.data === undefined){
         return <div onClick={this.handleClick}
           className="card background-transparent portrait-size m-0">
               <img
                 className="rounded img-fluid unselectable"
                 src={process.env.PUBLIC_URL + "/images/" + this.props.type + "_icon.png"}
+                alt="add an artifact"
+                />
+          </div>
+      } else if(this.props.data !== undefined){
+        let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
+        return <div onClick={this.handleClick}
+          className="card background-transparent portrait-size m-0">
+              <img
+                className="rounded img-fluid unselectable"
+                src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.props.data.set + "_" + typeList[this.props.data.type] + ".png"}
+                alt="add an artifact"
+                />
+          </div>
+      } else {
+        let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
+        return <div onClick={this.handleClick}
+          className="card background-transparent portrait-size m-0">
+              <img
+                className="rounded img-fluid unselectable"
+                src={process.env.PUBLIC_URL + "/images/artifact_content/" + storageUtils.artifactData[this.props.artifact_data].set + "_" + typeList[storageUtils.artifactData[this.props.artifact_data].type] + ".png"}
                 alt="add an artifact"
                 />
           </div>
@@ -91,7 +112,7 @@ class EntityCard extends React.Component{
    * Passes this card's information to the parent module.
    */
   handleOnClick(){
-    if(this.props.mode === "portrait"){
+    if(this.props.mode === "portrait" || (this.props.mode === "artifact" && this.props.data !== undefined)){
       this.passedOnClick(this.props.mode, this.props.card_id);
     } else {
       this.passedOnClick(this.props.mode, this.props.data);

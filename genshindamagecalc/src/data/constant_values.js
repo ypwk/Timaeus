@@ -174,7 +174,7 @@ export const constant_values = {
     ],
     /**
      * Formatted like so: 
-     *  substatFlavors[substatConv][rarity]
+     *  substatFlavors[substatConv][rarity][flavor]
      * "substatConv" is in the same order as "substatConv"
      */
     "substatFlavors": [
