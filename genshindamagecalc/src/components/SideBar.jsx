@@ -9,7 +9,7 @@ class SideBar extends React.Component{
             <nav className="navbar navbar-expand navbar-dark bg-dark">
               <div className="container">
                 <Link className="navbar-brand" to="/">
-                  Timaeus
+                  Timaeus' Abacus
                 </Link>
                 <div>
                   <ul className="navbar-nav ml-auto">

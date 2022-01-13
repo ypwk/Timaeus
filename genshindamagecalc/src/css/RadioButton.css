@@ -38,3 +38,16 @@
     padding-right: 8px;
   }
   
+  .disabled {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    border: 2px solid rgb(207, 207, 207);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    transition: all 0.1s linear;
+  }

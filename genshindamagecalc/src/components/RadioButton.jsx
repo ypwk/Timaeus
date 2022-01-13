@@ -6,16 +6,18 @@ export class RadioButton extends Component {
   state = {};
 
   render() {
-    const { selected, onChange, text, value } = this.props;
+    const { selected, onChange, text, value, disabled } = this.props;
     return (
       <div
         className="modern-radio-container"
         onClick={() => {
-          onChange(value);
+          if(!disabled){
+            onChange(value);
+          }
         }}
       >
         <div
-          className={`radio-outer-circle ${value !== selected && "unselected"}`}
+          className={(!disabled) ? `radio-outer-circle ${value !== selected && "unselected"}` : 'disabled'}
         >
           <div
             className={`radio-inner-circle ${value !== selected &&
@@ -31,6 +33,7 @@ export class RadioButton extends Component {
 RadioButton.propTypes = {
   text: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
-  selected: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  selected: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  disabled: PropTypes.bool.isRequired
 };

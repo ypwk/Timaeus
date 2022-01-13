@@ -1,21 +1,7 @@
 To do:
-Implement EntityCard
-Implement storageUtils class
-Implement CharacterScreen
-    Combine storage utility class with CharacterScreen (can edit character, and it saves)
-    Import character data
-        Character stats, images
-Implement InventoryScreen
-    Use EntityCards to create baseline version
-        Same idea as CharacterScreen
-    Combine storage utility class with InventoryScreen (can edit artifacts, weapons, and it saves)
-    Import all data
-        Weapons
-            stats, images
-        Artifacts
-            stats, images
-Combine CharacterScreen and InventoryScreen
-    Make sure that characters can equip artifacts and weapons
+Implement Substats
+Fix CharacterScreen weapon level/rarity discrepancy
+Set default values for CharacterScreen weapon modal to maximum values for respective rarities
 Implement EnvironmentScreen
     Use EntityCards to create baseline version
         Implement EntityCard Drag and Drop
