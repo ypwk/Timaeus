@@ -1,8 +1,10 @@
 import React from 'react';
+import Star from './Star';
 import EntityCard from './EntityCard';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Badge from "react-bootstrap/Badge";
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { RadioButton } from './RadioButton';
 import InputGroup from "react-bootstrap/InputGroup";
@@ -12,6 +14,7 @@ import "../css/ArtifactScreenStyling.css";
 
 import { artifact_set_data } from '../data/artifact_sets'
 import { constant_values } from '../data/constant_values'
+import { constant } from 'lodash';
 /**
  * This React Component represents the inventory screen in Genshin. 
  * 
@@ -185,7 +188,13 @@ class ArtifactScreen extends React.Component{
         let sr = (p, c) => p + c;
         if(this.artiData[this.state.caData] !== null && this.artiData[this.state.caData] !== undefined){
             let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
-            let subList = this.artiData[this.state.caData].substats.map((e, i) => <p>{this.round(e[1].reduce(sr), 1)} {constant_values.substatConv[e[0]]}</p>);
+            let subList = this.artiData[this.state.caData].substats.map((e, i) => {
+                if(constant_values.substatConv[e[0]].charAt(constant_values.substatConv[e[0]].length - 1) === '%'){
+                    return <p>{constant_values.substatConv[e[0]].substring(0, constant_values.substatConv[e[0]].length - 1)}+{this.round(e[1].reduce(sr), 1)}%</p>
+                } else {
+                    return <p>{constant_values.substatConv[e[0]]}+{this.round(e[1].reduce(sr), 1)}</p>
+                }
+            });
             let sp_artifact_data = artifact_set_data[this.artiData[this.state.caData].set];
             let possibleNameList = [
                 sp_artifact_data.sets.flower,
@@ -195,22 +204,32 @@ class ArtifactScreen extends React.Component{
                 sp_artifact_data.sets.circlet,
             ]
             return (<div className="pt-2">
-            <h1>{possibleNameList[this.artiData[this.state.caData].type]}</h1>
+                <h2 className='m-0'>
+                    {possibleNameList[this.artiData[this.state.caData].type]} <Badge bg="secondary">+{this.artiData[this.state.caData].level}</Badge> 
+                </h2>
+                <h6 className="text-muted m-0">
+                    {constant_values.pieceFormalNames[this.artiData[this.state.caData].type]}
+                </h6>
+            <div>
+
+            </div>
             <img className="character-detail-img border border-dark rounded mb-3 unselectable"
                         src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
                         alt={this.artiData[this.state.caData].name}/>
             <p className='h3'>
-                Level: +{this.artiData[this.state.caData].level}
+                {this.fetchRarityStars(this.artiData[this.state.caData].rarity)}
             </p>
-            <p className='h3'>
-                Rarity: {this.artiData[this.state.caData].rarity} stars
-            </p>
-            <p className='h3'>
-                Main Stat: {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
-                {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
-            </p>
+            <div className="d-flex justify-content-between">
+                <p className='h3'> 
+                    {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
+                </p>
+                <p className='h3'>
+                    {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
+                </p>
+            </div>
+            
             {subList}
-            <Button onClick={this.handleDeleteButtonClicked}>
+            <Button className="btn-danger" onClick={this.handleDeleteButtonClicked}>
                 Delete
             </Button>
         </div>)
@@ -508,6 +527,13 @@ class ArtifactScreen extends React.Component{
             filled = filled && !this.substatValues[a].includes(0);
         }
         return filled && constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1].includes(this.state.assignedSubstats);
+    }
+
+    fetchRarityStars(stars){
+        let starArr = Array(stars).fill(<Star />);
+        return <div>
+            {starArr}
+        </div>
     }
 
     /**

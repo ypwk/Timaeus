@@ -1,4 +1,11 @@
 export const constant_values = {
+    "pieceFormalNames": [
+        "Flower of Life",
+        "Plume of Death",
+        "Sands of Eon",
+        "Goblet of Eonothem",
+        "Circlet of Logos"
+    ],
     "statConv": [
         "HP", 
         "HP%", 
