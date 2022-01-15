@@ -8,7 +8,7 @@ import { RadioButton } from './RadioButton';
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
-import "../css/CharacterScreenStyling.css";
+import "../css/ArtifactScreenStyling.css";
 
 import { artifact_set_data } from '../data/artifact_sets'
 import { constant_values } from '../data/constant_values'
@@ -47,7 +47,7 @@ class ArtifactScreen extends React.Component{
         this.creationMStatModalSelection = 0;
         this.artiData = this.storageUtils.artifactData;
         this.artifactSetList = Object.keys(artifact_set_data);
-        this.substatValues = [0, 0, 0, 0];
+        this.substatValues = [[0], [0], [0], [0]];
         if(this.artiData !== undefined && this.artiData.length > 0){
             this.state = {
                 caData: 0,
@@ -55,7 +55,8 @@ class ArtifactScreen extends React.Component{
                 creationPieceModalSelection: 0,
                 creationModalRaritySelection: 3, 
                 creationSetModalSelection: 0, 
-                substatSelection: [1, 2, 3, 4]
+                substatSelection: [1, 2, 3, 4],
+                assignedSubstats: 0
             };
         } else {
             this.state = {
@@ -64,7 +65,8 @@ class ArtifactScreen extends React.Component{
                 creationPieceModalSelection: 0,
                 creationModalRaritySelection: 3, 
                 creationSetModalSelection: 0,
-                substatSelection: [1, 2, 3, 4]
+                substatSelection: [1, 2, 3, 4],
+                assignedSubstats: 0
             };
         }
     }
@@ -79,7 +81,7 @@ class ArtifactScreen extends React.Component{
                     {this.renderSelectedArtifactData()}
                 </div>
             </div>
-            <Modal onHide={this.toggleCreationModalState} show={this.state.showCreationModal}>
+            <Modal onHide={this.toggleCreationModalState} show={this.state.showCreationModal} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Create New Artifact</Modal.Title>
                 </Modal.Header>
@@ -88,7 +90,8 @@ class ArtifactScreen extends React.Component{
                     <Button variant="secondary" onClick={this.toggleCreationModalState}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={this.saveCreationModalThenClose}>
+                    <Button variant="primary" onClick={this.saveCreationModalThenClose} 
+                        disabled={!this.fetchSaveButtonDisabled()}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -179,9 +182,10 @@ class ArtifactScreen extends React.Component{
      * Returns a representation of the selected character's data. 
      */
      renderSelectedArtifactData(){
+        let sr = (p, c) => p + c;
         if(this.artiData[this.state.caData] !== null && this.artiData[this.state.caData] !== undefined){
             let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
-            let subList = this.artiData[this.state.caData].substats.map((e, i) => <p>{this.round(e[1], 1)} {constant_values.substatConv[e[0]]}</p>);
+            let subList = this.artiData[this.state.caData].substats.map((e, i) => <p>{this.round(e[1].reduce(sr), 1)} {constant_values.substatConv[e[0]]}</p>);
             let sp_artifact_data = artifact_set_data[this.artiData[this.state.caData].set];
             let possibleNameList = [
                 sp_artifact_data.sets.flower,
@@ -190,25 +194,20 @@ class ArtifactScreen extends React.Component{
                 sp_artifact_data.sets.goblet,
                 sp_artifact_data.sets.circlet,
             ]
-            console.log(this.artiData[this.state.caData].main_stat)
-            console.log(constant_values.statConvFormal[this.artiData[this.state.caData].main_stat])
             return (<div className="pt-2">
             <h1>{possibleNameList[this.artiData[this.state.caData].type]}</h1>
-            <img className="character-detail-img border border-dark rounded mb-3"
+            <img className="character-detail-img border border-dark rounded mb-3 unselectable"
                         src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
                         alt={this.artiData[this.state.caData].name}/>
             <p className='h3'>
                 Level: +{this.artiData[this.state.caData].level}
             </p>
             <p className='h3'>
-                Rarity: {this.artiData[this.state.caData].rarity} stars s hahshhdh
+                Rarity: {this.artiData[this.state.caData].rarity} stars
             </p>
             <p className='h3'>
                 Main Stat: {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
                 {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
-            </p>
-            <p>
-                POOOOOOOPPOOO MAN MAKE ARETRIFACT 
             </p>
             {subList}
             <Button onClick={this.handleDeleteButtonClicked}>
@@ -324,8 +323,6 @@ class ArtifactScreen extends React.Component{
                         <span className="input-group-text" id="basic-addon2">{this.fetchDefaultArtiMLevel()}</span>
                     </div>
                 </div>
-
-                <p className='mb-1'>Substats:</p>
                 {this.renderSubstatInterface()}
             </>
         )
@@ -333,14 +330,23 @@ class ArtifactScreen extends React.Component{
 
     renderSubstatInterface(){
         let dropDownList = [];
+        let sum_reducer = (p, c) => p + c;
         for(let i = 0; i < constant_values.numSubstatRolls[this.state.creationModalRaritySelection - 1]; i++){
             let ph = i;
             let buttonList = constant_values.substatFlavors[this.state.substatSelection[i]][this.state.creationModalRaritySelection - 1]
-                .map((e, i) =>  <Button variant="outline-secondary" key={ph * 10 + i} onClick={e => this.handleSubstatButtonsClicked(e, i, ph)}>{this.round(e, 1)}</Button> );
+                .map((e, i) =>  <Button variant="btn-outline-dark" 
+                disabled={this.state.assignedSubstats === constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1].length - 1]}
+                key={ph * 10 + i} onClick={e => this.handleSubstatButtonsClicked(e, i, ph)}>
+                    {this.round(e, 1)}
+                </Button> );
             let substatList = constant_values.substatConv.map((e, i) => {
                 if(!this.state.substatSelection.includes(i) || this.state.substatSelection[ph] === i)
                     return <option value={i} key={i}>{e}</option>
             });
+            let subButtonList = [];
+            if(this.substatValues[i][0] !== 0){
+                subButtonList = this.substatValues[i].map((e, i) => <Button variant="outline-primary" key={ph * 10 + i} onClick={e => this.handleRemoveSubstatButtonsClicked(e, i, ph)}>{this.round(e, 1)}</Button> );
+            }
             dropDownList.push(
                 <InputGroup className="mb-3" key={i}>
                     <Form.Select aria-label="Select artifact substat input box" size="sm"
@@ -349,11 +355,16 @@ class ArtifactScreen extends React.Component{
                         {substatList}
                     </Form.Select>
                     {buttonList}
-                    <FormControl aria-label="Text input with dropdown button" ref={this.substatValRefs[i]} defaultValue={this.round(this.substatValues[i], 1)}/>
+                    <FormControl aria-label="Text input with dropdown button" className="wide-form-select"
+                        ref={this.substatValRefs[i]} defaultValue={this.round(this.substatValues[i].reduce(sum_reducer), 1)} disabled/>
+                    {subButtonList}
                 </InputGroup>
             );
         }
-        return <>{dropDownList}</>
+        return <>
+            <p className='mb-1'>Unassigned Substats: {this.fetchUnassignedSubstats()}</p>
+            {dropDownList}
+        </>
     }
 
     /**
@@ -408,7 +419,6 @@ class ArtifactScreen extends React.Component{
      */
     creationModalMStatMenuOnSelect(e){
         this.creationMStatModalSelection = e.target.value;
-        console.log(e.target.value)
         for(let i = 0; i < constant_values.numSubstatRolls[this.state.creationModalRaritySelection - 1]; i++){
             //if the main stat coincides with a substat
             if(this.state.substatSelection[i] === constant_values.possibleMainStats[this.state.creationPieceModalSelection][this.creationMStatModalSelection]){ 
@@ -461,11 +471,13 @@ class ArtifactScreen extends React.Component{
             "main_stat": this.creationMStatModalSelection,
             "substats": this.state.substatSelection.map((e, i) => [e, this.substatValues[i]])
         }
-        console.log(new_arti_file)
         this.artiData.push(new_arti_file);
         this.storageUtils.artifactData = this.artiData;
         this.storageUtils.saveData("artifact");
-        this.setState({caData: this.artiData.length - 1});
+        this.setState({caData: this.artiData.length - 1,
+                creationPieceModalSelection: 0,
+                assignedSubstats: 0});
+        this.substatValues = [[0], [0], [0], [0]];
         this.toggleCreationModalState();
     }
 
@@ -477,17 +489,43 @@ class ArtifactScreen extends React.Component{
         return "/ " + this.state.creationModalRaritySelection * 4;
     }
 
+    fetchUnassignedSubstats(){
+        if(this.state.creationModalRaritySelection > 2){
+            if(this.state.assignedSubstats >= constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][0]){
+                return "" + (constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][1] - this.state.assignedSubstats);
+            } else {
+                return (constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][0] - this.state.assignedSubstats) 
+                + " or " + (constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][1] - this.state.assignedSubstats);
+            }
+        } else { // 2 or 1
+            return "" + (constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1][0] - this.state.assignedSubstats);
+        }
+    }
+
+    fetchSaveButtonDisabled(){
+        let filled = true;
+        for(let a = 0; a < constant_values.numSubstatRolls[this.state.creationModalRaritySelection - 1]; a++){
+            filled = filled && !this.substatValues[a].includes(0);
+        }
+        return filled && constant_values.maxNumSubstatRolls[this.state.creationModalRaritySelection - 1].includes(this.state.assignedSubstats);
+    }
+
     /**
      * Triggers when the substat is changed. Sets the changed substat value to state. 
      * @param {*} e is the event triggered
      * @param {Number} i is the index of the substat set
      */
     substatOnChange(e, i){
-        this.substatValues[i] = 0;
-        this.substatValRefs[i].current.value = 0;
+        let a_ss = 0;
+        if(this.substatValues[i][0] !== 0){
+            a_ss = this.substatValues[i].length;
+        }
+        this.substatValues[i] = [0];
+        //this.substatValRefs[i].current.value = 0;
         this.setState(state => {
             state.substatSelection[i] = parseInt(e.target.value);
             return {
+                assignedSubstats: state.assignedSubstats - a_ss,
                 substatSelection: state.substatSelection
             }
         });
@@ -503,10 +541,38 @@ class ArtifactScreen extends React.Component{
         let val = 0;
         val = parseFloat(this.substatValRefs[ph].current.value) +
             parseFloat(constant_values.substatFlavors[this.state.substatSelection[ph]][this.state.creationModalRaritySelection - 1][i]);
-        this.substatValues[ph] = val;
-        this.substatValRefs[ph].current.value = this.round(val, 1);
+        this.substatValRefs[ph].current.value = this.round(val, 1); //update sum text
+        if(this.substatValues[ph][0] === 0){
+            this.substatValues[ph][0] = parseFloat(constant_values.substatFlavors[this.state.substatSelection[ph]][this.state.creationModalRaritySelection - 1][i]);
+        } else {
+            this.substatValues[ph].push(parseFloat(constant_values.substatFlavors[this.state.substatSelection[ph]][this.state.creationModalRaritySelection - 1][i]));
+        }
+        this.setState(state => {
+            return {
+                assignedSubstats: state.assignedSubstats + 1
+            }
+        })
     }
 
+    /**
+     * onClick for substat deletion buttons
+     * @param {*} e is the onClick event
+     * @param {*} i is the selected substat in the list
+     * @param {*} ph is the selected substat type
+     */
+    handleRemoveSubstatButtonsClicked(e, i, ph){
+        let val = 0;
+        val = parseFloat(this.substatValRefs[ph].current.value) - parseFloat(e.target.innerText); 
+        this.substatValRefs[ph].current.value = this.round(val, 1); //update sum text
+        this.substatValues[ph].splice(i, 1); //delete substat
+        if(this.substatValues[ph].length === 0){
+            this.substatValues[ph] = [0];
+        }
+        //update substat count, also updating interface
+        this.setState(state => {
+            return {assignedSubstats: (state.assignedSubstats - 1)};
+        });
+    }
     /**
      * Clears all substat values 
      */
@@ -519,6 +585,26 @@ class ArtifactScreen extends React.Component{
      */
     round(value, sigfig){
         return Number(Math.round( value + 'e' + sigfig ) + 'e-' + sigfig )
+    }
+    
+    /**
+     * Breaks down a value in terms of substat type, using different flavors of substats to accomplish the goal. 
+     * Returns a list of broken-down substats, empty if the value cannot be reconstructed. 
+     * @param {*} substatIdentifier is the substatIdentifier (number representing the substat)
+     * @param {*} rarity is the rarity of the artifact (1 - 5)
+     * @param {*} value is the value to break down.
+     */
+    breakDownSub(substatIdentifier, rarity, value){
+        //let seed_value = constant_values.substatFlavors[substatIdentifier][rarity][constant_values[substatIdentifier][rarity].length - 1];
+        for(let h = 0; h < constant_values.substatFlavors.length; h++){
+            for(let j = 0; j < constant_values.substatFlavors[h].length; j++){
+                console.log(constant_values.substatConv[h])
+                console.log("rarity: " + ( j + 1))
+                console.log(constant_values.substatFlavors[h][j].map((e, i) => {
+                    return constant_values.substatFlavors[h][j][constant_values.substatFlavors[h][j].length - 1]* (10 - (constant_values.substatFlavors[h][j].length - 1 - i)) / 10;
+                }));
+            }
+        }
     }
 }
 
