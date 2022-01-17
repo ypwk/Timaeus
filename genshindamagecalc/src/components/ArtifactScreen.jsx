@@ -14,7 +14,7 @@ import "../css/ArtifactScreenStyling.css";
 
 import { artifact_set_data } from '../data/artifact_sets'
 import { constant_values } from '../data/constant_values'
-import { constant } from 'lodash';
+
 /**
  * This React Component represents the inventory screen in Genshin. 
  * 
@@ -163,7 +163,9 @@ class ArtifactScreen extends React.Component{
      * Handles clicks to the delete artifact button
      */
      handleDeleteButtonClicked(){
-        //remove character from state
+        //remove artifact from character
+        this.storageUtils.characterData[this.artiData[this.state.caData].character].artifacts[this.artiData[this.state.caData].type] = -1;
+        //remove artifact from state
         this.artiData.splice(this.state.caData, 1);
 
         //handle side effects of removal
@@ -488,8 +490,10 @@ class ArtifactScreen extends React.Component{
             "type": this.state.creationPieceModalSelection,
             "rarity": this.state.creationModalRaritySelection,
             "main_stat": this.creationMStatModalSelection,
-            "substats": this.state.substatSelection.map((e, i) => [e, this.substatValues[i]])
+            "substats": this.state.substatSelection.map((e, i) => [e, this.substatValues[i]]),
+            "character": -1
         }
+        console.log(new_arti_file)
         this.artiData.push(new_arti_file);
         this.storageUtils.artifactData = this.artiData;
         this.storageUtils.saveData("artifact");

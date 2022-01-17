@@ -10,6 +10,8 @@ import "../css/CharacterScreenStyling.css";
 import { sword_data, claymore_data, polearm_data, catalyst_data, bow_data, sword_list, claymore_list, polearm_list, catalyst_list, bow_list } from '../data/weapon';
 import { data_names } from '../data/character/character_name_index';
 import { character_name_list } from "../data/character/character_name_list"
+import { artifact_set_data } from '../data/artifact_sets'
+import { constant_values } from '../data/constant_values';
 /**
  * This React Component is an approximation for the character screen in Genshin. 
  * 
@@ -27,6 +29,7 @@ class CharacterScreen extends React.Component{
 
         //binding
         this.handleCharacterCardClick = this.handleCharacterCardClick.bind(this);
+        this.handleArtifactCardClick = this.handleArtifactCardClick.bind(this);
         this.toggleWeaponModalState = this.toggleWeaponModalState.bind(this);
         this.toggleArtifactModalState = this.toggleArtifactModalState.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
@@ -45,6 +48,7 @@ class CharacterScreen extends React.Component{
         this.fetchWeaponAscension = this.fetchWeaponAscension.bind(this);
         this.fetchWeaponLevelLimit = this.fetchWeaponLevelLimit.bind(this);
         this.fetchWeaponRefine = this.fetchWeaponRefine.bind(this);
+        this.fetchDefaultArtifacts = this.fetchDefaultArtifacts.bind(this);
 
         //references
         this.creationModalMenuRef = React.createRef();
@@ -66,20 +70,23 @@ class CharacterScreen extends React.Component{
         this.creationModalSelection = 0;
         this.weaponModalSelection = 0;
         this.artifactModalSelection = 0;
+        this.artifactModalPiece = 0;
         this.charData = this.storageUtils.characterData;
         if(this.charData !== undefined && this.charData.length > 0){
             this.state = {
                 ccData: 0,
                 showModal: false,
                 showWeaponModal: false,
-                showArtifactModal: false
+                showArtifactModal: false,
+                artifactModalPiece: 0
             };
         } else {
             this.state = {
                 ccData: null,
                 showModal: false,
                 showWeaponModal: false,
-                showArtifactModal: false
+                showArtifactModal: false,
+                artifactModalPiece: 0
             };
         }
     }
@@ -197,6 +204,24 @@ class CharacterScreen extends React.Component{
     }
 
     /**
+     * Handles clicks to artifact selection EntityCards
+     * @param {} data 
+     */
+    handleArtifactCardClick(mode, data){
+        if(mode === "artifact"){
+            let pieceList = {
+                "flower":0,
+                "plume":1,
+                "sands":2,
+                "goblet":3,
+                "circlet":4
+            }
+            this.toggleArtifactModalState();
+            this.setState({artifactModalPiece: pieceList[data]});
+        }
+    }
+
+    /**
      * Returns a representation of the selected character's data. 
      */
     renderSelectedCharacterData(){
@@ -292,11 +317,11 @@ class CharacterScreen extends React.Component{
                         <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
                     </div>
                     <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon}/>
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]}/> 
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]}/> 
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]}/> 
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]}/> 
-                    <EntityCard mode="artifact" onClick={this.handleCharacterCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]}/>
+                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]} storageUtil={this.storageUtils}/> 
+                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]} storageUtil={this.storageUtils}/> 
+                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]} storageUtil={this.storageUtils}/> 
+                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]} storageUtil={this.storageUtils}/> 
+                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]} storageUtil={this.storageUtils}/>
                     <Button onClick={this.handleDeleteButtonClicked}>
                         Delete
                     </Button>
@@ -345,7 +370,7 @@ class CharacterScreen extends React.Component{
             "ascension": 0,
             "constellation": 0,
             "talents": [1, 1, 1],
-            "artifacts": [],
+            "artifacts": [-1, -1, -1, -1, -1],
             "weapon": {}
         }
         this.creationModalSelection = 0;
@@ -397,7 +422,13 @@ class CharacterScreen extends React.Component{
      * then closes it. 
      */
      saveArtifactModalThenClose(){
-        this.toggleArtifactModalState();
+         if(this.artifactModalSelection !== undefined){
+            this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] = this.artifactModalSelection;
+            this.storageUtils.artifactData[this.artifactModalSelection].character = this.state.ccData;
+            this.storageUtils.characterData = this.charData;
+            this.storageUtils.saveData("character");
+            this.toggleArtifactModalState();
+         }
     }
 
     /**
@@ -425,19 +456,44 @@ class CharacterScreen extends React.Component{
      */
      renderArtifactModalBody() {
         //Format names and add them to the Form.
-        let characterNameList = [];
-        for(let i = 0; i < character_name_list.length; i++){
-            characterNameList.push(<option value={i} key={i}>{this.formatCharacterName(character_name_list[i])}</option>);
+        if(this.storageUtils.artifactData.length === 0){
+            return (
+                <>
+                    <p>You have not created any artifacts! Visit the artifact page to make artifacts.</p>
+                </>
+            )
+        } else {
+            let artifacts = [];
+            for(let a = 0; a < this.storageUtils.artifactData.length; a++){
+                if(this.storageUtils.artifactData[a].type === this.state.artifactModalPiece && (this.storageUtils.artifactData[a].character === -1 || this.storageUtils.artifactData.character === this.state.ccData)){
+                    let sp_artifact_data = artifact_set_data[this.storageUtils.artifactData[a].set];
+                    let possibleNameList = [
+                        sp_artifact_data.sets.flower,
+                        sp_artifact_data.sets.plume,
+                        sp_artifact_data.sets.sands,
+                        sp_artifact_data.sets.goblet,
+                        sp_artifact_data.sets.circlet,
+                    ]
+                    artifacts.push(<option value={a} key={a}>{possibleNameList[this.storageUtils.artifactData[a].type]} +{this.storageUtils.artifactData[a].level}</option>);
+                }
+            }
+            if(artifacts.length === 0){
+                return <>
+                    <p>You have not created any {constant_values.pieceFormalNamesPlural[this.state.artifactModalPiece]}! Visit the artifact page to make artifacts.</p>
+                </>
+            } else {
+                this.artifactModalSelection = artifacts[0].key;
+                return (
+                    <>
+                        <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.artifactModalMenuOnSelect(e)}>
+                            <Form.Select aria-label="Select character input box" defaultValue={this.fetchDefaultArtifacts()}>
+                                {artifacts}
+                            </Form.Select>
+                        </FloatingLabel>
+                    </>
+                )
+            }
         }
-        return (
-            <>
-                <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.creationModalMenuOnSelect(e)}>
-                    <Form.Select aria-label="Select character input box">
-                        {characterNameList}
-                    </Form.Select>
-                </FloatingLabel>
-            </>
-        )
     }
 
     /**
@@ -685,7 +741,6 @@ class CharacterScreen extends React.Component{
      * Handles changes to the current character's first talent
      */
     handleCharacterTalentOneChanged(){
-        console.log('one')
         let level = parseInt(this.characterTalentOneRef.current.value);
         if(level <= 10 && level > 0){
             this.charData[this.state.ccData].talents[0] = level;
@@ -698,7 +753,6 @@ class CharacterScreen extends React.Component{
      * Handles changes to the current character's second talent
      */
     handleCharacterTalentTwoChanged(){
-        console.log('two')
         let level = parseInt(this.characterTalentTwoRef.current.value);
         if(level <= 10 && level > 0){
             this.charData[this.state.ccData].talents[1] = level;
@@ -711,7 +765,6 @@ class CharacterScreen extends React.Component{
      * Handles changes to the current character's third talent
      */
     handleCharacterTalentThreeChanged(){
-        console.log('three')
         let level = parseInt(this.characterTalentThreeRef.current.value);
         if(level <= 10 && level > 0){
             this.charData[this.state.ccData].talents[2] = level;
@@ -751,6 +804,12 @@ class CharacterScreen extends React.Component{
         } else {
             return 1;
         }
+    }
+    fetchDefaultArtifacts(){
+        if(this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] !== -1){
+            return this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece];
+        }
+        return 0;
     }
 }
 

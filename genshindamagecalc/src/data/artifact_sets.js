@@ -596,8 +596,8 @@ export const artifact_set_data = {
     rarity: [4, 5],
     domain: "slumbering_court",
   },
-  "ocean-hued_clam": {
-    id: "ocean-hued_clam",
+  "ocean_hued_clam": {
+    id: "ocean_hued_clam",
     name: "Ocean-Hued Clam",
     setPiece: [2, 4],
     sets: {

@@ -1,5 +1,5 @@
 To do:
-Implement Substats
+Implement Substat Amount Lock based on level
 Fix CharacterScreen weapon level/rarity discrepancy
 Set default values for CharacterScreen weapon modal to maximum values for respective rarities
 Implement EnvironmentScreen
@@ -15,3 +15,4 @@ Polishing
     Debugging
     Refactor Code
     Implement animations
+    ussy mode

@@ -6,6 +6,13 @@ export const constant_values = {
         "Goblet of Eonothem",
         "Circlet of Logos"
     ],
+    "pieceFormalNamesPlural": [
+        "Flowers of Life",
+        "Plumes of Death",
+        "Sands of Eon",
+        "Goblets of Eonothem",
+        "Circlets of Logos"
+    ],
     "statConv": [
         "HP", 
         "HP%", 
