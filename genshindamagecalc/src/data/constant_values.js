@@ -205,5 +205,10 @@ export const constant_values = {
     ],
     "numSubStatFlavors": [2, 3, 4, 4, 4],
     "numSubstatRolls": [1, 1, 4, 4, 4],
-    "maxNumSubstatRolls": [[1], [1], [4, 5], [6, 7], [8, 9]]
+    "maxNumSubstatRolls": [[1], [1], [4, 5], [6, 7], [8, 9]],
+    /**
+     * WEAPON STATS
+     */
+    "weaponAscensionByRarity": [4, 4, 6, 6, 6],
+    "levelByAscension": [20, 40, 50, 60, 70, 80, 90]
 }

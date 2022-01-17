@@ -33,7 +33,7 @@ class CharacterScreen extends React.Component{
         this.toggleWeaponModalState = this.toggleWeaponModalState.bind(this);
         this.toggleArtifactModalState = this.toggleArtifactModalState.bind(this);
         this.toggleModalState = this.toggleModalState.bind(this);
-        this.saveModalThenClose = this.saveModalThenClose.bind(this);
+        this.saveCharacterModalThenClose = this.saveCharacterModalThenClose.bind(this);
         this.saveWeaponModalThenClose = this.saveWeaponModalThenClose.bind(this);
         this.saveArtifactModalThenClose = this.saveArtifactModalThenClose.bind(this);
         this.handleCharacterLevelChanged = this.handleCharacterLevelChanged.bind(this);
@@ -68,17 +68,40 @@ class CharacterScreen extends React.Component{
         //init state
         this.storageUtils = this.props.storageUtil;
         this.creationModalSelection = 0;
-        this.weaponModalSelection = 0;
         this.artifactModalSelection = 0;
         this.artifactModalPiece = 0;
         this.charData = this.storageUtils.characterData;
         if(this.charData !== undefined && this.charData.length > 0){
+            let listPointer = data_names[this.charData[0].name].weapon;
+            if(listPointer === "sword"){
+                listPointer = sword_list;
+            } else if(listPointer === "claymore"){
+                listPointer = claymore_list;
+            } else if(listPointer === "polearm"){
+                listPointer = polearm_list;
+            } else if(listPointer === "catalyst"){
+                listPointer = catalyst_list;
+            } else if(listPointer === "bow"){
+                listPointer = bow_list;
+            }
+            if(this.charData[0].weapon.name !== undefined){
+                for(let a = 0; a < listPointer.length; a++){
+                    if(listPointer[a] === this.charData[0].weapon.name){
+                        listPointer = a;
+                        break;
+                    }
+                }
+            } else {
+                listPointer = 0;
+            }
+            
             this.state = {
                 ccData: 0,
                 showModal: false,
                 showWeaponModal: false,
                 showArtifactModal: false,
-                artifactModalPiece: 0
+                artifactModalPiece: 0,
+                weaponModalSelection: listPointer
             };
         } else {
             this.state = {
@@ -86,7 +109,8 @@ class CharacterScreen extends React.Component{
                 showModal: false,
                 showWeaponModal: false,
                 showArtifactModal: false,
-                artifactModalPiece: 0
+                artifactModalPiece: 0,
+                weaponModalSelection: 0
             };
         }
     }
@@ -105,12 +129,12 @@ class CharacterScreen extends React.Component{
                 <Modal.Header closeButton>
                     <Modal.Title>Create New Character Profile</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{this.renderModalBody()}</Modal.Body>
+                <Modal.Body>{this.renderCharacterModalBody()}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.toggleModalState}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={this.saveModalThenClose}>
+                    <Button variant="primary" onClick={this.saveCharacterModalThenClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -193,7 +217,32 @@ class CharacterScreen extends React.Component{
      */
     handleCharacterCardClick(mode, data){
         if(mode === "portrait"){
-            this.setState({ccData: data});
+            let listPointer = data_names[this.charData[data].name].weapon;
+            if(listPointer === "sword"){
+                listPointer = sword_list;
+            } else if(listPointer === "claymore"){
+                listPointer = claymore_list;
+            } else if(listPointer === "polearm"){
+                listPointer = polearm_list;
+            } else if(listPointer === "catalyst"){
+                listPointer = catalyst_list;
+            } else if(listPointer === "bow"){
+                listPointer = bow_list;
+            }
+            if(this.charData[data].weapon.name !== undefined){
+                for(let a = 0; a < listPointer.length; a++){
+                    if(listPointer[a] === this.charData[data].weapon.name){
+                        listPointer = a;
+                        break;
+                    }
+                }
+            } else {
+                listPointer = 0;
+            }
+            this.setState({
+                ccData: data,
+                weaponModalSelection: listPointer
+            });
         } if(mode === "add"){
             this.toggleModalState();
         } if(mode === "weapon"){
@@ -226,7 +275,6 @@ class CharacterScreen extends React.Component{
      */
     renderSelectedCharacterData(){
         if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
-            const levelByAscension = [20, 40, 50, 60, 70, 80, 90]
             return (
             <div className="row pt-2 h-100 character-detail-background">
                 <div className="name-width col-3">
@@ -243,7 +291,7 @@ class CharacterScreen extends React.Component{
                             aria-label="Character's Level" aria-describedby="basic-addon2" ref={this.characterLevelInputRef}/>
                         <div className="input-group-append">
                             <span className="input-group-text" 
-                            id="basic-addon2" ref={this.characterLevelByAscensionRef}>/ {levelByAscension[this.charData[this.state.ccData].ascension]}</span>
+                            id="basic-addon2" ref={this.characterLevelByAscensionRef}>/ {constant_values.levelByAscension[this.charData[this.state.ccData].ascension]}</span>
                         </div>
                     </div>
                     <div className="input-group form-inline" key={this.state.ccData * 10 + 1}>
@@ -322,7 +370,7 @@ class CharacterScreen extends React.Component{
                     <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]} storageUtil={this.storageUtils}/> 
                     <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]} storageUtil={this.storageUtils}/> 
                     <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]} storageUtil={this.storageUtils}/>
-                    <Button onClick={this.handleDeleteButtonClicked}>
+                    <Button onClick={this.handleDeleteButtonClicked} className="btn-danger">
                         Delete
                     </Button>
                 </div>
@@ -362,14 +410,14 @@ class CharacterScreen extends React.Component{
      * Saves the content in the character modal
      * then closes it. 
      */
-    saveModalThenClose(){
+    saveCharacterModalThenClose(){
         //let data = data_names[character_name_list[this.creationModalSelection]];
         let new_char_file = {
             "name": character_name_list[this.creationModalSelection],
-            "level": 1,
-            "ascension": 0,
+            "level": 90,
+            "ascension": 6,
             "constellation": 0,
-            "talents": [1, 1, 1],
+            "talents": [8, 8, 8],
             "artifacts": [-1, -1, -1, -1, -1],
             "weapon": {}
         }
@@ -385,48 +433,45 @@ class CharacterScreen extends React.Component{
      * Saves the content in the weapon modal to characterData
      * then closes it. 
      */
-     saveWeaponModalThenClose(){
+    saveWeaponModalThenClose(){
         //let data = data_names[character_name_list[this.creationModalSelection]];
         let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
-        let nlp;
         if(listPointer === "sword"){
             listPointer = sword_list;
-            nlp = sword_data;
         } else if(listPointer === "claymore"){
             listPointer = claymore_list;
-            nlp = claymore_data;
         } else if(listPointer === "polearm"){
             listPointer = polearm_list;
-            nlp = polearm_data;
         } else if(listPointer === "catalyst"){
             listPointer = catalyst_list;
-            nlp = catalyst_data;
         } else if(listPointer === "bow"){
             listPointer = bow_list;
-            nlp = bow_data;
         }
         this.charData[this.state.ccData].weapon = {
-            "name": listPointer[this.weaponModalSelection],
+            "name": listPointer[this.state.weaponModalSelection],
             "level": this.weaponLevelInputRef.current.value,
             "ascension": this.weaponAscensionInputRef.current.value,
             "refine": this.weaponRefineInputRef.current.value
         };
-        this.weaponModalSelection = 0;
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
         this.toggleWeaponModalState();
+        this.setState({
+            weaponModalSelection: 0
+        })
     }
 
     /**
      * Saves the content in the artifact modal to characterData,
      * then closes it. 
      */
-     saveArtifactModalThenClose(){
+    saveArtifactModalThenClose(){
          if(this.artifactModalSelection !== undefined){
             this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] = this.artifactModalSelection;
             this.storageUtils.artifactData[this.artifactModalSelection].character = this.state.ccData;
             this.storageUtils.characterData = this.charData;
             this.storageUtils.saveData("character");
+            this.storageUtils.saveData("artifact");
             this.toggleArtifactModalState();
          }
     }
@@ -434,7 +479,7 @@ class CharacterScreen extends React.Component{
     /**
      * Renders the modal body.
      */
-    renderModalBody() {
+    renderCharacterModalBody() {
         //Format names and add them to the Form.
         let characterNameList = [];
         for(let i = 0; i < character_name_list.length; i++){
@@ -454,7 +499,7 @@ class CharacterScreen extends React.Component{
     /**
      * Renders the modal body.
      */
-     renderArtifactModalBody() {
+    renderArtifactModalBody() {
         //Format names and add them to the Form.
         if(this.storageUtils.artifactData.length === 0){
             return (
@@ -465,7 +510,7 @@ class CharacterScreen extends React.Component{
         } else {
             let artifacts = [];
             for(let a = 0; a < this.storageUtils.artifactData.length; a++){
-                if(this.storageUtils.artifactData[a].type === this.state.artifactModalPiece && (this.storageUtils.artifactData[a].character === -1 || this.storageUtils.artifactData.character === this.state.ccData)){
+                if(this.storageUtils.artifactData[a].type === this.state.artifactModalPiece && (this.storageUtils.artifactData[a].character === -1 || this.storageUtils.artifactData[a].character === this.state.ccData)){
                     let sp_artifact_data = artifact_set_data[this.storageUtils.artifactData[a].set];
                     let possibleNameList = [
                         sp_artifact_data.sets.flower,
@@ -479,7 +524,7 @@ class CharacterScreen extends React.Component{
             }
             if(artifacts.length === 0){
                 return <>
-                    <p>You have not created any {constant_values.pieceFormalNamesPlural[this.state.artifactModalPiece]}! Visit the artifact page to make artifacts.</p>
+                    <p>You do not have any unequipped {constant_values.pieceFormalNamesPlural[this.state.artifactModalPiece]} in your inventory! Visit the "Artifact" page to make artifacts.</p>
                 </>
             } else {
                 this.artifactModalSelection = artifacts[0].key;
@@ -502,9 +547,10 @@ class CharacterScreen extends React.Component{
      renderWeaponModalBody() {
         //Format names and add them to the Form.
         let weaponNameList = [];
+        let nlp = [1];
+        let listPointer = [0];
         if(this.state.ccData !== undefined && this.charData[this.state.ccData] !== undefined ){
-            let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
-            let nlp;
+            listPointer = data_names[this.charData[this.state.ccData].name].weapon;
             if(listPointer === "sword"){
                 listPointer = sword_list;
                 nlp = sword_data;
@@ -528,7 +574,7 @@ class CharacterScreen extends React.Component{
         return (
             <>
                 <FloatingLabel id="floatingSelect" label="Select Weapon:" className="mb-3" ref={this.weaponModalMenuRef} onChange={e => this.weaponModalMenuOnSelect(e)}>
-                    <Form.Select aria-label="Select weapon input box">
+                    <Form.Select aria-label="Select weapon input box" defaultValue={this.fetchCurrentCharacterWeapon()}>
                         {weaponNameList}
                     </Form.Select>
                 </FloatingLabel>
@@ -551,20 +597,22 @@ class CharacterScreen extends React.Component{
                         defaultValue={this.fetchWeaponAscension()} onChange={this.handleWeaponAscensionChanged}
                         aria-label="Weapon's Ascension Level" aria-describedby="basic-addon2" ref={this.weaponAscensionInputRef}/>
                     <div className="input-group-append">
-                        <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        <span className="input-group-text" id="basic-addon2">/{constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity]}</span>
                     </div>
                 </div>
-                <div className="input-group form-inline">
-                    <div className="input-group-append">
-                        <span className="input-group-text" id="basic-addon2">Refine:</span>
+                {nlp[listPointer[this.state.weaponModalSelection]].rarity > 2 &&
+                    <div className='input-group form-inline'>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">Refine:</span>
+                        </div>
+                        <input type="text" className="form-control" 
+                            defaultValue={this.fetchWeaponRefine()}
+                            aria-label="Weapon's Refine Level" aria-describedby="basic-addon2" ref={this.weaponRefineInputRef}/>
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">/ 5</span>
+                        </div>
                     </div>
-                    <input type="text" className="form-control" 
-                        defaultValue={this.fetchWeaponRefine()}
-                        aria-label="Weapon's Refine Level" aria-describedby="basic-addon2" ref={this.weaponRefineInputRef}/>
-                    <div className="input-group-append">
-                        <span className="input-group-text" id="basic-addon2">/ 5</span>
-                    </div>
-                </div>
+                }
             </>
         )
     }
@@ -584,7 +632,9 @@ class CharacterScreen extends React.Component{
      * @param {*} e is the onChange event
      */
     weaponModalMenuOnSelect(e){
-        this.weaponModalSelection = e.target.value;
+        this.setState({
+            weaponModalSelection: e.target.value
+        })
     }
 
     /**
@@ -622,9 +672,27 @@ class CharacterScreen extends React.Component{
      */
     handleWeaponAscensionChanged(){
         //check validity
+        let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+        let nlp;
+        if(listPointer === "sword"){
+            listPointer = sword_list;
+            nlp = sword_data;
+        } else if(listPointer === "claymore"){
+            listPointer = claymore_list;
+            nlp = claymore_data;
+        } else if(listPointer === "polearm"){
+            listPointer = polearm_list;
+            nlp = polearm_data;
+        } else if(listPointer === "catalyst"){
+            listPointer = catalyst_list;
+            nlp = catalyst_data;
+        } else if(listPointer === "bow"){
+            listPointer = bow_list;
+            nlp = bow_data;
+        }
         let valid = false;
         if(this.weaponAscensionInputRef.current.value >= 0 
-           && this.weaponAscensionInputRef.current.value <= 6 
+           && this.weaponAscensionInputRef.current.value <= constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity] 
            && this.weaponAscensionInputRef.current.value !== ""){
             valid = true;
         }
@@ -632,13 +700,16 @@ class CharacterScreen extends React.Component{
         if(valid){
            let ascension = parseInt(this.weaponAscensionInputRef.current.value);
            let currentLevel = parseInt(this.weaponLevelInputRef.current.value);
-           const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
-           this.weaponLevelDisplayRef.current.textContent = "/ " + levelByAscension[ascension];
-           if(currentLevel < levelByAscension[ascension - 1]){
-               this.weaponLevelInputRef.current.value = levelByAscension[ascension - 1];
-           } else if(currentLevel > levelByAscension[ascension]){
-               this.weaponLevelInputRef.current.value = levelByAscension[ascension];
+           this.weaponLevelDisplayRef.current.textContent = "/ " + constant_values.levelByAscension[ascension];
+           if(currentLevel < constant_values.levelByAscension[ascension - 1]){
+               this.weaponLevelInputRef.current.value = constant_values.levelByAscension[ascension - 1];
+           } else if(currentLevel > constant_values.levelByAscension[ascension]){
+               this.weaponLevelInputRef.current.value = constant_values.levelByAscension[ascension];
            }
+        } else if (this.weaponAscensionInputRef.current.value > constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity]){
+            this.weaponAscensionInputRef.current.value = 4;
+        } else if (this.weaponAscensionInputRef.current.value < 0){
+            this.weaponAscensionInputRef.current.value = 0;
         }
     }
 
@@ -646,7 +717,6 @@ class CharacterScreen extends React.Component{
      * Handles changes to the character level textbox
      */
     handleCharacterLevelChanged(){
-        const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
         const level = parseInt(this.characterLevelInputRef.current.value);
         let valid = false;
         if(this.charData[this.state.ccData].ascension === 0){ //check if provided character level is valid
@@ -655,7 +725,7 @@ class CharacterScreen extends React.Component{
             }
         }
         else {
-            if(level >= levelByAscension[this.charData[this.state.ccData].ascension - 1] && level <= levelByAscension[this.charData[this.state.ccData].ascension]){
+            if(level >= constant_values.levelByAscension[this.charData[this.state.ccData].ascension - 1] && level <= constant_values.levelByAscension[this.charData[this.state.ccData].ascension]){
                 valid = true;
             }
         }
@@ -700,15 +770,14 @@ class CharacterScreen extends React.Component{
          //change character level if valid
          if(valid){
             let ascension = parseInt(this.characterAscensionInputRef.current.value);
-            const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
             this.charData[this.state.ccData].ascension = ascension;
-            this.characterLevelByAscensionRef.current.textContent = "/ " + levelByAscension[this.charData[this.state.ccData].ascension];
-            if(this.charData[this.state.ccData].level < levelByAscension[this.charData[this.state.ccData].ascension - 1]){
-                this.characterLevelInputRef.current.value = levelByAscension[this.charData[this.state.ccData].ascension - 1];
-                this.charData[this.state.ccData].level = levelByAscension[this.charData[this.state.ccData].ascension - 1];
-            } else if(this.charData[this.state.ccData].level > levelByAscension[this.charData[this.state.ccData].ascension]){
-                this.characterLevelInputRef.current.value = levelByAscension[this.charData[this.state.ccData].ascension];
-                this.charData[this.state.ccData].level = levelByAscension[this.charData[this.state.ccData].ascension];
+            this.characterLevelByAscensionRef.current.textContent = "/ " + constant_values.levelByAscension[this.charData[this.state.ccData].ascension];
+            if(this.charData[this.state.ccData].level < constant_values.levelByAscension[this.charData[this.state.ccData].ascension - 1]){
+                this.characterLevelInputRef.current.value = constant_values.levelByAscension[this.charData[this.state.ccData].ascension - 1];
+                this.charData[this.state.ccData].level = constant_values.levelByAscension[this.charData[this.state.ccData].ascension - 1];
+            } else if(this.charData[this.state.ccData].level > constant_values.levelByAscension[this.charData[this.state.ccData].ascension]){
+                this.characterLevelInputRef.current.value = constant_values.levelByAscension[this.charData[this.state.ccData].ascension];
+                this.charData[this.state.ccData].level = constant_values.levelByAscension[this.charData[this.state.ccData].ascension];
             }
             this.storageUtils.characterData = this.charData;
             this.storageUtils.saveData("character");
@@ -777,32 +846,98 @@ class CharacterScreen extends React.Component{
      * @returns the proper weapon level, ascension, level, refine for rendering
      */
     fetchWeaponLevel(){
-        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
-            return this.charData[this.state.ccData].weapon.level;
-        } else {
-            return 1;
+        if(this.charData.length > 0){
+            if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+                return this.charData[this.state.ccData].weapon.level;
+            } else {
+                let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+                let nlp;
+                if(listPointer === "sword"){
+                    listPointer = sword_list;
+                    nlp = sword_data;
+                } else if(listPointer === "claymore"){
+                    listPointer = claymore_list;
+                    nlp = claymore_data;
+                } else if(listPointer === "polearm"){
+                    listPointer = polearm_list;
+                    nlp = polearm_data;
+                } else if(listPointer === "catalyst"){
+                    listPointer = catalyst_list;
+                    nlp = catalyst_data;
+                } else if(listPointer === "bow"){
+                    listPointer = bow_list;
+                    nlp = bow_data;
+                }
+                return constant_values.levelByAscension[constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity]];
+            }
         }
     }
     fetchWeaponAscension(){
-        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
-            return this.charData[this.state.ccData].weapon.ascension;
-        } else {
-            return 0;
+        if(this.charData.length > 0){
+            if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+                return this.charData[this.state.ccData].weapon.ascension;
+            } else {
+                let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+                let nlp;
+                if(listPointer === "sword"){
+                    listPointer = sword_list;
+                    nlp = sword_data;
+                } else if(listPointer === "claymore"){
+                    listPointer = claymore_list;
+                    nlp = claymore_data;
+                } else if(listPointer === "polearm"){
+                    listPointer = polearm_list;
+                    nlp = polearm_data;
+                } else if(listPointer === "catalyst"){
+                    listPointer = catalyst_list;
+                    nlp = catalyst_data;
+                } else if(listPointer === "bow"){
+                    listPointer = bow_list;
+                    nlp = bow_data;
+                }
+                return constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity];
+            }
         }
     }
     fetchWeaponLevelLimit(){
-        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
-            const levelByAscension = [20, 40, 50, 60, 70, 80, 90];
-            return "/ " + levelByAscension[this.charData[this.state.ccData].weapon.ascension];
-        } else {
-            return "/ 20";
+        if(this.charData.length > 0){
+            if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+                return "/ " + constant_values.levelByAscension[this.charData[this.state.ccData].weapon.ascension];
+            } else {
+                let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+                let nlp;
+                if(listPointer === "sword"){
+                    listPointer = sword_list;
+                    nlp = sword_data;
+                } else if(listPointer === "claymore"){
+                    listPointer = claymore_list;
+                    nlp = claymore_data;
+                } else if(listPointer === "polearm"){
+                    listPointer = polearm_list;
+                    nlp = polearm_data;
+                } else if(listPointer === "catalyst"){
+                    listPointer = catalyst_list;
+                    nlp = catalyst_data;
+                } else if(listPointer === "bow"){
+                    listPointer = bow_list;
+                    nlp = bow_data;
+                }
+                return "/ " + constant_values.levelByAscension[constant_values.weaponAscensionByRarity[nlp[listPointer[this.state.weaponModalSelection]].rarity]];
+            }
         }
+        
+        
     }
     fetchWeaponRefine(){
         if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
-            return this.charData[this.state.ccData].weapon.refine;
+            if(this.charData[this.state.ccData].weapon.refine !== undefined){
+                return this.charData[this.state.ccData].weapon.refine;
+            } else {
+                return 1;
+            }
+            
         } else {
-            return 1;
+            return 5;
         }
     }
     fetchDefaultArtifacts(){
@@ -810,6 +945,27 @@ class CharacterScreen extends React.Component{
             return this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece];
         }
         return 0;
+    }
+    fetchCurrentCharacterWeapon(){
+        if(this.charData[this.state.ccData] !== undefined && Object.keys(this.charData[this.state.ccData].weapon).length !== 0){
+            let listPointer = data_names[this.charData[this.state.ccData].name].weapon;
+            if(listPointer === "sword"){
+                listPointer = sword_list;
+            } else if(listPointer === "claymore"){
+                listPointer = claymore_list;
+            } else if(listPointer === "polearm"){
+                listPointer = polearm_list;
+            } else if(listPointer === "catalyst"){
+                listPointer = catalyst_list;
+            } else if(listPointer === "bow"){
+                listPointer = bow_list;
+            }
+            for(let a = 0; a < listPointer.length; a++){
+                if(listPointer[a] === this.charData[this.state.ccData].weapon.name){
+                    return a;
+                }
+            }
+        }
     }
 }
 

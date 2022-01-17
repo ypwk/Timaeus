@@ -164,7 +164,9 @@ class ArtifactScreen extends React.Component{
      */
      handleDeleteButtonClicked(){
         //remove artifact from character
-        this.storageUtils.characterData[this.artiData[this.state.caData].character].artifacts[this.artiData[this.state.caData].type] = -1;
+        if(this.artiData[this.state.caData].character !== -1){
+            this.storageUtils.characterData[this.artiData[this.state.caData].character].artifacts[this.artiData[this.state.caData].type] = -1;
+        }
         //remove artifact from state
         this.artiData.splice(this.state.caData, 1);
 
