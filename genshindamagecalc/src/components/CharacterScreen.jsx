@@ -9,8 +9,9 @@ import "../css/CharacterScreenStyling.css";
 
 import { sword_data, claymore_data, polearm_data, catalyst_data, bow_data, sword_list, claymore_list, polearm_list, catalyst_list, bow_list } from '../data/weapon';
 import { data_names } from '../data/character/character_name_index';
-import { character_name_list } from "../data/character/character_name_list"
-import { artifact_set_data } from '../data/artifact_sets'
+import { character_name_list } from "../data/character/character_name_list";
+import calcUtils from "../utils/calcUtils";
+import { artifact_set_data } from '../data/artifact_sets';
 import { constant_values } from '../data/constant_values';
 /**
  * This React Component is an approximation for the character screen in Genshin. 
@@ -275,6 +276,9 @@ class CharacterScreen extends React.Component{
      */
     renderSelectedCharacterData(){
         if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
+            let stats = calcUtils.calcAll(this.charData[this.state.ccData], this.storageUtils.artifactData);
+            console.log(stats)
+            let statList = constant_values.statConvFormal.map((e, i) => {return <p>{i}: {e} {calcUtils.round(stats[i], 1)}</p>});
             return (
             <div className="row pt-2 h-100 character-detail-background">
                 <div className="name-width col-3">
@@ -373,6 +377,11 @@ class CharacterScreen extends React.Component{
                     <Button onClick={this.handleDeleteButtonClicked} className="btn-danger">
                         Delete
                     </Button>
+                    <p>HP: {calcUtils.round(calcUtils.hp(stats[stats.length - 3], stats[1] + 20, stats[0]), 0)}</p>
+                    <p>DEF: {calcUtils.round(calcUtils.def(stats[stats.length - 1], stats[5], stats[4]), 0)}</p>
+                    <p>ATK: {calcUtils.round(calcUtils.atk(stats[stats.length - 2], stats[3], stats[2]), 0)}</p>
+                    {statList}
+                    
                 </div>
             </div>)
         } else {
@@ -382,6 +391,36 @@ class CharacterScreen extends React.Component{
                     Create one now by clicking on the plus on the left side of the screen.
                 </p>
             </div>)
+
+            /*
+             *<p>Max HP: </p>
+                    <p>ATK</p>
+                    <p>DEF</p>
+                    <p>Elemental Mastery</p>
+                    <p>Crit Rate</p>
+                    <p>Crit Damage</p>
+                    <p>Healing Bonus</p>
+                    <p>Incoming Healing Bonus</p>
+                    <p>Energy Recharge</p>
+                    <p>CD Reduction</p>
+                    <p>Shield Strength</p>
+                    <p>Pyro DMG Bonus</p>
+                    <p>Pyro RES</p>
+                    <p>Hydro DMG Bonus</p>
+                    <p>Hydro RES</p>
+                    <p>Dendro DMG Bonus</p>
+                    <p>Dendro RES</p>
+                    <p>Electro DMG Bonus</p>
+                    <p>Electro RES</p>
+                    <p>Anemo DMG Bonus</p>
+                    <p>Anemo RES</p>
+                    <p>Cryo DMG Bonus</p>
+                    <p>Cryo RES</p>
+                    <p>Geo DMG Bonus</p>
+                    <p>Geo RES</p>
+                    <p>Physical DMG Bonus</p>
+                    <p>Physical RES</p>
+             */
         }
     }
 
@@ -447,18 +486,19 @@ class CharacterScreen extends React.Component{
         } else if(listPointer === "bow"){
             listPointer = bow_list;
         }
+        let refine = 1;
+        if(this.weaponRefineInputRef.current !== null){
+            refine = parseInt(this.weaponRefineInputRef.current.value);
+        }
         this.charData[this.state.ccData].weapon = {
             "name": listPointer[this.state.weaponModalSelection],
-            "level": this.weaponLevelInputRef.current.value,
-            "ascension": this.weaponAscensionInputRef.current.value,
-            "refine": this.weaponRefineInputRef.current.value
+            "level": parseInt(this.weaponLevelInputRef.current.value),
+            "ascension": parseInt(this.weaponAscensionInputRef.current.value),
+            "refine": refine
         };
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
         this.toggleWeaponModalState();
-        this.setState({
-            weaponModalSelection: 0
-        })
     }
 
     /**
@@ -467,7 +507,10 @@ class CharacterScreen extends React.Component{
      */
     saveArtifactModalThenClose(){
          if(this.artifactModalSelection !== undefined){
-            this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] = this.artifactModalSelection;
+            if(this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] !== -1){
+                this.storageUtils.artifactData[this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece]].character = -1;
+            }
+            this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] = parseInt(this.artifactModalSelection);
             this.storageUtils.artifactData[this.artifactModalSelection].character = this.state.ccData;
             this.storageUtils.characterData = this.charData;
             this.storageUtils.saveData("character");
@@ -643,7 +686,7 @@ class CharacterScreen extends React.Component{
      * @param {*} e is the onChange event
      */
     artifactModalMenuOnSelect(e){
-        this.artifactModalSelection = e.target.value;
+        this.artifactModalSelection = parseInt(e.target.value);
     }
 
     /**
@@ -788,12 +831,22 @@ class CharacterScreen extends React.Component{
      * Handles clicks to the delete character button
      */
     handleDeleteButtonClicked(){
+        //remove artifact/character reference
+        for(let a = 0; a < 5; a++){
+            if(this.charData[this.state.ccData].artifacts[a] !== -1){
+                this.storageUtils.artifactData[this.charData[this.state.ccData].artifacts[a]].character = -1;
+            }
+        }
+
         //remove character from state
         this.charData.splice(this.state.ccData, 1);
 
         //handle side effects of removal
         if(this.charData.length === 0){
-            this.setState({ccData: null});
+            this.setState({
+                ccData: null,
+                weaponModalSelection: 0
+                });
         }
         else if(this.state.ccData === this.charData.length){
             this.setState({ccData: this.state.ccData - 1});
@@ -804,6 +857,7 @@ class CharacterScreen extends React.Component{
         //remove character from long term storage
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
+        this.storageUtils.saveData("artifact");
     }
 
     /**
@@ -935,13 +989,12 @@ class CharacterScreen extends React.Component{
             } else {
                 return 1;
             }
-            
         } else {
             return 5;
         }
     }
     fetchDefaultArtifacts(){
-        if(this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] !== -1){
+        if(this.charData.length !== 0 && this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece] !== -1){
             return this.charData[this.state.ccData].artifacts[this.state.artifactModalPiece];
         }
         return 0;

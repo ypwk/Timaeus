@@ -14,6 +14,10 @@ export const artifact_set_data = {
       "Max HP increased by 1000.",
       "Opening a chest regenerates 30% Max HP over 5s.",
     ],
+    values: [
+      [[0, 1000]],
+      [[-1, -1]]
+    ],
     rarity: [1, 2, 3],
     domain: "midsummer_courtyard",
   },
@@ -29,6 +33,10 @@ export const artifact_set_data = {
       sands: "Lucky Dog's Hourglass",
     },
     bonuses: ["DEF increased by 100.", "Picking up Mora restores 300 HP."],
+    values: [
+      [[4, 100]],
+      [[-1, -1]]
+    ],
     rarity: [1, 2, 3],
     domain: "domain_of_guyun",
   },
@@ -47,6 +55,10 @@ export const artifact_set_data = {
       "Increases incoming healing by 20%.",
       "Using Elemental Burst restores 20% HP.",
     ],
+    values: [
+      [[19, 20]],
+      [[-1, -1]]
+    ],
     rarity: [1, 2, 3],
     domain: "valley_of_remembrance",
   },
@@ -62,6 +74,10 @@ export const artifact_set_data = {
       sands: "Sundial of the Sojourner",
     },
     bonuses: ["ATK +18%.", "Increases Charged Attack CRIT Rate by 30%."],
+    values: [
+      [[3, 18]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
     domain: "midsummer_courtyard",
   },
@@ -79,6 +95,10 @@ export const artifact_set_data = {
     bonuses: [
       "All Elemental RES increased by 20%.",
       "Incoming elemental DMG increases corresponding Elemental RES by 30% for 10s. Can only occur once every 10s.",
+    ],
+    values: [
+      [[22, 20], [23, 20], [24, 20], [25, 20], [26, 20], [27, 20], [28, 20]],
+      [[-1, -1]]
     ],
     rarity: [3, 4],
     domain: "valley_of_remembrance",
@@ -98,6 +118,10 @@ export const artifact_set_data = {
       "CRIT Rate +12%",
       "When HP is below 70%, CRIT Rate increases by an additional 24%.",
     ],
+    values: [
+      [[8, 12]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "instructor": {
@@ -114,6 +138,10 @@ export const artifact_set_data = {
     bonuses: [
       "Increases Elemental Mastery by 80.",
       "Upon triggering an Elemental Reaction, increases all party members' Elemental Mastery by 120 for 8s.",
+    ],
+    values: [
+      [[7, 80]],
+      [[-1, -1]]
     ],
     rarity: [3, 4],
   },
@@ -132,6 +160,10 @@ export const artifact_set_data = {
       "Energy Recharge +20%",
       "Using an Elemental Burst regenerates 2 Energy for all party members (excluding the wearer) every 2s for 6s. This effect cannot stack.",
     ],
+    values: [
+      [[6, 20]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "defenders_will": {
@@ -148,6 +180,10 @@ export const artifact_set_data = {
     bonuses: [
       "DEF +30%",
       "For each different element present in your own party, the wearer's Elemental RES to that corresponding element is increased by 30%.",
+    ],
+    values: [
+      [[5, 30]],
+      [[-1, -1]]
     ],
     rarity: [3, 4],
     domain: "hidden_palace_of_zhou_formula",
@@ -167,6 +203,10 @@ export const artifact_set_data = {
       "ATK +18%.",
       "Increases DMG by 30% against opponents with more than 50% HP.",
     ],
+    values: [
+      [[3, 18]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
     domain: "ridge_watch",
   },
@@ -184,6 +224,10 @@ export const artifact_set_data = {
     bonuses: [
       "Increases Normal Attack and Charged Attack DMG by 15%.",
       "After using Elemental Skill, increases Normal Attack and Charged Attack DMG by 25% for 8s.",
+    ],
+    values: [
+      [[29, 15], [30, 15]],
+      [[-1, -1]]
     ],
     rarity: [3, 4],
     domain: "ridge_watch",
@@ -203,6 +247,10 @@ export const artifact_set_data = {
       "Increases Elemental Skill DMG by 20%.",
       "Defeating an opponent has a 100% chance to remove Elemental Skill CD. Can only occur once every 15s.",
     ],
+    values: [
+      [[31, 20]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
     domain: "clear_pool_and_mountain_cavern",
   },
@@ -221,6 +269,10 @@ export const artifact_set_data = {
       "Energy Recharge +20%",
       "Gaining Elemental Particles or Orbs gives 3 Energy to all party members who have a bow or a catalyst equipped. Can only occur once every 3s.",
     ],
+    values: [
+      [[6, 20]],
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
     domain: "clear_pool_and_mountain_cavern",
   },
@@ -230,6 +282,9 @@ export const artifact_set_data = {
     setPiece: [1],
     sets: { circlet: "Tiara of Flame" },
     bonuses: ["Affected by Pyro for 40% less time."],
+    values: [
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "prayers_for_destiny": {
@@ -238,6 +293,9 @@ export const artifact_set_data = {
     setPiece: [1],
     sets: { circlet: "Tiara of Torrents" },
     bonuses: ["Affected by Hydro for 40% less time."],
+    values: [
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "prayers_for_wisdom": {
@@ -246,6 +304,9 @@ export const artifact_set_data = {
     setPiece: [1],
     sets: { circlet: "Tiara of Thunder" },
     bonuses: ["Affected by Electro for 40% less time."],
+    values: [
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "prayers_to_springtime": {
@@ -254,6 +315,9 @@ export const artifact_set_data = {
     setPiece: [1],
     sets: { circlet: "Tiara of Frost" },
     bonuses: ["Affected by Cryo for 40% less time."],
+    values: [
+      [[-1, -1]]
+    ],
     rarity: [3, 4],
   },
   "blizzard_strayer": {
@@ -270,6 +334,10 @@ export const artifact_set_data = {
     bonuses: [
       "Cryo DMG Bonus +15%",
       "When a character attacks an opponent affected by Cryo, their CRIT Rate is increased by 20%. If the opponent is Frozen, CRIT Rate is increased by an additional 20%.",
+    ],
+    values: [
+      [[15, 15]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "peak_of_vindagnyr",
@@ -289,6 +357,10 @@ export const artifact_set_data = {
       "Electro RES increased by 40%.",
       "Increases DMG against opponents affected by Electro by 35%.",
     ],
+    values: [
+      [[25, 40]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "midsummer_courtyard",
   },
@@ -306,6 +378,10 @@ export const artifact_set_data = {
     bonuses: [
       "Pyro RES increased by 40%.",
       "Increases DMG against opponents affected by Pyro by 35%.",
+    ],
+    values: [
+      [[22, 40]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "hidden_palace_of_zhou_formula",
@@ -325,6 +401,10 @@ export const artifact_set_data = {
       "Character Healing Effectiveness +15%",
       "Using an Elemental Skill or Burst increases healing received by all party members by 20% for 10s.",
     ],
+    values: [
+      [[18, 15]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "valley_of_remembrance",
   },
@@ -343,6 +423,10 @@ export const artifact_set_data = {
       "ATK +18%.",
       "If the wielder of this artifact set uses a Sword, Claymore or Polearm, increases their Normal Attack DMG by 35%.",
     ],
+    values: [
+      [[3, 18]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
   },
   "viridescent_venerer": {
@@ -360,7 +444,7 @@ export const artifact_set_data = {
       "Anemo DMG Bonus +15%",
       "Increases Swirl DMG by 60%. Decreases opponent's Elemental RES to the element infused in the Swirl by 40% for 10s.",
     ],
-    rarity: [4, 5],
+    rarity: [14, 15],
     domain: "valley_of_remembrance",
   },
   "wanderers_troupe": {
@@ -378,6 +462,10 @@ export const artifact_set_data = {
       "Increases Elemental Mastery by 80.",
       "Increases Charged Attack DMG by 35% if the character uses a Catalyst or a Bow.",
     ],
+    values: [
+      [[7, 80]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
   },
   "thundering_fury": {
@@ -394,6 +482,10 @@ export const artifact_set_data = {
     bonuses: [
       "Electro DMG Bonus +15%",
       "Increases damage caused by Overloaded, Electro-Charged and Superconduct by 40%. Triggering such effects decreases Elemental Skill CD by 1s. Can only occur once every 0.8s.",
+    ],
+    values: [
+      [[13, 15]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "midsummer_courtyard",
@@ -413,6 +505,10 @@ export const artifact_set_data = {
       "Pyro DMG Bonus +15%",
       "Increases Overloaded and Burning DMG by 40%. Increases Vaporize and Melt DMG by 15%. Using Elemental Skill increases the 2-Piece Set Bonus by 50% of its starting value for 10s. Max 3 stacks.",
     ],
+    values: [
+      [[10, 15]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "hidden_palace_of_zhou_formula",
   },
@@ -430,6 +526,10 @@ export const artifact_set_data = {
     bonuses: [
       "Elemental Burst DMG +20%",
       "Using an Elemental Burst increases all party members' ATK by 20% for 12s. This effect cannot stack.",
+    ],
+    values: [
+      [[32, 20]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "clear_pool_and_mountain_cavern",
@@ -449,6 +549,10 @@ export const artifact_set_data = {
       "Physical DMG +25%",
       "After defeating an opponent, increases Charged Attack DMG by 50%, and reduces its Stamina cost to 0 for 10s.",
     ],
+    values: [
+      [[17, 25]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "clear_pool_and_mountain_cavern",
   },
@@ -466,6 +570,10 @@ export const artifact_set_data = {
     bonuses: [
       "Gain a 15% Geo DMG Bonus.",
       "Upon obtaining an Elemental Shard created through a Crystallize Reaction, all party members gain a 35% DMG Bonus for that particular element for 10s. Only one form of Elemental DMG Bonus can be gained in this manner at any one time.",
+    ],
+    values: [
+      [[16, 15]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "domain_of_guyun",
@@ -485,6 +593,10 @@ export const artifact_set_data = {
       "Increases Shield Strength by 35%.",
       "While protected by a shield, gain an additional 40% Normal and Charged Attack DMG.",
     ],
+    values: [
+      [[21, 35]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "domain_of_guyun",
   },
@@ -502,6 +614,10 @@ export const artifact_set_data = {
     bonuses: [
       "Hydro DMG Bonus +15%",
       "After using Elemental Skill, increases Normal Attack and Charged Attack DMG by 30% for 15s.",
+    ],
+    values: [
+      [[11, 15]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "peak_of_vindagnyr",
@@ -521,6 +637,10 @@ export const artifact_set_data = {
       "HP increased by 20%.",
       "When an Elemental Skill hits an opponent, the ATK of all nearby party members is increased by 20% and their Shield Strength is increased by 30% for 3s. This effect can be triggered once every 0.5s. This effect can still be triggered even when the character who is using this artifact set is not on the field.",
     ],
+    values: [
+      [[1, 20]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "ridge_watch",
   },
@@ -538,6 +658,10 @@ export const artifact_set_data = {
     bonuses: [
       "Physical DMG is increased by 25%.",
       "When an Elemental Skill hits an opponent, ATK is increased by 9% for 7s. This effect stacks up to 2 times and can be triggered once every 0.3s. Once 2 stacks are reached, the 2-set effect is increased by 100%.",
+    ],
+    values: [
+      [[17, 25]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "ridge_watch",
@@ -557,6 +681,10 @@ export const artifact_set_data = {
       "ATK +18%.",
       "When casting an Elemental Skill, if the character has 15 or more Energy, they lose 15 Energy and Normal/Charged/Plunging Attack DMG is increased by 50% for 10s. This effect will not trigger again during that duration.",
     ],
+    values: [
+      [[3, 18]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "momiji-dyed_court",
   },
@@ -574,6 +702,10 @@ export const artifact_set_data = {
     bonuses: [
       "Energy Recharge +20%",
       "Increases Elemental Burst DMG by 25% of Energy Recharge. A maximum of 75% bonus DMG can be obtained in this way.",
+    ],
+    values: [
+      [[6, 20]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "momiji-dyed_court",
@@ -593,6 +725,10 @@ export const artifact_set_data = {
       "DEF +30%",
       "A character equipped with this Artifact set will obtain the Curiosity effect in the following conditions: When on the field, the character gains 1 stack after hitting an opponent with a Geo attack, triggering a maximum of once every 0.3s. When off the field, the character gains 1 stack every 3s. Curiosity can stack up to 4 times, each providing 6% DEF and a 6% Geo DMG Bonus. When 6 seconds pass without gaining a Curiosity stack, 1 stack is lost.",
     ],
+    values: [
+      [[5, 30]],
+      [[-1, -1]]
+    ],
     rarity: [4, 5],
     domain: "slumbering_court",
   },
@@ -610,6 +746,10 @@ export const artifact_set_data = {
     bonuses: [
       "Healing Bonus +15%.",
       "When the character equipping this artifact set heals a character in the party, a Sea-Dyed Foam will appear for 3 seconds, accumulating the amount of HP recovered from healing (including overflow healing). At the end of the duration, the Sea-Dyed Foam will explode, dealing DMG to nearby opponents based on 90% of the accumulated healing. (This DMG is calculated similarly to Reactions such as Electro-Charged, and Superconduct, but is not affected by Elemental Mastery, Character Levels, or Reaction DMG Bonuses). Only one Sea-Dyed Foam can be produced every 3.5 seconds. Each Sea-Dyed Foam can accumulate up to 30,000 HP (including overflow healing). There can be no more than one Sea-Dyed Foam active at any given time. This effect can still be triggered even when the character who is using this artifact set is not on the field.",
+    ],
+    values: [
+      [[7, 80]],
+      [[-1, -1]]
     ],
     rarity: [4, 5],
     domain: "slumbering_court",

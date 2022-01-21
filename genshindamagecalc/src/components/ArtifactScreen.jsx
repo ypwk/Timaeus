@@ -5,15 +5,15 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
-import FloatingLabel from "react-bootstrap/FloatingLabel"
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { RadioButton } from './RadioButton';
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
 import "../css/ArtifactScreenStyling.css";
 
-import { artifact_set_data } from '../data/artifact_sets'
-import { constant_values } from '../data/constant_values'
+import { artifact_set_data } from '../data/artifact_sets';
+import { constant_values } from '../data/constant_values';
 
 /**
  * This React Component represents the inventory screen in Genshin. 
@@ -220,9 +220,7 @@ class ArtifactScreen extends React.Component{
             <img className="character-detail-img border border-dark rounded mb-3 unselectable"
                         src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
                         alt={this.artiData[this.state.caData].name}/>
-            <p className='h3'>
-                {this.fetchRarityStars(this.artiData[this.state.caData].rarity)}
-            </p>
+            {this.fetchRarityStars(this.artiData[this.state.caData].rarity)}
             <div className="d-flex justify-content-between">
                 <p className='h3'> 
                     {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}

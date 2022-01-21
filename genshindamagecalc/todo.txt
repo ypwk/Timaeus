@@ -3,16 +3,14 @@ Implement Substat Amount Lock based on level
 Fix CharacterScreen weapon level/rarity discrepancy
 Set default values for CharacterScreen weapon modal to maximum values for respective rarities
 Implement EnvironmentScreen
-    Use EntityCards to create baseline version
-        Implement EntityCard Drag and Drop
-        Environment Modeling 
-            Import all enemies
-            Implement damage calculation
-                Causality
-            Model elemental gauges
+    Import Enemies 
+    Implement Simple Damage Calculation
 
 Polishing
     Debugging
     Refactor Code
     Implement animations
-    ussy mode
+    
+Future Features
+- Timeline functionality
+- Substat parsing functionality (break down concrete substats into individual ones)
