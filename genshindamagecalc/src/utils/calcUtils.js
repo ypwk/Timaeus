@@ -1,4 +1,3 @@
-import { xiangling_data, xingqiu_data } from "../data/character";
 import { data_names } from "../data/character/character_name_index";
 import { constant_values } from '../data/constant_values'
 import { weaponsData } from "../data/weapons";
@@ -52,9 +51,15 @@ class calcUtils {
         let sr = (p, c) => p + c;
 
         //characters have 50 base crit dmg and 5 base crit rate and 100 ER
-        stats[6] = 100;
-        stats[8] = 5;
-        stats[9] = 50;
+        if(Object.keys(data_names[char_file.name])[7] !== "er"){
+            stats[6] = 100;
+        }
+        if(Object.keys(data_names[char_file.name])[7] !== "critDamage"){
+            stats[9] = 50;
+        }
+        if(Object.keys(data_names[char_file.name])[7] !== "critRate"){
+            stats[8] = 5;
+        }
 
         //sum artifact values
         let artifacts = char_file.artifacts.filter(e => e !== -1).map(e => artifacts_file[e]);
@@ -72,15 +77,15 @@ class calcUtils {
                 stats[constant_values.statConv[weapon.secondary.name]] += weapon.secondary.stats[char_file.weapon.level + char_file.weapon.ascension] * 100;
             }
             //base atk
-            console.log(char_file)
             stats[Object.keys(constant_values.statConv).length + 1] += weapon.atk[char_file.weapon.level + char_file.weapon.ascension];
         }
-        
+
         //sum character base stats
         stats[Object.keys(constant_values.statConv).length] += data_names[char_file.name].hp[char_file.level + char_file.ascension];
         stats[Object.keys(constant_values.statConv).length + 1] += data_names[char_file.name].atk[char_file.level + char_file.ascension];
         stats[Object.keys(constant_values.statConv).length + 2] += data_names[char_file.name].def[char_file.level + char_file.ascension];
-        stats[constant_values.statConv[Object.keys(data_names[char_file.name])[7]]] += data_names[char_file.name][Object.keys(data_names[char_file.name])[7]][char_file.level + char_file.ascension];
+        let p_mod = constant_values.notPercentageStats.includes(constant_values.statConv[Object.keys(data_names[char_file.name])[7]]) ? 1 : 100 
+        stats[constant_values.statConv[Object.keys(data_names[char_file.name])[7]]] += p_mod * data_names[char_file.name][Object.keys(data_names[char_file.name])[7]][char_file.level + char_file.ascension];
         return stats;
     }
 

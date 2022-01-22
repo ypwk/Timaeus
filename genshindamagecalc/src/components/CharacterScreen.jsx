@@ -117,12 +117,12 @@ class CharacterScreen extends React.Component{
     }
 
     render(){
-        return <div className="overflow-hidden p-0">
-            <div className="row">
-                <div className="d-inline col-auto character-card-tray">
+        return <div className="p-0 d-flex">
+            <div className="concrete-char-display">
+                <div className="character-card-tray">
                     {this.renderCharacterCards()}
                 </div>
-                <div className="d-inline col character-details-tray">
+                <div className="character-details-tray">
                     {this.renderSelectedCharacterData()}
                 </div>
             </div>
@@ -176,41 +176,19 @@ class CharacterScreen extends React.Component{
      * @returns a table containing all the EntityCards needed to render in the CharacterScreen.
      */
     renderCharacterCards(){
-        let rTableData = [];
-        let cRow = [];
-        let count = 0;
-        let currentRowCounter = 0;
-        let location = 0;
-        let totalCount = 0;
+        let ccards = [];
         for(var a = 0; a < this.charData.length; a++){
-            if(count === 3){
-                rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-                currentRowCounter++;
-                cRow = [];
-                count = 0;
-            }
-            cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="portrait" data={this.charData[location]} onClick={this.handleCharacterCardClick} card_id={totalCount}/>
+            ccards.push(<div className="c-portrait-auto" id={a} key={a}>
+                <EntityCard mode="portrait" data={this.charData[a]} onClick={this.handleCharacterCardClick} card_id={a}/>
             </div>);
-            count++;
-            totalCount++;
-            location++;
         }
-        if(count === 3){
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-            currentRowCounter++;
-            cRow = []; //add extra add button
-            cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/>
-            </div>);
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-        } else { //add extra add button
-            cRow.push(<div className=" col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={totalCount}/> 
-            </div>);
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push remaining EntityCards
+        ccards.push(<div className="c-portrait-auto" id={this.charData.length} key={this.charData.length}>
+            <EntityCard mode="add" onClick={this.handleCharacterCardClick} card_id={this.charData.length}/>
+        </div>);
+        for(let a = 0; a < 4; a++){
+            ccards.push(<div className='hidden-portrait-auto' key={this.charData.length + a + 1}></div>)
         }
-        return (<div className="container">{rTableData}</div>);
+        return (<div className="flex-container box wrap">{ccards}</div>);
     }
 
     /**
@@ -277,8 +255,7 @@ class CharacterScreen extends React.Component{
     renderSelectedCharacterData(){
         if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
             let stats = calcUtils.calcAll(this.charData[this.state.ccData], this.storageUtils.artifactData);
-            console.log(stats)
-            let statList = constant_values.statConvFormal.map((e, i) => {return <p>{i}: {e} {calcUtils.round(stats[i], 1)}</p>});
+            let statList = constant_values.statConvFormal.map((e, i) => {return <p key={i}>{i}: {e} {calcUtils.round(stats[i], 1)}</p>});
             return (
             <div className="row pt-2 h-100 character-detail-background">
                 <div className="name-width col-3">
@@ -355,25 +332,26 @@ class CharacterScreen extends React.Component{
                     </div>
                 </div>
                 <div className="col-9">
-                    <div className="form-check-inline">
-                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox1" value="option1"/>
-                        <label className="ascension-label" htmlFor="inlineCheckbox1">
-                        </label>
-                    </div>
-                    <div className="form-check-inline">
-                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox2" value="option2"/>
-                        <label className="ascension-label" htmlFor="inlineCheckbox2"></label>
-                    </div>
-                    <div className="form-check-inline">
-                        <input className="ascension-cbox" type="checkbox" id="inlineCheckbox3" value="option3"/>
-                        <label className="ascension-label" htmlFor="inlineCheckbox3"></label>
-                    </div>
-                    <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon}/>
-                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]} storageUtil={this.storageUtils}/> 
-                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]} storageUtil={this.storageUtils}/> 
-                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]} storageUtil={this.storageUtils}/> 
-                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]} storageUtil={this.storageUtils}/> 
-                    <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]} storageUtil={this.storageUtils}/>
+                    <div className="gear-flex-container">
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon}/>
+                        </div>
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]} storageUtil={this.storageUtils}/> 
+                        </div>
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="plume" artifact_data={this.charData[this.state.ccData].artifacts[1]} storageUtil={this.storageUtils}/> 
+                        </div>
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="sands" artifact_data={this.charData[this.state.ccData].artifacts[2]} storageUtil={this.storageUtils}/> 
+                        </div>
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="goblet" artifact_data={this.charData[this.state.ccData].artifacts[3]} storageUtil={this.storageUtils}/> 
+                        </div>
+                        <div className='gear-flex-baby'>
+                            <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]} storageUtil={this.storageUtils}/>
+                        </div>
+                    </div>         
                     <Button onClick={this.handleDeleteButtonClicked} className="btn-danger">
                         Delete
                     </Button>

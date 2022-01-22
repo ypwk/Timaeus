@@ -2,11 +2,14 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+.flex-width{
+    flex: 1 1 6em;
+}
+
 .portrait-size{
     text-align: center;
     position: relative;
-    width: 6em;  /* Container's dimensions */
-    height: 6em;
+    flex: 0 1 6em;
 }
 
 .center-cropped {

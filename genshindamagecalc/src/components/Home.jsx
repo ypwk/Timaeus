@@ -4,7 +4,7 @@ class Home extends React.Component{
     render(){
         return(
             <div style={{ padding: 20 }}>
-                <h2>Welcome to Timaeus</h2>
+                <h2>Welcome to Timaeus' Abacus</h2>
                 <p>poop</p>
             </div>);
     }

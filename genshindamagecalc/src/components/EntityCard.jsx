@@ -25,9 +25,9 @@ class EntityCard extends React.Component{
   render(){
     if(this.props.mode === "portrait"){ //used as images to click on and drag 
       return <div onClick={this.handleClick}
-                  className="card background-transparent portrait-size m-0">
+                  className="card background-transparent flex-width m-0">
           <img
-            className="rounded img-fluid unselectable"
+            className="rounded img-fluid unselectable portrait-size"
             src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.props.data.name + "_face.png"}
             alt={this.props.data.name}
             />
@@ -35,9 +35,9 @@ class EntityCard extends React.Component{
     }
     else if(this.props.mode === "add"){ //used to add a new character
       return <div onClick={this.handleClick}
-                  className="card background-transparent portrait-size m-0">
+                  className="card background-transparent flex-width m-0">
         <img
-          className="rounded img-fluid unselectable"
+          className="rounded img-fluid unselectable portrait-size"
           src={process.env.PUBLIC_URL + "/images/add_image.png"}
           alt="add a new character"
           />
@@ -45,9 +45,9 @@ class EntityCard extends React.Component{
     } else if(this.props.mode === "artifact"){
       if(this.props.artifact_data === -1 && this.props.data === undefined){
         return <div onClick={this.handleClick}
-          className="card background-transparent portrait-size m-0">
+          className="card background-transparent flex-width m-0">
               <img
-                className="rounded img-fluid unselectable"
+                className="rounded img-fluid unselectable portrait-size"
                 src={process.env.PUBLIC_URL + "/images/" + this.props.type + "_icon.png"}
                 alt="add an artifact"
                 />

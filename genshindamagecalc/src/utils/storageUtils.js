@@ -1,5 +1,4 @@
 import localForage from 'localforage';
-import { useLayoutEffect } from 'react';
 /**
  * Manages storage utilities using localforage.
  * Github:
@@ -107,7 +106,7 @@ class storageUtils {
      */
     saveAndClose(callback){
         if(this.checkedOut === false){ 
-            throw 'storageUtils: trying to save data that has not been fetched.';
+            console.log('storageUtils: trying to save data that has not been fetched.');
         }
 
         //save character data
@@ -159,7 +158,7 @@ class storageUtils {
                 throw error;
             });
         } else {
-            throw "storageUtils: Requested data type is not supported. (options are character, weapon, and artifact)"
+            console.log("storageUtils: Requested data type is not supported. (options are character, weapon, and artifact)");
         }
     }
 }

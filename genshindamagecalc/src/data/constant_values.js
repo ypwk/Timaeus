@@ -99,6 +99,9 @@ export const constant_values = {
         "Melt DMG Bonus",
         "Burning DMG Bonus"
     ],
+    "notPercentageStats":[
+        0, 2, 4, 7
+    ],
     "possibleMainStats": [ //flower, plume, sands, goblet, circlet
         [0], 
         [2],

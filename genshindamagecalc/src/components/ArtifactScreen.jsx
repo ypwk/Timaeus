@@ -76,11 +76,11 @@ class ArtifactScreen extends React.Component{
 
     render(){
         return <div className="overflow-hidden p-0">
-            <div className="row">
-                <div className="d-inline col-auto character-card-tray">
+            <div className="concrete-artifact-display">
+                <div className="d-inline artifact-card-tray">
                     {this.renderArtifactCards()}
                 </div>
-                <div className="d-inline col character-details-tray">
+                <div className="d-inline artifact-details-tray">
                     {this.renderSelectedArtifactData()}
                 </div>
             </div>
@@ -107,41 +107,19 @@ class ArtifactScreen extends React.Component{
      * @returns a table containing all the EntityCards needed to render in the CharacterScreen.
      */
      renderArtifactCards(){
-        let rTableData = [];
-        let cRow = [];
-        let count = 0;
-        let currentRowCounter = 0;
-        let location = 0;
-        let totalCount = 0;
-        for(var a = 0; a < this.artiData.length; a++){
-            if(count === 7){
-                rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-                currentRowCounter++;
-                cRow = [];
-                count = 0;
-            }
-            cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="artifact" data={this.artiData[location]} onClick={this.handleArtifactCardClick} card_id={totalCount}/>
+        let acards = [];
+        for(let a = 0; a < this.artiData.length; a++){
+            acards.push(<div className="c-artifact-auto" id={a} key={a}>
+                <EntityCard mode="artifact" data={this.artiData[a]} onClick={this.handleArtifactCardClick} card_id={a}/>
             </div>);
-            count++;
-            totalCount++;
-            location++;
         }
-        if(count === 7){
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-            currentRowCounter++;
-            cRow = []; //add extra add button
-            cRow.push(<div className="col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleArtifactCardClick} card_id={totalCount}/>
+        acards.push(<div className="c-artifact-auto" id={this.artiData.length} key={this.artiData.length}>
+                <EntityCard mode="add" onClick={this.handleArtifactCardClick} card_id={this.artiData.length}/> 
             </div>);
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push rows of EntityCards
-        } else { //add extra add button
-            cRow.push(<div className=" col-auto" id={location} key={a}>
-                <EntityCard mode="add" onClick={this.handleArtifactCardClick} card_id={totalCount}/> 
-            </div>);
-            rTableData[currentRowCounter] = <div className="row" key={currentRowCounter}>{cRow}</div>; //push remaining EntityCards
+        for(let a = 0; a < 6; a++){
+            acards.push(<div className='hidden-artifact-auto' key={this.artiData.length + a + 1}></div>)
         }
-        return (<div className="container">{rTableData}</div>);
+        return (<div className="flex-container box wrap">{acards}</div>);
     }
 
     /**
@@ -194,9 +172,9 @@ class ArtifactScreen extends React.Component{
             let typeList = ["flower", "plume", "sands", "goblet", "circlet"];
             let subList = this.artiData[this.state.caData].substats.map((e, i) => {
                 if(constant_values.substatConv[e[0]].charAt(constant_values.substatConv[e[0]].length - 1) === '%'){
-                    return <p>{constant_values.substatConv[e[0]].substring(0, constant_values.substatConv[e[0]].length - 1)}+{this.round(e[1].reduce(sr), 1)}%</p>
+                    return <p key={i}>{constant_values.substatConv[e[0]].substring(0, constant_values.substatConv[e[0]].length - 1)}+{this.round(e[1].reduce(sr), 1)}%</p>
                 } else {
-                    return <p>{constant_values.substatConv[e[0]]}+{this.round(e[1].reduce(sr), 1)}</p>
+                    return <p key={i}>{constant_values.substatConv[e[0]]}+{this.round(e[1].reduce(sr), 1)}</p>
                 }
             });
             let sp_artifact_data = artifact_set_data[this.artiData[this.state.caData].set];
@@ -229,7 +207,6 @@ class ArtifactScreen extends React.Component{
                     {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
                 </p>
             </div>
-            
             {subList}
             <Button className="btn-danger" onClick={this.handleDeleteButtonClicked}>
                 Delete
@@ -534,7 +511,7 @@ class ArtifactScreen extends React.Component{
     }
 
     fetchRarityStars(stars){
-        let starArr = Array(stars).fill(<Star />);
+        let starArr = [...Array(stars)].map((_, i) => <Star key={i}/>);
         return <div>
             {starArr}
         </div>
