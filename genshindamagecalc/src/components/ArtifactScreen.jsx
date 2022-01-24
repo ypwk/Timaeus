@@ -186,32 +186,37 @@ class ArtifactScreen extends React.Component{
                 sp_artifact_data.sets.circlet,
             ]
             return (<div className="pt-2">
-                <h2 className='m-0'>
-                    {possibleNameList[this.artiData[this.state.caData].type]} <Badge bg="secondary">+{this.artiData[this.state.caData].level}</Badge> 
-                </h2>
-                <h6 className="text-muted m-0">
-                    {constant_values.pieceFormalNames[this.artiData[this.state.caData].type]}
-                </h6>
-            <div>
-
-            </div>
-            <img className="character-detail-img border border-dark rounded mb-3 unselectable"
-                        src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
-                        alt={this.artiData[this.state.caData].name}/>
-            {this.fetchRarityStars(this.artiData[this.state.caData].rarity)}
-            <div className="d-flex justify-content-between">
-                <p className='h3'> 
-                    {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
-                </p>
-                <p className='h3'>
-                    {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
-                </p>
-            </div>
-            {subList}
-            <Button className="btn-danger" onClick={this.handleDeleteButtonClicked}>
-                Delete
-            </Button>
-        </div>)
+                        <div className='artifact-section-name'>
+                            <div className='m-2'>
+                                <h1 className='m-0'>
+                                    {possibleNameList[this.artiData[this.state.caData].type]} <Badge bg="secondary">+{this.artiData[this.state.caData].level}</Badge> 
+                                </h1>
+                                <h6 className="text-muted m-0">
+                                    {constant_values.pieceFormalNames[this.artiData[this.state.caData].type]}
+                                </h6>
+                            </div>
+                            <div className='m-2'>
+                                <Button className="btn-danger" onClick={this.handleDeleteButtonClicked}>
+                                    Delete
+                                </Button>
+                            </div>
+                        </div>
+                        <img className="character-detail-img border border-dark rounded m-3 unselectable"
+                                    src={process.env.PUBLIC_URL + "/images/artifact_content/" + this.artiData[this.state.caData].set + "_" + typeList[this.artiData[this.state.caData].type] + ".png"}
+                                    alt={this.artiData[this.state.caData].name}/>
+                        <div className="m-2">
+                            {this.fetchRarityStars(this.artiData[this.state.caData].rarity)}
+                            <div className="d-flex justify-content-between">
+                                <p className='h3'> 
+                                    {constant_values.statConvFormal[constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]]}
+                                </p>
+                                <p className='h3'>
+                                    {constant_values.mainStatScaling[this.artiData[this.state.caData].rarity - 1][constant_values.possibleMainStats[this.artiData[this.state.caData].type][this.artiData[this.state.caData].main_stat]][this.artiData[this.state.caData].level]}  
+                                </p>
+                            </div>
+                            {subList}
+                        </div>
+                    </div>)
         } else {
             return (<div className="pt-2">
                 <h1>You have not created any artifacts!</h1>
@@ -470,7 +475,6 @@ class ArtifactScreen extends React.Component{
             "substats": this.state.substatSelection.map((e, i) => [e, this.substatValues[i]]),
             "character": -1
         }
-        console.log(new_arti_file)
         this.artiData.push(new_arti_file);
         this.storageUtils.artifactData = this.artiData;
         this.storageUtils.saveData("artifact");

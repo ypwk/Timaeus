@@ -1,0 +1,19 @@
+
+/* Character Selection Styling */
+.char-selection-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.char-display-container {
+    margin: 0em 1em 1em 1em;
+    display: flex;
+    flex-direction: row;
+    flex: 1 0;
+}
+
+.char-display-baby {
+    flex: 1 1 6em;
+    margin: 0.2em;
+}

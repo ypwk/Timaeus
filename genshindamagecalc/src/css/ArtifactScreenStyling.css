@@ -86,3 +86,9 @@
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }  
+
+.artifact-section-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

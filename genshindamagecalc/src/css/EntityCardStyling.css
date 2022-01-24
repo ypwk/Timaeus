@@ -12,6 +12,10 @@
     flex: 0 1 6em;
 }
 
+.weapon-size {
+    object-fit: cover;
+}
+
 .center-cropped {
     position: absolute;
     bottom: 0;
@@ -28,4 +32,41 @@
     -moz-user-drag: none; 
     -o-user-drag: none; 
     user-drag: none; 
+}
+
+.detail-card {
+    position: relative;
+    display: flex;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    flex-direction: row;
+}
+
+.detail-card-fw-section {
+    flex: 0 1 4em;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-card-artifacts-section {
+    flex: 0 1 1em;
+    display: flex;
+    flex-direction: row;
+    align-self: top;
+}
+
+.detail-card-face {
+    flex: 2 1 0%;
+}
+
+.detail-card-artifacts {
+    flex: 1 1 0%;
+    align-self: center;
+}
+
+.detail-card-weapon {
+    flex: 1 2 0%;
 }

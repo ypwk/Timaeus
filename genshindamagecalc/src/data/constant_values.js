@@ -1,4 +1,11 @@
 export const constant_values = {
+    "pieceNames": [
+        "flower",
+        "plume",
+        "sands",
+        "goblet",
+        "circlet"
+    ],
     "pieceFormalNames": [
         "Flower of Life",
         "Plume of Death",
@@ -43,18 +50,19 @@ export const constant_values = {
         "anemoRes": 26, 
         "cryoRes": 27, 
         "geoRes": 28,
-        "normalDamage": 29,
-        "chargedDamage": 30,
-        "skillDamage": 31,
-        "burstDamage": 32,
-        "overloaded": 33,
-        "shattered": 34,
-        "electrocharged": 35,
-        "superconduct": 36,
-        "swirl": 37,
-        "vaporize": 38,
-        "melt": 39,
-        "burning": 40
+        "physicalRes": 29,
+        "normalDamage": 30,
+        "chargedDamage": 31,
+        "skillDamage": 32,
+        "burstDamage": 33,
+        "overloaded": 34,
+        "shattered": 35,
+        "electrocharged": 36,
+        "superconduct": 37,
+        "swirl": 38,
+        "vaporize": 39,
+        "melt": 40,
+        "burning": 41
     },
     "statConvFormal": [
         "HP", 
@@ -86,6 +94,7 @@ export const constant_values = {
         "Anemo RES", 
         "Cryo RES", 
         "Geo RES",
+        "Physical RES",
         "Normal Attack DMG Bonus",
         "Charged Attack DMG Bonus",
         "Elemental Skill DMG Bonus",

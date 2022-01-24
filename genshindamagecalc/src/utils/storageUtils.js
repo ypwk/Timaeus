@@ -47,6 +47,7 @@ class storageUtils {
         this.characterData = [];
         this.artifactData = [];
         this.weaponData = [];
+        this.envData = [[-1, -1, -1, -1], []];
         this.checkedOut = false;
         //initialize localForage
         localForage.config({ //configure localForage
@@ -79,6 +80,7 @@ class storageUtils {
         localForage.setItem('character', this.characterData);
         localForage.setItem('artifact', this.artifactData);
         localForage.setItem('weapon', this.weaponData);
+        localForage.setItem('environment', this.envData);
     }
 
     /**
@@ -94,6 +96,8 @@ class storageUtils {
             this.artifactData = data;
             data = await localForage.getItem('weapon');
             this.weaponData = data;
+            data = await localForage.getItem('environment');
+            this.envData = data;
         } catch (err){
             throw err;
         }
@@ -133,6 +137,13 @@ class storageUtils {
                 throw error;
             });
         
+        //save environment data
+        localForage.setItem('weapon', this.weaponData)
+            .then((value) => {
+                this.envData = [];
+            }).catch((error) => {
+                throw error;
+            });
         this.checkedOut = false;
         callback();
     }
@@ -154,6 +165,11 @@ class storageUtils {
             });
         } else if(nameOfData === "artifact"){
             localForage.setItem('artifact', this.artifactData)
+            .catch((error) => {
+                throw error;
+            });
+        } else if(nameOfData === "environment"){
+            localForage.setItem('environment', this.envData)
             .catch((error) => {
                 throw error;
             });

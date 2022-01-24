@@ -255,87 +255,97 @@ class CharacterScreen extends React.Component{
     renderSelectedCharacterData(){
         if(this.charData[this.state.ccData] !== null && this.charData[this.state.ccData] !== undefined){
             let stats = calcUtils.calcAll(this.charData[this.state.ccData], this.storageUtils.artifactData);
-            let statList = constant_values.statConvFormal.map((e, i) => {return <p key={i}>{i}: {e} {calcUtils.round(stats[i], 1)}</p>});
             return (
-            <div className="row pt-2 h-100 character-detail-background">
-                <div className="name-width col-3">
-                    <p className="h1 inline text-left">{this.formatCharacterName(this.charData[this.state.ccData].name)}</p>
-                    <img className="character-detail-img border border-dark rounded mb-3"
-                        src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.charData[this.state.ccData].name + "_face.png"}
-                        alt={this.charData[this.state.ccData].name}/>
-                    <div className="input-group form-inline" key={this.state.ccData * 10}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Lvl:</span>
-                        </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].level} onChange={this.handleCharacterLevelChanged}
-                            aria-label="Character's Level" aria-describedby="basic-addon2" ref={this.characterLevelInputRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" 
-                            id="basic-addon2" ref={this.characterLevelByAscensionRef}>/ {constant_values.levelByAscension[this.charData[this.state.ccData].ascension]}</span>
-                        </div>
+            <div className="id-section">
+                <div className='id-section-name'>
+                    <p className="h1 inline text-left m-2">{this.formatCharacterName(this.charData[this.state.ccData].name)}</p>
+                    <Button onClick={this.handleDeleteButtonClicked} className="btn-danger m-2">
+                        Delete
+                    </Button>
+                </div>
+                <div className="id-section-stats">
+                    <div className="id-section-image-box">
+                        <img className="character-detail-img border border-dark rounded m-3"
+                            src={process.env.PUBLIC_URL + "/images/character_content/face/" + this.charData[this.state.ccData].name + "_face.png"}
+                            alt={this.charData[this.state.ccData].name}/>
                     </div>
-                    <div className="input-group form-inline" key={this.state.ccData * 10 + 1}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Asc:</span>
+                    <div className="id-section-stats-inputs">
+                        <div className="input-group m-1" key={this.state.ccData * 10}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Level:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].level} onChange={this.handleCharacterLevelChanged}
+                                aria-label="Character's Level" aria-describedby="basic-addon2" ref={this.characterLevelInputRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" 
+                                id="basic-addon2" ref={this.characterLevelByAscensionRef}>/ {constant_values.levelByAscension[this.charData[this.state.ccData].ascension]}</span>
+                            </div>
                         </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].ascension} onChange={this.handleCharacterAscensionChanged}
-                            aria-label="Character's Ascension" aria-describedby="basic-addon2" ref={this.characterAscensionInputRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        <div className="input-group m-1" key={this.state.ccData * 10 + 1}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Ascension:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].ascension} onChange={this.handleCharacterAscensionChanged}
+                                aria-label="Character's Ascension" aria-describedby="basic-addon2" ref={this.characterAscensionInputRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">/ 6</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-group form-inline" key={this.state.ccData * 10 + 2}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Cons:</span>
+                        <div className="input-group m-1" key={this.state.ccData * 10 + 2}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Constellation:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].constellation} onChange={this.handleCharacterConstellationChanged}
+                                aria-label="Character's Constellation" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">/ 6</span>
+                            </div>
                         </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].constellation} onChange={this.handleCharacterConstellationChanged}
-                            aria-label="Character's Constellation" aria-describedby="basic-addon2" ref={this.characterConstellationInputRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 6</span>
+                        <div className="input-group m-1" key={this.state.ccData * 10 + 3}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Normal Attack Talent:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentOneChanged}
+                                aria-label="Character's Normal Attack Talent" aria-describedby="basic-addon2" ref={this.characterTalentOneRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">/ 10</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-group form-inline" key={this.state.ccData * 10 + 3}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">NA:</span>
+                        <div className="input-group m-1" key={this.state.ccData * 10 + 4}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Elemental Skill Talent:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].talents[1]} onChange={this.handleCharacterTalentTwoChanged}
+                                aria-label="Character's Elemental Skill Talent" aria-describedby="basic-addon2" ref={this.characterTalentTwoRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">/ 10</span>
+                            </div>
                         </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].talents[0]} onChange={this.handleCharacterTalentOneChanged}
-                            aria-label="Character's Normal Attack Talent" aria-describedby="basic-addon2" ref={this.characterTalentOneRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 10</span>
-                        </div>
-                    </div>
-                    <div className="input-group form-inline" key={this.state.ccData * 10 + 4}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Skill:</span>
-                        </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].talents[1]} onChange={this.handleCharacterTalentTwoChanged}
-                            aria-label="Character's Elemental Skill Talent" aria-describedby="basic-addon2" ref={this.characterTalentTwoRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 10</span>
-                        </div>
-                    </div>
-                    <div className="input-group form-inline" key={this.state.ccData * 10 + 5}>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">Burst:</span>
-                        </div>
-                        <input type="text" className="form-control" 
-                            defaultValue={this.charData[this.state.ccData].talents[2]} onChange={this.handleCharacterTalentThreeChanged}
-                            aria-label="Character's Elemental Burst Talent" aria-describedby="basic-addon2" ref={this.characterTalentThreeRef}/>
-                        <div className="input-group-append">
-                            <span className="input-group-text" id="basic-addon2">/ 10</span>
+                        <div className="input-group m-1" key={this.state.ccData * 10 + 5}>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">Elemental Burst Talent:</span>
+                            </div>
+                            <input type="text" className="form-control" 
+                                defaultValue={this.charData[this.state.ccData].talents[2]} onChange={this.handleCharacterTalentThreeChanged}
+                                aria-label="Character's Elemental Burst Talent" aria-describedby="basic-addon2" ref={this.characterTalentThreeRef}/>
+                            <div className="input-group-append">
+                                <span className="input-group-text" id="basic-addon2">/ 10</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="col-9">
-                    <div className="gear-flex-container">
+                <div className="gear-section">
+                    <div className="gear-weapon-container">
                         <div className='gear-flex-baby'>
                             <EntityCard mode="weapon" onClick={this.handleCharacterCardClick} type={data_names[this.charData[this.state.ccData].name].weapon} weapon_data={this.charData[this.state.ccData].weapon}/>
                         </div>
+                    </div>         
+                    <div className="gear-artifact-container">
                         <div className='gear-flex-baby'>
                             <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="flower" artifact_data={this.charData[this.state.ccData].artifacts[0]} storageUtil={this.storageUtils}/> 
                         </div>
@@ -351,16 +361,37 @@ class CharacterScreen extends React.Component{
                         <div className='gear-flex-baby'>
                             <EntityCard mode="artifact" onClick={this.handleArtifactCardClick} type="circlet" artifact_data={this.charData[this.state.ccData].artifacts[4]} storageUtil={this.storageUtils}/>
                         </div>
-                    </div>         
-                    <Button onClick={this.handleDeleteButtonClicked} className="btn-danger">
-                        Delete
-                    </Button>
-                    <p>HP: {calcUtils.round(calcUtils.hp(stats[stats.length - 3], stats[1] + 20, stats[0]), 0)}</p>
-                    <p>DEF: {calcUtils.round(calcUtils.def(stats[stats.length - 1], stats[5], stats[4]), 0)}</p>
-                    <p>ATK: {calcUtils.round(calcUtils.atk(stats[stats.length - 2], stats[3], stats[2]), 0)}</p>
-                    {statList}
-                    
+                    </div>     
                 </div>
+                <div className='stat-list'>
+                    <p>Max HP: {calcUtils.round(calcUtils.hp(stats[stats.length - 3], stats[1], stats[0]), 0)}</p>
+                    <p>ATK: {calcUtils.round(calcUtils.atk(stats[stats.length - 2], stats[3], stats[2]), 0)}</p>
+                    <p>DEF: {calcUtils.round(calcUtils.def(stats[stats.length - 1], stats[5], stats[4]), 0)}</p>
+                    <p>Elemental Mastery: {calcUtils.round(stats[7], 0)}</p>
+                    <p>CRIT Rate: {calcUtils.round(stats[8], 1)}%</p>
+                    <p>CRIT DMG: {calcUtils.round(stats[9], 1)}%</p>
+                    <p>Healing Bonus: {calcUtils.round(stats[18], 1)}%</p>
+                    <p>Incoming Healing Bonus: {calcUtils.round(stats[19], 1)}%</p>
+                    <p>Energy Recharge: {calcUtils.round(stats[6], 1)}%</p>
+                    <p>CD Reduction: {calcUtils.round(stats[20], 1)}%</p>
+                    <p>Shield Strength: {calcUtils.round(stats[21], 1)}%</p>
+                    <p>Pyro DMG Bonus: {calcUtils.round(stats[10], 1)}%</p>
+                    <p>Pyro RES: {calcUtils.round(stats[22], 1)}%</p>
+                    <p>Hydro DMG Bonus: {calcUtils.round(stats[11], 1)}%</p>
+                    <p>Hydro RES: {calcUtils.round(stats[23], 1)}%</p>
+                    <p>Dendro DMG Bonus: {calcUtils.round(stats[12], 1)}%</p>
+                    <p>Dendro RES: {calcUtils.round(stats[24], 1)}%</p>
+                    <p>Electro DMG Bonus: {calcUtils.round(stats[13], 1)}%</p>
+                    <p>Electro RES: {calcUtils.round(stats[25], 1)}%</p>
+                    <p>Anemo DMG Bonus: {calcUtils.round(stats[14], 1)}%</p>
+                    <p>Anemo RES: {calcUtils.round(stats[26], 1)}%</p>
+                    <p>Cryo DMG Bonus: {calcUtils.round(stats[15], 1)}%</p>
+                    <p>Cryo RES: {calcUtils.round(stats[27], 1)}%</p>
+                    <p>Geo DMG Bonus: {calcUtils.round(stats[16], 1)}%</p>
+                    <p>Geo RES: {calcUtils.round(stats[28], 1)}%</p>
+                    <p>Physical DMG Bonus: {calcUtils.round(stats[17], 1)}%</p>
+                    <p>Physical RES: {calcUtils.round(stats[29], 1)}%</p>
+                </div>      
             </div>)
         } else {
             return (<div className="pt-2">
@@ -369,36 +400,6 @@ class CharacterScreen extends React.Component{
                     Create one now by clicking on the plus on the left side of the screen.
                 </p>
             </div>)
-
-            /*
-             *<p>Max HP: </p>
-                    <p>ATK</p>
-                    <p>DEF</p>
-                    <p>Elemental Mastery</p>
-                    <p>Crit Rate</p>
-                    <p>Crit Damage</p>
-                    <p>Healing Bonus</p>
-                    <p>Incoming Healing Bonus</p>
-                    <p>Energy Recharge</p>
-                    <p>CD Reduction</p>
-                    <p>Shield Strength</p>
-                    <p>Pyro DMG Bonus</p>
-                    <p>Pyro RES</p>
-                    <p>Hydro DMG Bonus</p>
-                    <p>Hydro RES</p>
-                    <p>Dendro DMG Bonus</p>
-                    <p>Dendro RES</p>
-                    <p>Electro DMG Bonus</p>
-                    <p>Electro RES</p>
-                    <p>Anemo DMG Bonus</p>
-                    <p>Anemo RES</p>
-                    <p>Cryo DMG Bonus</p>
-                    <p>Cryo RES</p>
-                    <p>Geo DMG Bonus</p>
-                    <p>Geo RES</p>
-                    <p>Physical DMG Bonus</p>
-                    <p>Physical RES</p>
-             */
         }
     }
 
@@ -551,8 +552,8 @@ class CharacterScreen extends React.Component{
                 this.artifactModalSelection = artifacts[0].key;
                 return (
                     <>
-                        <FloatingLabel id="floatingSelect" label="Select Character:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.artifactModalMenuOnSelect(e)}>
-                            <Form.Select aria-label="Select character input box" defaultValue={this.fetchDefaultArtifacts()}>
+                        <FloatingLabel id="floatingSelect" label="Select Artifact:" className="mb-3" ref={this.creationModalMenuRef} onChange={e => this.artifactModalMenuOnSelect(e)}>
+                            <Form.Select aria-label="Select artifact input box" defaultValue={this.fetchDefaultArtifacts()}>
                                 {artifacts}
                             </Form.Select>
                         </FloatingLabel>
@@ -832,10 +833,21 @@ class CharacterScreen extends React.Component{
             this.setState({ccData: this.state.ccData}); //re-render for fun HAHA
         }
 
+        this.storageUtils.envData[0] = this.storageUtils.envData[0].map(e => {
+            if(e > this.state.ccData){
+                return e - 1;
+            } else if (e === this.state.ccData){
+                return -1;
+            } else {
+                return e;
+            }
+        });
+
         //remove character from long term storage
         this.storageUtils.characterData = this.charData;
         this.storageUtils.saveData("character");
         this.storageUtils.saveData("artifact");
+        this.storageUtils.saveData("environment");
     }
 
     /**

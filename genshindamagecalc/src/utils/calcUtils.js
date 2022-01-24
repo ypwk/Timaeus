@@ -74,7 +74,8 @@ class calcUtils {
         if(Object.keys(char_file.weapon).length > 0){
             let weapon = weaponsData[char_file.weapon.name];
             if(Object.keys(weapon.secondary).length > 0){
-                stats[constant_values.statConv[weapon.secondary.name]] += weapon.secondary.stats[char_file.weapon.level + char_file.weapon.ascension] * 100;
+                let p_mod = constant_values.notPercentageStats.includes(constant_values.statConv[weapon.secondary.name]) ? 1 : 100
+                stats[constant_values.statConv[weapon.secondary.name]] += weapon.secondary.stats[char_file.weapon.level + char_file.weapon.ascension] * p_mod;
             }
             //base atk
             stats[Object.keys(constant_values.statConv).length + 1] += weapon.atk[char_file.weapon.level + char_file.weapon.ascension];

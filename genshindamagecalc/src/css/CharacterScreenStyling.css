@@ -26,7 +26,8 @@
 .character-details-tray{
     flex: 4;
     flex-direction: row;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .character-detail-background{
@@ -38,10 +39,6 @@
 .character-detail-img{
     max-width: 10em;
     max-height: 10em;
-}
-
-.name-width{
-    max-width: 10em;
 }
 
 .invisible{
@@ -72,11 +69,59 @@
     overflow: hidden;
 }
 
-.gear-flex-container {
+/* character gear styling */
+.gear-section {
     display: flex;
     flex-direction: row;
+    margin: 1em;
+}
+
+.gear-weapon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1 0;
+}
+
+.gear-artifact-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex: 4 0;
 }
 
 .gear-flex-baby {
     flex: 0 1 6em;
+}
+
+/* character trait styling */
+.id-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.id-section-stats {
+    display: flex;
+    flex-direction: row;
+}
+
+.id-section-stats-inputs {
+    margin-right: 1em;
+    flex: 1 1;
+}
+
+.id-section-image-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.id-section-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stat-list {
+    margin: 1em;
 }
