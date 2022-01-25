@@ -61,6 +61,7 @@ class calcUtils {
             stats[8] = 5;
         }
 
+        console.log(char_file)
         //sum artifact values
         let artifacts = char_file.artifacts.filter(e => e !== -1).map(e => artifacts_file[e]);
         artifacts.forEach(e => {

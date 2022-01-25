@@ -14,6 +14,8 @@
 }
 
 .char-display-baby {
+    display: flex;
+    flex-direction: row;
     flex: 1 1 6em;
     margin: 0.2em;
 }

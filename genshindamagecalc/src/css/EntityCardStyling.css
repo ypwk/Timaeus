@@ -49,22 +49,39 @@
     flex: 0 1 4em;
     display: flex;
     flex-direction: column;
+    align-self: center;
 }
 
 .detail-card-artifacts-section {
-    flex: 0 1 1em;
+    flex: 1;
     display: flex;
     flex-direction: row;
-    align-self: top;
+    min-height: 0;
+    align-items: top;
+}
+
+.detail-card-right-section{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    align-items: top;
+}
+
+.detail-card-stats-section {
+    margin: 0.3em;
 }
 
 .detail-card-face {
     flex: 2 1 0%;
+    align-self: center;
 }
 
 .detail-card-artifacts {
-    flex: 1 1 0%;
+    flex: 1;
     align-self: center;
+    min-height: 0;
+    min-width: 0;
 }
 
 .detail-card-weapon {

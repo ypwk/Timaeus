@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel"
+import calcUtils from "../utils/calcUtils";
 
 import "../css/EnvironmentScreenStyling.css";
 
@@ -24,6 +25,7 @@ class EnvironmentScreen extends React.Component{
             selectedCharData: this.storageUtils.envData[0],
             showCharacterModal: false
         }
+        this.charStats = this.state.selectedCharData.map(e => calcUtils.calcAll(this.storageUtils.characterData[e], this.storageUtils.artifactData));
         this.characterModalSelection = 0;
         this.currentlyEditedCharacter = 0;
     }
@@ -36,22 +38,26 @@ class EnvironmentScreen extends React.Component{
                         <div className='char-display-baby'>
                             <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(0)} 
                                 data={this.storageUtils.characterData[this.state.selectedCharData[0]]}
-                                arti_dat={this.storageUtils.artifactData}/>
+                                arti_dat={this.storageUtils.artifactData}
+                                char_stat={this.charStats[0]}/>
                         </div>
                         <div className='char-display-baby'>
                             <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(1)} 
                                 data={this.storageUtils.characterData[this.state.selectedCharData[1]]}
-                                arti_dat={this.storageUtils.artifactData}/>
+                                arti_dat={this.storageUtils.artifactData}
+                                char_stat={this.charStats[1]}/>
                         </div>
                         <div className='char-display-baby'>
                             <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(2)} 
                                 data={this.storageUtils.characterData[this.state.selectedCharData[2]]}
-                                arti_dat={this.storageUtils.artifactData}/>
+                                arti_dat={this.storageUtils.artifactData}
+                                char_stat={this.charStats[2]}/>
                         </div>
                         <div className='char-display-baby'>
                             <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(3)} 
                                 data={this.storageUtils.characterData[this.state.selectedCharData[3]]}
-                                arti_dat={this.storageUtils.artifactData}/>
+                                arti_dat={this.storageUtils.artifactData}
+                                char_stat={this.charStats[3]}/>
                         </div>
                     </div>
                 </div>
@@ -125,6 +131,7 @@ class EnvironmentScreen extends React.Component{
     saveCharacterModalThenClose(){
         let nscd = this.state.selectedCharData;
         nscd[this.currentlyEditedCharacter] = this.characterModalSelection;
+        this.charStats[this.currentlyEditedCharacter] = calcUtils.calcAll(this.storageUtils.characterData[this.characterModalSelection], this.storageUtils.artifactData);
         this.storageUtils.envData[0] = nscd;
         this.storageUtils.saveData("environment");
         this.setState(state => {

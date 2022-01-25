@@ -1,4 +1,6 @@
 import React from "react";
+import calcUtils from "../utils/calcUtils";
+
 import "../css/EntityCardStyling.css";
 
 import { data_names } from "../data/character/character_name_index.js";
@@ -186,7 +188,7 @@ class EntityCard extends React.Component {
           } else {
             return (
               <img
-                className="rounded img-fluid unselectable"
+                className="rounded img-fluid unselectable detail-card-artifacts"
                 src={
                   process.env.PUBLIC_URL +
                   "/images/" +
@@ -201,7 +203,7 @@ class EntityCard extends React.Component {
         return (
           <div
             onClick={this.handleClick}
-            className="background-transparent m-0 detail-card"
+            className="background-transparent detail-card"
           >
             <div className="detail-card-fw-section">
               <img
@@ -214,22 +216,46 @@ class EntityCard extends React.Component {
                 }
                 alt={this.props.data.name}
               />
-              <img
-                className="rounded img-fluid unselectable detail-card-weapon"
-                src={
-                  process.env.PUBLIC_URL +
-                  "/images/weapon_content/" +
-                  data_names[this.props.data.name].weapon +
-                  "/" +
-                  this.props.data.weapon.name +
-                  ".png"
-                }
-                alt={this.props.data.weapon.name}
-              />
+              { this.props.data.weapon.name === undefined ? 
+                <img
+                  className="rounded img-fluid unselectable"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/" +
+                    data_names[this.props.data.name].weapon +
+                    "_icon.png"
+                  }
+                  alt="add a weapon"
+                />
+                :
+                <img
+                  className="rounded img-fluid unselectable detail-card-weapon"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/weapon_content/" +
+                    data_names[this.props.data.name].weapon +
+                    "/" +
+                    this.props.data.weapon.name +
+                    ".png"
+                  }
+                  alt={this.props.data.weapon.name}
+                />
+              }
+              
             </div>
-            <div className="detail-card-artifacts-section">
-              {artifacts}
+            <div className="detail-card-right-section">
+              <div className="detail-card-artifacts-section">
+                {artifacts}
+              </div>
+              <div className="detail-card-stats-section">
+                  <p className="m-0">Max HP: {calcUtils.round(calcUtils.hp(this.props.char_stat[this.props.char_stat.length - 3], this.props.char_stat[1], this.props.char_stat[0]), 0)}</p>
+                  <p className="m-0">ATK: {calcUtils.round(calcUtils.atk(this.props.char_stat[this.props.char_stat.length - 2], this.props.char_stat[3], this.props.char_stat[2]), 0)}</p>
+                  <p className="m-0">DEF: {calcUtils.round(calcUtils.def(this.props.char_stat[this.props.char_stat.length - 1], this.props.char_stat[5], this.props.char_stat[4]), 0)}</p>
+                  <p className="m-0">CRIT Rate: {calcUtils.round(this.props.char_stat[8], 1)}%</p>
+                  <p className="m-0">CRIT DMG: {calcUtils.round(this.props.char_stat[9], 1)}%</p>
+              </div>
             </div>
+            
           </div>
         );
       } else {
