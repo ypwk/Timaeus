@@ -39,24 +39,28 @@ class EnvironmentScreen extends React.Component{
                                 <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(0)} 
                                     data={this.storageUtils.characterData[this.state.selectedCharData[0]]}
                                     arti_dat={this.storageUtils.artifactData}
+                                    deleteClick={e => this.handleCharacterCardDelete(0)}
                                     char_stat={this.charStats[0]}/>
                             </div>
                             <div className='char-display-baby'>
                                 <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(1)} 
                                     data={this.storageUtils.characterData[this.state.selectedCharData[1]]}
                                     arti_dat={this.storageUtils.artifactData}
+                                    deleteClick={e => this.handleCharacterCardDelete(1)}
                                     char_stat={this.charStats[1]}/>
                             </div>
                             <div className='char-display-baby'>
                                 <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(2)} 
                                     data={this.storageUtils.characterData[this.state.selectedCharData[2]]}
                                     arti_dat={this.storageUtils.artifactData}
+                                    deleteClick={e => this.handleCharacterCardDelete(2)}
                                     char_stat={this.charStats[2]}/>
                             </div>
                             <div className='char-display-baby'>
                                 <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(3)} 
                                     data={this.storageUtils.characterData[this.state.selectedCharData[3]]}
                                     arti_dat={this.storageUtils.artifactData}
+                                    deleteClick={e => this.handleCharacterCardDelete(3)}
                                     char_stat={this.charStats[3]}/>
                             </div>
                         </div>
@@ -90,6 +94,18 @@ class EnvironmentScreen extends React.Component{
     handleCharacterCardClick(charID){
         this.currentlyEditedCharacter = charID;
         this.toggleCharacterModalState();
+    }
+
+    /**
+     * On-click handler for clicks to the character card delete buttons.
+     * @param {number} charID - Indicates the ID of the character card that is slated to be deleted. 
+     */
+    handleCharacterCardDelete(charID){
+        let nscd = this.state.selectedCharData
+        nscd[charID] = -1;
+        this.storageUtils.envData[0] = nscd;
+        this.storageUtils.saveData("environment");
+        this.setState({selectedCharData: nscd});
     }
 
     toggleCharacterModalState(){

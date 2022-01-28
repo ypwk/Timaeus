@@ -1,5 +1,7 @@
 import React from "react";
 import calcUtils from "../utils/calcUtils";
+import Button from "react-bootstrap/Button";
+import { MdClear } from "react-icons/md";
 
 import "../css/EntityCardStyling.css";
 
@@ -25,6 +27,9 @@ class EntityCard extends React.Component {
     super(props);
     this.handleClick = this.handleOnClick.bind(this);
     this.passedOnClick = this.props.onClick.bind(this);
+    if(this.props.deleteClick !== undefined){
+      this.passedDeleteClick = this.props.deleteClick.bind(this);
+    }
   }
 
   render() {
@@ -241,6 +246,9 @@ class EntityCard extends React.Component {
                   alt={this.props.data.weapon.name}
                 />
               }
+              <Button onClick={this.passedDeleteClick} className="btn m-2">
+                  <MdClear />
+              </Button>
               
             </div>
             <div className="detail-card-right-section">
@@ -264,11 +272,13 @@ class EntityCard extends React.Component {
             onClick={this.handleClick}
             className="background-transparent detail-card-add-image"
           >
-            <img
-              className="rounded img-fluid unselectable detail-card-image-size"
-              src={process.env.PUBLIC_URL + "/images/add_image.png"}
-              alt="add a new character"
-            />
+            <div className="detail-card-image-size">
+              <img
+                className="rounded img-fluid unselectable detail-card-add-image-interior"
+                src={process.env.PUBLIC_URL + "/images/add_image.png"}
+                alt="add a new character"
+              />
+            </div>
           </div>
         );
       }
