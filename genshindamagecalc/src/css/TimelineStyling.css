@@ -1,0 +1,17 @@
+.timeline-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-indicator {
+    height: 1em;
+    flex: 1 0 1em;
+    align-self: stretch;
+}
+
+.timeline-title {
+    flex: 0 0 100%;
+    align-items: baseline;
+    display: block;
+}

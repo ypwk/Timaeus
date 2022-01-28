@@ -1,0 +1,33 @@
+
+.home-container {
+    height: 96vh;
+    display: flex;
+    position: relative;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), 70% , rgba(255, 255, 255, 0));
+}
+
+.unselectable{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none; 
+    -khtml-user-drag: none; 
+    -moz-user-drag: none; 
+    -o-user-drag: none; 
+}
+
+.image {
+    z-index:-1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.title-text {
+    position: absolute;
+    text-align: center;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

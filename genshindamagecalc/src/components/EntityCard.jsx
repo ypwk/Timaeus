@@ -262,10 +262,10 @@ class EntityCard extends React.Component {
         return (
           <div
             onClick={this.handleClick}
-            className="card background-transparent flex-width m-0"
+            className="background-transparent detail-card-add-image"
           >
             <img
-              className="rounded img-fluid unselectable portrait-size"
+              className="rounded img-fluid unselectable detail-card-image-size"
               src={process.env.PUBLIC_URL + "/images/add_image.png"}
               alt="add a new character"
             />

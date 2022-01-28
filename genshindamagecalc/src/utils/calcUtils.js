@@ -49,7 +49,9 @@ class calcUtils {
         //Max HP = Base HP * (1 + HP Bonus %) + HP Flat Bonus
         let stats = Array.from({length: Object.keys(constant_values.statConv).length + 3}, e => 0) 
         let sr = (p, c) => p + c;
-
+        if(char_file === undefined) {
+            return stats;
+        }
         //characters have 50 base crit dmg and 5 base crit rate and 100 ER
         if(Object.keys(data_names[char_file.name])[7] !== "er"){
             stats[6] = 100;
@@ -61,11 +63,11 @@ class calcUtils {
             stats[8] = 5;
         }
 
-        console.log(char_file)
         //sum artifact values
         let artifacts = char_file.artifacts.filter(e => e !== -1).map(e => artifacts_file[e]);
         artifacts.forEach(e => {
-            stats[constant_values.possibleMainStats[e.type][e.main_stat]] += constant_values.mainStatScaling[e.rarity - 1][constant_values.possibleMainStats[e.type][e.main_stat]][e.level];
+            stats[constant_values.possibleMainStats[e.type][e.main_stat]] += 
+                constant_values.mainStatScaling[e.rarity - 1][constant_values.possibleMainStats[e.type][e.main_stat]][e.level];
             e.substats.forEach(e => {
                 stats[e[0]] += e[1].reduce(sr);
             });

@@ -833,6 +833,7 @@ class CharacterScreen extends React.Component{
             this.setState({ccData: this.state.ccData}); //re-render for fun HAHA
         }
 
+        console.log(this.storageUtils.envData[0])
         this.storageUtils.envData[0] = this.storageUtils.envData[0].map(e => {
             if(e > this.state.ccData){
                 return e - 1;
@@ -842,6 +843,7 @@ class CharacterScreen extends React.Component{
                 return e;
             }
         });
+        console.log(this.storageUtils.envData[0])
 
         //remove character from long term storage
         this.storageUtils.characterData = this.charData;

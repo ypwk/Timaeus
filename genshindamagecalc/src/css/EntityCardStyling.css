@@ -50,6 +50,8 @@
     display: flex;
     flex-direction: column;
     align-self: center;
+    justify-items: center;
+    justify-content: space-between;
 }
 
 .detail-card-artifacts-section {
@@ -86,4 +88,15 @@
 
 .detail-card-weapon {
     flex: 1 2 0%;
+}
+
+.detail-card-image-size {
+    flex: 0 1 100px;
+    align-self: center;
+    justify-content: center;
+}
+
+.detail-card-add-image {
+    flex: 1 1 4em;
+    display: flex;
 }

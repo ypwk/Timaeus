@@ -32,53 +32,55 @@ class EnvironmentScreen extends React.Component{
 
     render(){
         return <div>
-                <div className='char-selection-container'>
-                    <p className='m-2 h3'>Party Members</p>
-                    <div className='char-display-container'>
-                        <div className='char-display-baby'>
-                            <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(0)} 
-                                data={this.storageUtils.characterData[this.state.selectedCharData[0]]}
-                                arti_dat={this.storageUtils.artifactData}
-                                char_stat={this.charStats[0]}/>
-                        </div>
-                        <div className='char-display-baby'>
-                            <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(1)} 
-                                data={this.storageUtils.characterData[this.state.selectedCharData[1]]}
-                                arti_dat={this.storageUtils.artifactData}
-                                char_stat={this.charStats[1]}/>
-                        </div>
-                        <div className='char-display-baby'>
-                            <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(2)} 
-                                data={this.storageUtils.characterData[this.state.selectedCharData[2]]}
-                                arti_dat={this.storageUtils.artifactData}
-                                char_stat={this.charStats[2]}/>
-                        </div>
-                        <div className='char-display-baby'>
-                            <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(3)} 
-                                data={this.storageUtils.characterData[this.state.selectedCharData[3]]}
-                                arti_dat={this.storageUtils.artifactData}
-                                char_stat={this.charStats[3]}/>
+                    <div className='char-selection-container'>
+                        <p className='m-2 h3'>Party Members</p>
+                        <div className='char-display-container'>
+                            <div className='char-display-baby'>
+                                <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(0)} 
+                                    data={this.storageUtils.characterData[this.state.selectedCharData[0]]}
+                                    arti_dat={this.storageUtils.artifactData}
+                                    char_stat={this.charStats[0]}/>
+                            </div>
+                            <div className='char-display-baby'>
+                                <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(1)} 
+                                    data={this.storageUtils.characterData[this.state.selectedCharData[1]]}
+                                    arti_dat={this.storageUtils.artifactData}
+                                    char_stat={this.charStats[1]}/>
+                            </div>
+                            <div className='char-display-baby'>
+                                <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(2)} 
+                                    data={this.storageUtils.characterData[this.state.selectedCharData[2]]}
+                                    arti_dat={this.storageUtils.artifactData}
+                                    char_stat={this.charStats[2]}/>
+                            </div>
+                            <div className='char-display-baby'>
+                                <EntityCard mode="add-character" onClick={e => this.handleCharacterCardClick(3)} 
+                                    data={this.storageUtils.characterData[this.state.selectedCharData[3]]}
+                                    arti_dat={this.storageUtils.artifactData}
+                                    char_stat={this.charStats[3]}/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            
-            <Timeline />
+                    <div>
+                        
+                    </div>
+                    <Timeline />
 
-            <Modal onHide={this.toggleCharacterModalState} show={this.state.showCharacterModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit Character</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{this.renderCharacterModalBody()}</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={this.toggleCharacterModalState}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={this.saveCharacterModalThenClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>;
+                    <Modal onHide={this.toggleCharacterModalState} show={this.state.showCharacterModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Character</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>{this.renderCharacterModalBody()}</Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.toggleCharacterModalState}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={this.saveCharacterModalThenClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>;
     }
 
     /**
@@ -106,10 +108,11 @@ class EnvironmentScreen extends React.Component{
     }
 
     renderCharacterModalBody(){
+        console.log(this.storageUtils.characterData[this.state.selectedCharData[this.currentlyEditedCharacter]])
         let notTaken = [...Array(this.storageUtils.characterData.length).keys()]
             .filter(e => !this.state.selectedCharData.includes(e) 
-                && (!this.state.selectedCharData.map(e => this.storageUtils.characterData[e].name).includes(this.storageUtils.characterData[e].name)
-                || this.storageUtils.characterData[this.state.selectedCharData[this.currentlyEditedCharacter]].name === this.storageUtils.characterData[e].name));
+                && (!this.state.selectedCharData.map(e => this.storageUtils.characterData[e] !== undefined ? this.storageUtils.characterData[e].name : "").includes(this.storageUtils.characterData[e].name)
+                || (this.storageUtils.characterData[this.state.selectedCharData[this.currentlyEditedCharacter]] !== undefined && this.storageUtils.characterData[this.state.selectedCharData[this.currentlyEditedCharacter]].name === this.storageUtils.characterData[e].name)));
         this.characterModalSelection = notTaken[0];
         if(notTaken.length > 0){
             let characters = notTaken.map(e => <option value={e} key={e}>
@@ -125,7 +128,6 @@ class EnvironmentScreen extends React.Component{
         } else {
             return <h2>Oops, you don't have any character profiles eligible to add to the team! Head to the Character page to make more character profiles.</h2>
         }
-        
     }
 
     saveCharacterModalThenClose(){
