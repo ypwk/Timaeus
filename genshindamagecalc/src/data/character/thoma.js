@@ -3,6 +3,7 @@ export const thoma_data = {
     "description": "The Kamisato Clan's housekeeper. A well-known \"fixer\" in Inazuma.",
     "weapon": "polearm",
     "rarity": 4,
+    "region": "inazuma",
     "hp": [
       null,
       866.2014770507812,

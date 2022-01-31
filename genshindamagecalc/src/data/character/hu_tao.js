@@ -3,6 +3,7 @@ export const hu_tao_data = {
     "description": "The 77th Director of the Wangsheng Funeral Parlor. She took over the business at a rather young age.",
     "weapon": "polearm",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       1210.7164306640625,

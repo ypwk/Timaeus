@@ -31,6 +31,7 @@ export const character_name_list = [
     "rosaria",
     "sangonomiya_kokomi",
     "sayu",
+    "shenhe",
     "sucrose",
     "tartaglia",
     "thoma",
@@ -44,5 +45,6 @@ export const character_name_list = [
     "xinyan",
     "yanfei",
     "yoimiya",
+    "yun_jin",
     "zhongli"
 ];

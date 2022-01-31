@@ -32,6 +32,7 @@ export const data_names = {
     "rosaria" : charDetailedData.rosaria_data,
     "sangonomiya_kokomi" : charDetailedData.sangonomiya_kokomi_data,
     "sayu" : charDetailedData.sayu_data,
+    "shenhe" : charDetailedData.shenhe_data,
     "sucrose" : charDetailedData.sucrose_data,
     "tartaglia" : charDetailedData.tartaglia_data,
     "thoma" : charDetailedData.thoma_data,
@@ -45,5 +46,6 @@ export const data_names = {
     "xinyan" : charDetailedData.xinyan_data,
     "yanfei" : charDetailedData.yanfei_data,
     "yoimiya" : charDetailedData.yoimiya_data,
+    "yun_jin" : charDetailedData.yun_jin_data,
     "zhongli" : charDetailedData.zhongli_data
 };

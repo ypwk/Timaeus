@@ -3,6 +3,7 @@ export const zhongli_data = {
     "description": "A mysterious expert contracted by the Wangsheng Funeral Parlor. Extremely knowledgeable in all things.",
     "weapon": "polearm",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       1143.9840087890625,

@@ -3,6 +3,7 @@ export const amber_data = {
     "description": "Always energetic and full of life, Amber's the best — albeit only — Outrider of the Knights of Favonius.",
     "weapon": "bow",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       793.2581787109375,

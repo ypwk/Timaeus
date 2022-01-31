@@ -3,6 +3,7 @@ export const aloy_data = {
     "description": "Formerly an outcast, now a hunter of unparalleled aptitude. Ready to do the right thing with her bow at any given time.",
     "weapon": "bow",
     "rarity": 5,
+    "region": "other",
     "hp": [
       null,
       848.4547729492188,

@@ -3,6 +3,7 @@ export const barbara_data = {
     "description": "Every citizen of Mondstadt adores Barbara. She learned the word \"idol\" from a magazine.",
     "weapon": "catalyst",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       820.6118774414062,

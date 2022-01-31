@@ -3,6 +3,7 @@ export const tartaglia_data = {
     "description": "No. 11 of The Harbingers, also known as \"Childe.\" His name is highly feared on the battlefield.",
     "weapon": "bow",
     "rarity": 5,
+    "region": "snezhnaya",
     "hp": [
       null,
       1020.0524291992188,

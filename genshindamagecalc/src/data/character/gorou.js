@@ -3,6 +3,7 @@ export const gorou_data = {
     "description": "The great general of Watatsumi Island's forces. He is deeply trusted by his subordinates.",
     "weapon": "bow",
     "rarity": "rare",
+    "region": "inazuma",
     "hp": [
       null,
       802.3760986328125,

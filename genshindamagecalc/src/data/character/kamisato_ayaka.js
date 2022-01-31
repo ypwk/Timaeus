@@ -3,6 +3,7 @@ export const kamisato_ayaka_data = {
     "description": "Daughter of the Yashiro Commission's Kamisato Clan. Dignified and elegant, as well as wise and strong.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "inazuma",
     "hp": [
       null,
       1000.9860229492188,

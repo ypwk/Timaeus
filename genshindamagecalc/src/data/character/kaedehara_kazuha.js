@@ -3,6 +3,7 @@ export const kaedehara_kazuha_data = {
     "description": "A wandering samurai from Inazuma who is currently with Liyue's Crux Fleet. A gentle and carefree soul whose heart hides a great many burdens from the past.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "inazuma",
     "hp": [
       null,
       1039.1187744140625,

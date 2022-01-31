@@ -3,6 +3,7 @@ export const kujou_sara_data = {
     "description": "A general of the Tenryou Commission. Bold, decisive, and skilled in battle.",
     "weapon": "bow",
     "rarity": 4,
+    "region": "inazuma",
     "hp": [
       null,
       802.3760986328125,

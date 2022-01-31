@@ -3,6 +3,7 @@ export const qiqi_data = {
     "description": "An apprentice and herb gatherer at Bubu Pharmacy. An undead with a bone-white complexion, she seldom has much in the way of words or emotion.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       962.8532104492188,

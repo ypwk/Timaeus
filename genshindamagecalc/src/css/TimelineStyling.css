@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
 }
 
 .time-indicator {
@@ -14,4 +15,16 @@
     flex: 0 0 100%;
     align-items: baseline;
     display: block;
+}
+
+.timeline-title-constituent {
+    margin: 1em 1em 1em 1em;
+}
+
+.timeline-table {
+    overflow: scroll;
+}
+
+.ctext {
+    text-align: center;
 }

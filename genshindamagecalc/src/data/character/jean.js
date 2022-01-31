@@ -3,6 +3,7 @@ export const jean_data = {
     "description": "The righteous and rigorous Dandelion Knight, and Acting Grand Master of Mondstadt's Knights of Favonius.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       1143.9840087890625,

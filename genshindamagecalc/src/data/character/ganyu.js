@@ -3,6 +3,7 @@ export const ganyu_data = {
     "description": "The secretary at Yuehai Pavilion. The blood of the qilin, an illuminated beast, flows within her veins.",
     "weapon": "bow",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       762.656005859375,

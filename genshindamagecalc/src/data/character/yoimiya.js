@@ -3,6 +3,7 @@ export const yoimiya_data = {
     "description": "Owner of Naganohara Fireworks. Known as \"Queen of the Summer Festival,\" she excels in her craft of creating fireworks that symbolize people's hopes and dreams.",
     "weapon": "bow",
     "rarity": 5,
+    "region": "inazuma",
     "hp": [
       null,
       791.255615234375,

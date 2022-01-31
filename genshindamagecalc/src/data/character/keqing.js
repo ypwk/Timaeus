@@ -3,6 +3,7 @@ export const keqing_data = {
     "description": "The Yuheng of the Liyue Qixing. Keqing has much to say about Rex Lapis' unilateral approach to policymaking in Liyue — but in truth, gods admire skeptics such as her quite a lot.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       1020.0524291992188,

@@ -3,6 +3,7 @@ export const xinyan_data = {
     "description": "Liyue's sole rock 'n' roll musician. She rebels against ossified prejudices using her music and passionate singing.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       939.1447143554688,

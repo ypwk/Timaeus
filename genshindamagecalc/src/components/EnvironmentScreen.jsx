@@ -68,7 +68,7 @@ class EnvironmentScreen extends React.Component{
                     <div>
                         
                     </div>
-                    <Timeline />
+                    <Timeline char_dat={this.state.selectedCharData} storageUtil={this.storageUtils} />
 
                     <Modal onHide={this.toggleCharacterModalState} show={this.state.showCharacterModal}>
                         <Modal.Header closeButton>

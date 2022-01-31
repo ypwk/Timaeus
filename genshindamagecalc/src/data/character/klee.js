@@ -3,6 +3,7 @@ export const klee_data = {
     "description": "An explosives expert and a regular at the Knights of Favonius' confinement room. Also known as Fleeing Sunlight.",
     "weapon": "catalyst",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       800.788818359375,

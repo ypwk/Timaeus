@@ -3,6 +3,7 @@ export const bennett_data = {
     "description": "A good-natured adventurer from Mondstadt who's unfortunately extremely unlucky.",
     "weapon": "sword",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       1039.4417724609375,

@@ -3,6 +3,7 @@ export const sangonomiya_kokomi_data = {
     "description": "The Divine Priestess of Watatsumi Island. All of the island's affairs are at this young lady's fingertips.",
     "weapon": "catalyst",
     "rarity": 5,
+    "region": "inazuma",
     "hp": [
       null,
       1048.6519775390625,

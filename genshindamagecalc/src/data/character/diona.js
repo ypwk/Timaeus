@@ -3,6 +3,7 @@ export const diona_data = {
     "description": "A young lady who has inherited trace amounts of non-human blood. She is the incredibly popular bartender of the Cat's Tail tavern.",
     "weapon": "bow",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       802.3760986328125,

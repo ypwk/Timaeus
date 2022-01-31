@@ -3,6 +3,7 @@ export const rosaria_data = {
     "description": "A sister of the church, though you wouldn't know it if it weren't for her attire. Known for her sharp, cold words and manner, she often works alone.",
     "weapon": "polearm",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       1030.3238525390625,

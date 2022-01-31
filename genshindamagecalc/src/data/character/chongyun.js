@@ -3,6 +3,7 @@ export const chongyun_data = {
     "description": "A young exorcist from a family of exorcists. He does everything he can to suppress his abundance of yang energy.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       920.908935546875,

@@ -3,6 +3,7 @@ export const xiangling_data = {
     "description": "A renowned chef from Liyue. She's extremely passionate about cooking and excels at making her signature hot and spicy dishes.",
     "weapon": "polearm",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       911.791015625,

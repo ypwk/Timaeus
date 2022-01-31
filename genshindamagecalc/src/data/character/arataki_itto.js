@@ -3,6 +3,7 @@ export const arataki_itto_data = {
     "description": "The first and greatest head of the Arataki Gang, famed throughout Inazuma City's Hanamizaka... Wait, what? You've never heard of them? Are you trying to be funny here?",
     "weapon": "claymore",
     "rarity": "legendary",
+    "region": "inazuma",
     "hp": [
       null,
       1000.9860229492188,

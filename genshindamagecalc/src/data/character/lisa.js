@@ -3,6 +3,7 @@ export const lisa_data = {
     "description": "The languid but knowledgeable Librarian of the Knights of Favonius, deemed by Sumeru Academia to be their most distinguished graduate in the past two centuries.",
     "weapon": "catalyst",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       802.3760986328125,

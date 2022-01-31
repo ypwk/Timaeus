@@ -3,6 +3,7 @@ export const traveler_geo_data = {
     "description": "A traveler from another world who had their only kin taken away, forcing them to embark on a journey to find The Seven.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "other",
     "hp": [
       null,
       911.791015625,

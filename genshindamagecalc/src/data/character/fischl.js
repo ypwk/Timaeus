@@ -3,6 +3,7 @@ export const fischl_data = {
     "description": "A mysterious girl who calls herself \"Prinzessin der Verurteilung\" and travels with a night raven named Oz.",
     "weapon": "bow",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       770.46337890625,

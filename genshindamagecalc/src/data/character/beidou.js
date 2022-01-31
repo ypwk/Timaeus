@@ -3,6 +3,7 @@ export const beidou_data = {
     "description": "Captain of her crew, The Crux. She's quite an unbound and forthright woman.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       1094.149169921875,

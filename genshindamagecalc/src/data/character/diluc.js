@@ -3,6 +3,7 @@ export const diluc_data = {
     "description": "The tycoon of a winery empire in Mondstadt, unmatched in every possible way.",
     "weapon": "claymore",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       1010.5192260742188,

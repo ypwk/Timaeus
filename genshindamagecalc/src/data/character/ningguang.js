@@ -3,6 +3,7 @@ export const ningguang_data = {
     "description": "The Tianquan of the Liyue Qixing. Her wealth is unsurpassed in all of Teyvat.",
     "weapon": "catalyst",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       820.6118774414062,

@@ -3,6 +3,7 @@ export const raiden_shogun_data = {
     "description": "Her Excellency, the Almighty Narukami Ogosho, who promised the people of Inazuma an unchanging Eternity.",
     "weapon": "polearm",
     "rarity": 5,
+    "region": "inazuma",
     "hp": [
       null,
       1004.7992553710938,

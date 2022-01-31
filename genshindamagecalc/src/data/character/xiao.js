@@ -3,6 +3,7 @@ export const xiao_data = {
     "description": "A yaksha adeptus who defends Liyue. Also heralded as the \"Conqueror of Demons\" and \"Vigilant Yaksha.\"",
     "weapon": "polearm",
     "rarity": 5,
+    "region": "liyue",
     "hp": [
       null,
       991.4528198242188,

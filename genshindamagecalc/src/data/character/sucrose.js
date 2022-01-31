@@ -3,6 +3,7 @@ export const sucrose_data = {
     "description": "An alchemist filled with curiosity about all things. She researches bio-alchemy.",
     "weapon": "catalyst",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       775.0223388671875,

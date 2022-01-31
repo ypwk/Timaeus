@@ -3,6 +3,7 @@ export const noelle_data = {
     "description": "A maid who faithfully serves the Knights of Favonius. She dreams of joining their ranks someday.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       1012.0880126953125,

@@ -3,6 +3,7 @@ export const sayu_data = {
     "description": "A pint-sized ninja attached to the Shuumatsuban, who always seems sleep-deprived.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "inazuma",
     "hp": [
       null,
       993.8521728515625,

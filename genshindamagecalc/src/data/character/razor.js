@@ -3,6 +3,7 @@ export const razor_data = {
     "description": "A boy who lives among the wolves in Wolvendom of Mondstadt, away from human civilization. As agile as lightning.",
     "weapon": "claymore",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       1002.9700927734375,

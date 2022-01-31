@@ -3,6 +3,7 @@ export const mona_data = {
     "description": "A mysterious young astrologer who proclaims herself to be \"Astrologist Mona Megistus,\" and who possesses abilities to match the title. Erudite, but prideful.",
     "weapon": "catalyst",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       810.322021484375,

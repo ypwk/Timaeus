@@ -3,6 +3,7 @@ export const kaeya_data = {
     "description": "A thinker in the Knights of Favonius with a somewhat exotic appearance.",
     "weapon": "sword",
     "rarity": 4,
+    "region": "mondstadt",
     "hp": [
       null,
       975.6163940429688,

@@ -3,6 +3,7 @@ export const venti_data = {
     "description": "One of the many bards of Mondstadt, who freely wanders the city's streets and alleys.",
     "weapon": "bow",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       819.855224609375,

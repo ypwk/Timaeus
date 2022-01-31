@@ -3,6 +3,7 @@ export const xingqiu_data = {
     "description": "A young man carrying a longsword who is frequently seen at book booths. He has a chivalrous heart and yearns for justice and fairness for all.",
     "weapon": "sword",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       857.0835571289062,

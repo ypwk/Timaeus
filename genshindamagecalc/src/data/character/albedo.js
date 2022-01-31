@@ -3,6 +3,7 @@ export const albedo_data = {
     "description": "A genius known as the Kreideprinz, he is the Chief Alchemist and Captain of the Investigation Team of the Knights of Favonius.",
     "weapon": "sword",
     "rarity": 5,
+    "region": "mondstadt",
     "hp": [
       null,
       1029.5855712890625,

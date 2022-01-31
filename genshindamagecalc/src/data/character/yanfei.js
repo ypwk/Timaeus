@@ -3,6 +3,7 @@ export const yanfei_data = {
     "description": "A well-known legal adviser active in Liyue Harbor. A brilliant young lady in whose veins runs the blood of an illuminated beast.",
     "weapon": "catalyst",
     "rarity": 4,
+    "region": "liyue",
     "hp": [
       null,
       784.1402587890625,
