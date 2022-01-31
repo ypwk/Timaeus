@@ -4,6 +4,7 @@ export const venti_data = {
     "weapon": "bow",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "anemo",
     "hp": [
       null,
       819.855224609375,

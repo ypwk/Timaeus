@@ -4,6 +4,7 @@ export const traveler_electro_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "other",
+    "element": "electro",
     "hp": [
       null,
       911.791015625,

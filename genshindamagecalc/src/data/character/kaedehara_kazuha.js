@@ -4,6 +4,7 @@ export const kaedehara_kazuha_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "inazuma",
+    "element": "anemo",
     "hp": [
       null,
       1039.1187744140625,

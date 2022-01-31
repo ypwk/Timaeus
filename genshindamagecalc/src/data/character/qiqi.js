@@ -4,6 +4,7 @@ export const qiqi_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "liyue",
+    "element": "cryo",
     "hp": [
       null,
       962.8532104492188,

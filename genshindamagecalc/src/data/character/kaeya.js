@@ -4,6 +4,7 @@ export const kaeya_data = {
     "weapon": "sword",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "cryo",
     "hp": [
       null,
       975.6163940429688,

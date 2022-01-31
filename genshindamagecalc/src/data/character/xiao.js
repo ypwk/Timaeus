@@ -4,6 +4,7 @@ export const xiao_data = {
     "weapon": "polearm",
     "rarity": 5,
     "region": "liyue",
+    "element": "anemo",
     "hp": [
       null,
       991.4528198242188,

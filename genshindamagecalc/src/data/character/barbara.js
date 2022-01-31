@@ -4,6 +4,7 @@ export const barbara_data = {
     "weapon": "catalyst",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "hydro",
     "hp": [
       null,
       820.6118774414062,

@@ -4,6 +4,7 @@ export const diona_data = {
     "weapon": "bow",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "cryo",
     "hp": [
       null,
       802.3760986328125,

@@ -4,6 +4,7 @@ export const klee_data = {
     "weapon": "catalyst",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "pyro",
     "hp": [
       null,
       800.788818359375,

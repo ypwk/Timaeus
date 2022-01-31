@@ -4,6 +4,7 @@ export const yoimiya_data = {
     "weapon": "bow",
     "rarity": 5,
     "region": "inazuma",
+    "element": "pyro",
     "hp": [
       null,
       791.255615234375,

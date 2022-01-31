@@ -4,6 +4,7 @@ export const keqing_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "liyue",
+    "element": "electro",
     "hp": [
       null,
       1020.0524291992188,

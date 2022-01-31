@@ -4,6 +4,7 @@ export const jean_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "anemo",
     "hp": [
       null,
       1143.9840087890625,

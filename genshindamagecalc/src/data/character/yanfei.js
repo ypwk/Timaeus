@@ -4,6 +4,7 @@ export const yanfei_data = {
     "weapon": "catalyst",
     "rarity": 4,
     "region": "liyue",
+    "element": "pyro",
     "hp": [
       null,
       784.1402587890625,

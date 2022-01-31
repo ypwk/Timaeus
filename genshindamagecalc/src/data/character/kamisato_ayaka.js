@@ -4,6 +4,7 @@ export const kamisato_ayaka_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "inazuma",
+    "element": "cryo",
     "hp": [
       null,
       1000.9860229492188,

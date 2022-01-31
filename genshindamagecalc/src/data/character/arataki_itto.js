@@ -4,6 +4,7 @@ export const arataki_itto_data = {
     "weapon": "claymore",
     "rarity": "legendary",
     "region": "inazuma",
+    "element": "geo",
     "hp": [
       null,
       1000.9860229492188,

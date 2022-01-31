@@ -4,6 +4,7 @@ export const xinyan_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "liyue",
+    "element": "pyro",
     "hp": [
       null,
       939.1447143554688,

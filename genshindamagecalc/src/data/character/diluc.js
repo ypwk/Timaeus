@@ -4,6 +4,7 @@ export const diluc_data = {
     "weapon": "claymore",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "pyro",
     "hp": [
       null,
       1010.5192260742188,

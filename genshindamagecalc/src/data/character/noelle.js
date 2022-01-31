@@ -4,6 +4,7 @@ export const noelle_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "geo",
     "hp": [
       null,
       1012.0880126953125,

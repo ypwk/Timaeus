@@ -4,6 +4,7 @@ export const traveler_anemo_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "other",
+    "element": "anemo",
     "hp": [
       null,
       911.791015625,

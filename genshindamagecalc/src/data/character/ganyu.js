@@ -4,6 +4,7 @@ export const ganyu_data = {
     "weapon": "bow",
     "rarity": 5,
     "region": "liyue",
+    "element": "cryo",
     "hp": [
       null,
       762.656005859375,

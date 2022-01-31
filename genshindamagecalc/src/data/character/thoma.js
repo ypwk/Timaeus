@@ -4,6 +4,7 @@ export const thoma_data = {
     "weapon": "polearm",
     "rarity": 4,
     "region": "inazuma",
+    "element": "pyro",
     "hp": [
       null,
       866.2014770507812,

@@ -4,6 +4,7 @@ export const beidou_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "liyue",
+    "element": "electro",
     "hp": [
       null,
       1094.149169921875,

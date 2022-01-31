@@ -4,6 +4,7 @@ export const sucrose_data = {
     "weapon": "catalyst",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "anemo",
     "hp": [
       null,
       775.0223388671875,

@@ -4,6 +4,7 @@ export const zhongli_data = {
     "weapon": "polearm",
     "rarity": 5,
     "region": "liyue",
+    "element": "geo",
     "hp": [
       null,
       1143.9840087890625,

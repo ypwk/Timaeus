@@ -4,6 +4,7 @@ export const kujou_sara_data = {
     "weapon": "bow",
     "rarity": 4,
     "region": "inazuma",
+    "element": "electro",
     "hp": [
       null,
       802.3760986328125,

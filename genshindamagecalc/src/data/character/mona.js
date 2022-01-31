@@ -4,6 +4,7 @@ export const mona_data = {
     "weapon": "catalyst",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "hydro",
     "hp": [
       null,
       810.322021484375,

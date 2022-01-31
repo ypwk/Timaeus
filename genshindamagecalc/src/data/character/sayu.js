@@ -4,6 +4,7 @@ export const sayu_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "inazuma",
+    "element": "anemo",
     "hp": [
       null,
       993.8521728515625,

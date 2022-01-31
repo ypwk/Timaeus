@@ -4,6 +4,7 @@ export const xiangling_data = {
     "weapon": "polearm",
     "rarity": 4,
     "region": "liyue",
+    "element": "pyro",
     "hp": [
       null,
       911.791015625,

@@ -4,6 +4,7 @@ export const hu_tao_data = {
     "weapon": "polearm",
     "rarity": 5,
     "region": "liyue",
+    "element": "pyro",
     "hp": [
       null,
       1210.7164306640625,

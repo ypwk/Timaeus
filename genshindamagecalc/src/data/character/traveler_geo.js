@@ -4,6 +4,7 @@ export const traveler_geo_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "other",
+    "element": "geo",
     "hp": [
       null,
       911.791015625,

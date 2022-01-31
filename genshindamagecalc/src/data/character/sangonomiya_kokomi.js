@@ -4,6 +4,7 @@ export const sangonomiya_kokomi_data = {
     "weapon": "catalyst",
     "rarity": 5,
     "region": "inazuma",
+    "element": "hydro",
     "hp": [
       null,
       1048.6519775390625,

@@ -4,6 +4,7 @@ export const raiden_shogun_data = {
     "weapon": "polearm",
     "rarity": 5,
     "region": "inazuma",
+    "element": "electro",
     "hp": [
       null,
       1004.7992553710938,

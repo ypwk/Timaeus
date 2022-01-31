@@ -4,6 +4,7 @@ export const tartaglia_data = {
     "weapon": "bow",
     "rarity": 5,
     "region": "snezhnaya",
+    "element": "hydro",
     "hp": [
       null,
       1020.0524291992188,

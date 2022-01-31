@@ -4,6 +4,7 @@ export const lisa_data = {
     "weapon": "catalyst",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "electro",
     "hp": [
       null,
       802.3760986328125,

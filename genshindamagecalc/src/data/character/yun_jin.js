@@ -4,6 +4,7 @@ export const yun_jin_data = {
     "weapon": "polearm",
     "rarity": "rare",
     "region": "liyue",
+    "element": "geo",
     "hp": [
       null,
       893.55517578125,

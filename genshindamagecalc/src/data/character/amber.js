@@ -4,6 +4,7 @@ export const amber_data = {
     "weapon": "bow",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "pyro",
     "hp": [
       null,
       793.2581787109375,

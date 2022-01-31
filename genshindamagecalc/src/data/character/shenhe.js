@@ -4,6 +4,7 @@ export const shenhe_data = {
     "weapon": "polearm",
     "rarity": "legendary",
     "region": "liyue",
+    "element": "cryo",
     "hp": [
       null,
       1011.4725341796875,

@@ -4,6 +4,7 @@ export const ningguang_data = {
     "weapon": "catalyst",
     "rarity": 4,
     "region": "liyue",
+    "element": "geo",
     "hp": [
       null,
       820.6118774414062,

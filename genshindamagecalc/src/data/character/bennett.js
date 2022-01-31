@@ -4,6 +4,7 @@ export const bennett_data = {
     "weapon": "sword",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "pyro",
     "hp": [
       null,
       1039.4417724609375,

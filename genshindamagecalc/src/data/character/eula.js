@@ -4,6 +4,7 @@ export const eula_data = {
     "weapon": "claymore",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "cryo",
     "hp": [
       null,
       1029.5855712890625,

@@ -4,6 +4,7 @@ export const gorou_data = {
     "weapon": "bow",
     "rarity": "rare",
     "region": "inazuma",
+    "element": "geo",
     "hp": [
       null,
       802.3760986328125,

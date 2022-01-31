@@ -4,6 +4,7 @@ export const fischl_data = {
     "weapon": "bow",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "electro",
     "hp": [
       null,
       770.46337890625,

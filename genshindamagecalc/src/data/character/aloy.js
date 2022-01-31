@@ -4,6 +4,7 @@ export const aloy_data = {
     "weapon": "bow",
     "rarity": 5,
     "region": "other",
+    "element": "cryo",
     "hp": [
       null,
       848.4547729492188,

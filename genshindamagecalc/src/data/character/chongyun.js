@@ -4,6 +4,7 @@ export const chongyun_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "liyue",
+    "element": "cryo",
     "hp": [
       null,
       920.908935546875,

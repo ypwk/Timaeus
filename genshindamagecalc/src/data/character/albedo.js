@@ -4,6 +4,7 @@ export const albedo_data = {
     "weapon": "sword",
     "rarity": 5,
     "region": "mondstadt",
+    "element": "geo",
     "hp": [
       null,
       1029.5855712890625,

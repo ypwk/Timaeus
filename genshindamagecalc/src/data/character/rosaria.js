@@ -4,6 +4,7 @@ export const rosaria_data = {
     "weapon": "polearm",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "cryo",
     "hp": [
       null,
       1030.3238525390625,

@@ -4,6 +4,7 @@ export const xingqiu_data = {
     "weapon": "sword",
     "rarity": 4,
     "region": "liyue",
+    "element": "hydro",
     "hp": [
       null,
       857.0835571289062,

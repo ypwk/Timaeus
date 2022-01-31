@@ -4,6 +4,7 @@ export const razor_data = {
     "weapon": "claymore",
     "rarity": 4,
     "region": "mondstadt",
+    "element": "electro",
     "hp": [
       null,
       1002.9700927734375,
