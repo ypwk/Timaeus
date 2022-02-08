@@ -93,7 +93,7 @@ class calcUtils {
         }
 
         //sum weapon and artifact effects
-        if(weaponsData[char_file.weapon.name].skill.value !== undefined){
+        if(char_file.weapon.name !== undefined && weaponsData[char_file.weapon.name].skill.value !== undefined){
             weaponsData[char_file.weapon.name].skill.value(stats, char_file); 
         }
         

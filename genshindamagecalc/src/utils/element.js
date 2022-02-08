@@ -1,15 +1,22 @@
 
-
 class Element {
-    static Pyro = new Element("pyro");
-    static Hydro = new Element("hydro");
-    static Dendro = new Element("dendro");
-    static Electro = new Element("electro");
-    static Anemo = new Element("anemo");
-    static Cryo = new Element("cryo");
-    static Geo = new Element("geo");
+    static Type = {
+        Aura: "aura",
+        Transient: "transient"
+    }
 
-    constructor(name) {
-        this.name = name
+    static Pyro = new Element("pyro", Element.Type.Aura);
+    static Hydro = new Element("hydro", Element.Type.Aura);
+    static Dendro = new Element("dendro", Element.Type.Aura);
+    static Electro = new Element("electro", Element.Type.Aura);
+    static Anemo = new Element("anemo", Element.Type.Transient);
+    static Cryo = new Element("cryo", Element.Type.Aura);
+    static Geo = new Element("geo", Element.Type.Transient);
+
+    constructor(name, type) {
+        this.name = name;
+        this.type = type;
     }
 }
+
+export default Element;
