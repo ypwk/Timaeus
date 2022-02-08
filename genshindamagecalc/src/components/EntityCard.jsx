@@ -179,6 +179,7 @@ class EntityCard extends React.Component {
             return (
               <img
                 className="rounded img-fluid unselectable detail-card-artifacts"
+                key={i}
                 src={
                   process.env.PUBLIC_URL +
                   "/images/artifact_content/" +
@@ -194,6 +195,7 @@ class EntityCard extends React.Component {
             return (
               <img
                 className="rounded img-fluid unselectable detail-card-artifacts"
+                key={i}
                 src={
                   process.env.PUBLIC_URL +
                   "/images/" +
@@ -263,7 +265,6 @@ class EntityCard extends React.Component {
                   <p className="m-0">CRIT DMG: {calcUtils.round(this.props.char_stat[9], 1)}%</p>
               </div>
             </div>
-            
           </div>
         );
       } else {

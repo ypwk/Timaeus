@@ -53,16 +53,18 @@ export const constant_values = {
         "physicalRes": 29,
         "normalDamage": 30,
         "chargedDamage": 31,
-        "skillDamage": 32,
-        "burstDamage": 33,
-        "overloaded": 34,
-        "shattered": 35,
-        "electrocharged": 36,
-        "superconduct": 37,
-        "swirl": 38,
-        "vaporize": 39,
-        "melt": 40,
-        "burning": 41
+        "plungingDamage": 32,
+        "skillDamage": 33,
+        "burstDamage": 34,
+        "overloaded": 35,
+        "shattered": 36,
+        "electrocharged": 37,
+        "superconduct": 38,
+        "swirl": 39,
+        "vaporize": 40,
+        "melt": 41,
+        "burning": 42,
+        "damage": 43,
     },
     "statConvFormal": [
         "HP", 
@@ -97,6 +99,7 @@ export const constant_values = {
         "Physical RES",
         "Normal Attack DMG Bonus",
         "Charged Attack DMG Bonus",
+        "Plunging Attack DMG Bonus",
         "Elemental Skill DMG Bonus",
         "Elemental Burst DMG Bonus",
         "Overloaded DMG Bonus",
@@ -106,7 +109,8 @@ export const constant_values = {
         "Swirl DMG Bonus",
         "Vaporize DMG Bonus",
         "Melt DMG Bonus",
-        "Burning DMG Bonus"
+        "Burning DMG Bonus",
+        "Damage %"
     ],
     "notPercentageStats":[
         0, 2, 4, 7

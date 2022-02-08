@@ -1,3 +1,9 @@
+import Trigger from "../utils/trigger";
+import Buff from "../utils/buff";
+import Stack from "../utils/stack";
+import calcUtils from "../utils/calcUtils";
+import { data_names } from "../data/character/character_name_index";
+
 export const weaponsData = {
     "dull_blade": {
         "id": "dull_blade",
@@ -24,7 +30,18 @@ export const weaponsData = {
         "rarity": 3, "description": "A reliable steel-forged weapon that serves as a testament to the great adventures of its old master.",
         "skill": {
             "name": "Bane of Water and Ice",
-            "description": "Increases DMG against opponents affected by Hydro or Cryo by <span style=\"color: #99FFFFFF;\">12%/15%/18%/21%/24%</span>."
+            "description": "Increases DMG against opponents affected by Hydro or Cryo by <span style=\"color: #99FFFFFF;\">12%/15%/18%/21%/24%</span>.",
+            "value": function(charStat, charDat) {
+                let buffVals = [12, 15, 18, 21, 24]; //damage%
+                let buffs = [
+                    Buff(Trigger(Trigger.Type.Instant.OnAttackAffected, 
+                            [Element.Hydro, Element.Cryo], 
+                            undefined), 
+                        Buff.AffectedChars.Self, 
+                        [43, buffVals[charDat.weapon.refine]], undefined)
+                    ];
+                return buffs;
+            }
         },
         "secondary": {
             "name": "atkPercent",
@@ -39,7 +56,18 @@ export const weaponsData = {
         "rarity": 3, "description": "A sword that once shone like the sun. The wielder of this sword will be blessed with a \"feel-good\" buff. The reflective material on the blade has long worn off.",
         "skill": {
             "name": "Vigorous",
-            "description": "When HP is above 90%, increases CRIT Rate by <span style=\"color: #99FFFFFF;\">14%/17.5%/21%/24.5%/28%</span>."
+            "description": "When HP is above 90%, increases CRIT Rate by <span style=\"color: #99FFFFFF;\">14%/17.5%/21%/24.5%/28%</span>.",
+            "value": function(charStat, charDat) {
+                let buffVals = [14, 17.5, 21, 24.5, 28];
+                let buffs = [
+                    Buff(Trigger(Trigger.Type.Conditional.HPThreshold,
+                            90,
+                            undefined),
+                        Buff.AffectedChars.Self,
+                        [8, buffVals[charDat.weapon.refine]], undefined)
+                ];
+                return buffs
+            }
         },
         "secondary": {
             "name": "critDamage",
@@ -54,7 +82,17 @@ export const weaponsData = {
         "rarity": 3, "description": "A handy steel sword which contains scissors, a magnifying glass, tinder, and other useful items in its sheath.",
         "skill": {
             "name": "Journey",
-            "description": "Each Elemental Orb or Particle collected restores <span style=\"color: #99FFFFFF;\">1%/1.25%/1.5%/1.75%/2%</span> HP."
+            "description": "Each Elemental Orb or Particle collected restores <span style=\"color: #99FFFFFF;\">1%/1.25%/1.5%/1.75%/2%</span> HP.",
+            "value": function(charStat, charDat) {
+                let buffVals = [1, 1.25, 1.5, 1.75, 2]; //% healing
+                let buffs = [
+                    Buff(Trigger(Trigger.Type.Instant.OnPickUpEnergy,
+                        undefined,
+                        undefined),
+                        Buff.AffectedChars.Self,
+                        [Buff.Effect.HealPercent, buffVals[charDat.weapon.refine]], undefined)
+                ]
+            }
         },
         "secondary": {
             "name": "defPercent",
@@ -795,7 +833,13 @@ export const weaponsData = {
         "rarity": 3, "description": "A standard-issue weapon of the Millelith soldiers. It has a sturdy shaft and sharp spearhead. It's a reliable weapon.",
         "skill": {
             "name": "Sharp",
-            "description": "Increases Normal Attack DMG by <span style=\"color: #99FFFFFF;\">24%/30%/36%/42%/48%</span>."
+            "description": "Increases Normal Attack DMG by <span style=\"color: #99FFFFFF;\">24%/30%/36%/42%/48%</span>.",
+            "value": function(charStat, charDat) {
+                let buffs = [];
+                let buffVals = [24, 30, 36, 42, 48]; //normal att damage
+                charStat[30] += buffVals[charDat.weapon.refine];
+                return buffs;
+            }
         },
         "secondary": {
             "name": "critRate",
@@ -1032,7 +1076,15 @@ export const weaponsData = {
         "rarity": 5, "description": "A \"firewood staff\" that was once used in ancient and long-lost rituals.",
         "skill": {
             "name": "Reckless Cinnabar",
-            "description": "HP increased by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span>. Additionally, provides an ATK Bonus based on <span style=\"color: #99FFFFFF;\">0.8%/1%/1.2%/1.4%/1.6%</span> of the wielder's Max HP. When the wielder's HP is less than 50%, this ATK Bonus is increased by an additional <span style=\"color: #99FFFFFF;\">1%/1.2%/1.4%/1.6%/1.8%</span> of Max HP."
+            "description": "HP increased by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span>. Additionally, provides an ATK Bonus based on <span style=\"color: #99FFFFFF;\">0.8%/1%/1.2%/1.4%/1.6%</span> of the wielder's Max HP. When the wielder's HP is less than 50%, this ATK Bonus is increased by an additional <span style=\"color: #99FFFFFF;\">1%/1.2%/1.4%/1.6%/1.8%</span> of Max HP.",
+            "value": function(charStat, charDat) {
+                let hpVal = [20, 25, 30, 35, 40];
+                let atkConv = [0.8, 1, 1.2, 1.4, 1.6];
+                let buffs = [];
+                charStat[1] += hpVal[charDat.weapon.refine];
+                charStat[2] += calcUtils.hp(data_names[charDat.name].hp[charDat.level], charStat[1], charStat[0]) * atkConv[charDat.weapon.refine] / 100
+                return buffs
+            }
         },
         "secondary": {
             "name": "critDamage",
@@ -1092,7 +1144,19 @@ export const weaponsData = {
         "rarity": 5, "description": "A naginata used to \"cut grass.\" Any army that stands before this weapon will probably be likewise cut down...",
         "skill": {
             "name": "Timeless Dream: Eternal Stove",
-            "description": "ATK increased by <span style=\"color: #99FFFFFF;\">28%/35%/42%/49%/56%</span> of Energy Recharge over the base 100%. You can gain a maximum bonus of <span style=\"color: #99FFFFFF;\">80%/90%/100%/110%/120%</span> ATK. Gain <span style=\"color: #99FFFFFF;\">30%/35%/40%/45%/50%</span> Energy Recharge for 12s after using an Elemental Burst."
+            "description": "ATK increased by <span style=\"color: #99FFFFFF;\">28%/35%/42%/49%/56%</span> of Energy Recharge over the base 100%. You can gain a maximum bonus of <span style=\"color: #99FFFFFF;\">80%/90%/100%/110%/120%</span> ATK. Gain <span style=\"color: #99FFFFFF;\">30%/35%/40%/45%/50%</span> Energy Recharge for 12s after using an Elemental Burst.",
+            "value": function(charStat, charDat){
+                let buffVals = [30, 35, 40, 45, 50]; //er
+                let atkInc = [28, 35, 42, 49, 56]; //percent of ER
+                let cap = [80, 90, 100, 110, 120]; //atk percent
+                let bonus = charStat[6] * atkInc / 100.0;
+                if(bonus > cap[charDat.weapon.refine]){
+                    bonus = cap[charDat.weapon.refine];
+                }
+                charStat[3] += bonus;
+                let buffs = [Buff(Trigger(Trigger.Type.Instant.OnCastBurst), Buff.AffectedChars.Self, [[6, buffVals[charDat.weapon.refine]]], 720)];
+                return buffs;
+            }
         },
         "secondary": {
             "name": "er",

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { CharacterScreen, ArtifactScreen, EnvironmentScreen, SideBar, Home } from './components';
+import { CharacterScreen, ArtifactScreen, EnvironmentScreen, SideBar, Home, CalcScreen } from './components';
 import React, { Component } from 'react';
 import Loader from "react-loader-spinner";
 
@@ -42,6 +42,7 @@ class App extends Component {
             <Route path="/character/" element={<CharacterScreen storageUtil={this.storageHelper}/>} />
             <Route path="/artifact/" element={<ArtifactScreen storageUtil={this.storageHelper}/>} />
             <Route path="/environment/" element={<EnvironmentScreen storageUtil={this.storageHelper}/>} />
+            <Route path="/calc" element={<CalcScreen storageUtil={this.storageHelper}/>} />
           </Routes>
         </Router>
       </div> );

@@ -46,6 +46,7 @@ class calcUtils {
      * @param {*} artifacts_file is the entire artifact array
      */
     static calcAll(char_file, artifacts_file){
+        let ascension_loc = 9; //location of ascension stat in character data files
         //Max HP = Base HP * (1 + HP Bonus %) + HP Flat Bonus
         let stats = Array.from({length: Object.keys(constant_values.statConv).length + 3}, e => 0) 
         let sr = (p, c) => p + c;
@@ -53,15 +54,22 @@ class calcUtils {
             return stats;
         }
         //characters have 50 base crit dmg and 5 base crit rate and 100 ER
-        if(Object.keys(data_names[char_file.name])[7] !== "er"){
+        if(Object.keys(data_names[char_file.name])[ascension_loc] !== "er"){
             stats[6] = 100;
         }
-        if(Object.keys(data_names[char_file.name])[7] !== "critDamage"){
+        if(Object.keys(data_names[char_file.name])[ascension_loc] !== "critDamage"){
             stats[9] = 50;
         }
-        if(Object.keys(data_names[char_file.name])[7] !== "critRate"){
+        if(Object.keys(data_names[char_file.name])[ascension_loc] !== "critRate"){
             stats[8] = 5;
         }
+
+        //sum character base stats
+        stats[Object.keys(constant_values.statConv).length] += data_names[char_file.name].hp[char_file.level + char_file.ascension];
+        stats[Object.keys(constant_values.statConv).length + 1] += data_names[char_file.name].atk[char_file.level + char_file.ascension];
+        stats[Object.keys(constant_values.statConv).length + 2] += data_names[char_file.name].def[char_file.level + char_file.ascension];
+        let p_mod = constant_values.notPercentageStats.includes(constant_values.statConv[Object.keys(data_names[char_file.name])[ascension_loc]]) ? 1 : 100 
+        stats[constant_values.statConv[Object.keys(data_names[char_file.name])[ascension_loc]]] += p_mod * data_names[char_file.name][Object.keys(data_names[char_file.name])[ascension_loc]][char_file.level + char_file.ascension];
 
         //sum artifact values
         let artifacts = char_file.artifacts.filter(e => e !== -1).map(e => artifacts_file[e]);
@@ -84,12 +92,11 @@ class calcUtils {
             stats[Object.keys(constant_values.statConv).length + 1] += weapon.atk[char_file.weapon.level + char_file.weapon.ascension];
         }
 
-        //sum character base stats
-        stats[Object.keys(constant_values.statConv).length] += data_names[char_file.name].hp[char_file.level + char_file.ascension];
-        stats[Object.keys(constant_values.statConv).length + 1] += data_names[char_file.name].atk[char_file.level + char_file.ascension];
-        stats[Object.keys(constant_values.statConv).length + 2] += data_names[char_file.name].def[char_file.level + char_file.ascension];
-        let p_mod = constant_values.notPercentageStats.includes(constant_values.statConv[Object.keys(data_names[char_file.name])[7]]) ? 1 : 100 
-        stats[constant_values.statConv[Object.keys(data_names[char_file.name])[7]]] += p_mod * data_names[char_file.name][Object.keys(data_names[char_file.name])[7]][char_file.level + char_file.ascension];
+        //sum weapon and artifact effects
+        if(weaponsData[char_file.weapon.name].skill.value !== undefined){
+            weaponsData[char_file.weapon.name].skill.value(stats, char_file); 
+        }
+        
         return stats;
     }
 

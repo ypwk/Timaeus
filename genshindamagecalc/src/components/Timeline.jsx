@@ -33,14 +33,14 @@ class Timeline extends React.Component {
 
         //render character displays
         let chr_disp = this.props.char_dat.map(e => this.props.storageUtil.characterData[e])
-                                        .map(e => e !== undefined ? <tr>
+                                        .map((e, i) => e !== undefined ? <tr key={i}>
                                                 <td>
                                                     Deez Nuts
                                                 </td>
                                                 <td>
                                                     {e.name}
                                                 </td>
-                                            </tr> : <tr>
+                                            </tr> : <tr key={i}>
                                                 <td>
                                                     Deez Nuts
                                                 </td>

@@ -24,7 +24,7 @@ export const polearm_data = {
         "rarity": 3, "description": "A standard-issue weapon of the Millelith soldiers. It has a sturdy shaft and sharp spearhead. It's a reliable weapon.",
         "skill": {
             "name": "Sharp",
-            "description": "Increases Normal Attack DMG by <span style=\"color: #99FFFFFF;\">24%/30%/36%/42%/48%</span>."
+            "description": "Increases Normal Attack DMG by <span style=\"color: #99FFFFFF;\">24, 30, 36, 42, 48<, span>."
         },
         "secondary": {
             "name": "critRate",
@@ -39,7 +39,7 @@ export const polearm_data = {
         "rarity": 3, "description": "A polearm with an axe blade mounted on top that can deal quite a lot of damage. It's favored by the Millelith officers.",
         "skill": {
             "name": "Heavy",
-            "description": "Normal Attacks deal an additional <span style=\"color: #99FFFFFF;\">160%/200%/240%/280%/320%</span> ATK as DMG. Can only occur once every 10s."
+            "description": "Normal Attacks deal an additional <span style=\"color: #99FFFFFF;\">160, 200, 240, 280, 320<, span> ATK as DMG. Can only occur once every 10s."
         },
         "secondary": {
             "name": "atkPercent",
@@ -54,7 +54,7 @@ export const polearm_data = {
         "rarity": 3, "description": "An exceptionally powerful polearm that also offers a simple but elegant solution to the issue of the easily stained white tassel.",
         "skill": {
             "name": "Bane of the Soft",
-            "description": "Increases DMG against slimes by <span style=\"color: #99FFFFFF;\">40%/50%/60%/70%/80%</span>."
+            "description": "Increases DMG against slimes by <span style=\"color: #99FFFFFF;\">40, 50, 60, 70, 80<, span>."
         },
         "secondary": {
             "name": "hpPercent",
@@ -69,7 +69,7 @@ export const polearm_data = {
         "rarity": 3, "description": "Reserve",
         "skill": {
             "name": "TBD",
-            "description": "Defeating an opponent restores <span style=\"color: #99FFFFFF;\">8%/10%/12%/14%/16%</span> HP."
+            "description": "Defeating an opponent restores <span style=\"color: #99FFFFFF;\">8, 10, 12, 14, 16<, span> HP."
         },
         "secondary": {},
         "atk": [null, 9.899999618530273, 10.652399344062815, 11.404799069595356, 12.157199975299818, 12.899699238586436, 13.652098964118977, 14.394599407577516, 15.137099851036055, 15.879599114322673, 16.622099557781212, 17.36459882106783, 18.097198802280445, 18.839699245738984, 19.5722992269516, 20.304900388336137, 21.03749918937683, 21.770097990417526, 22.502699151802062, 23.235297952842757, 23.95799983215329, 43.45799983215329, 44.18069935111998, 44.91329815216068, 45.63600003147121, 46.358699550437905, 47.0813990694046, 47.80409858837129, 48.51689882526398, 49.23959834423067, 49.95239858112336, 50.66519881801605, 51.387898336982744, 52.100698573875434, 52.813498810768124, 53.526299047660814, 54.22919764213566, 54.94199787902835, 55.65479811592104, 56.35769907073973, 57.06059766521457, 57.77339790210726, 77.17339942798617, 77.87630038280486, 78.5791989772797, 79.28209993209839, 79.98500088691708, 80.68790184173577, 81.38089879379277, 82.08379974861145, 82.78670070343014, 83.47969765548714, 84.18259861030583, 103.68259861030583, 104.37560028305052, 105.0686019557952, 105.7615989078522, 106.46449986267089, 107.15750153541558, 107.85049848747258, 108.54350016021726, 109.22659783020026, 109.91959950294495, 110.61260117568963, 130.01260270156854, 130.70559965362554, 131.38870204429622, 132.08169899635323, 132.7648013870239, 133.4578030597686, 134.1409007297516, 134.83390240249628, 135.51700007247928, 136.20010246314996, 136.88320013313296, 156.38320013313296, 157.07620180587764, 157.75929947586064, 158.44240186653133, 159.12549953651433, 159.808601927185, 160.491699597168, 161.1748019878387, 161.8578996578217, 162.54100204849237, 163.22409971847537, 182.62409361495975, 183.29729672355643, 183.98039439353943, 184.66349206352243, 185.3465944541931, 186.0296921241761, 186.7028952327728, 187.3859929027558, 188.06909529342647, 188.74229368133547, 189.42539607200615]
@@ -81,7 +81,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A polearm decorated with an entwining golden dragon. Light and sharp, this weapon may very well kill dragons with ease.",
         "skill": {
             "name": "Bane of Flame and Water",
-            "description": "Increases DMG against opponents affected by Hydro or Pyro by <span style=\"color: #99FFFFFF;\">20%/24%/28%/32%/36%</span>."
+            "description": "Increases DMG against opponents affected by Hydro or Pyro by <span style=\"color: #99FFFFFF;\">20, 24, 28, 32, 36<, span>."
         },
         "secondary": {
             "name": "em",
@@ -96,7 +96,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A hooked spear discovered hidden away in the Blackcliff Forge. The glimmers along the sharp edge are like stars in the night.",
         "skill": {
             "name": "Magic Affinity",
-            "description": "After using an Elemental Skill, increases Normal and Charged Attack DMG by <span style=\"color: #99FFFFFF;\">8%/10%/12%/14%/16%</span> for 12s. Max 2 stacks."
+            "description": "After using an Elemental Skill, increases Normal and Charged Attack DMG by <span style=\"color: #99FFFFFF;\">8, 10, 12, 14, 16<, span> for 12s. Max 2 stacks."
         },
         "secondary": {
             "name": "er",
@@ -111,7 +111,7 @@ export const polearm_data = {
         "rarity": 4, "description": "An exotic weapon with an extremely long blade on the top and a crescent blade at the bottom. It found its way into Liyue through foreign traders. With practice, it can deal heavy damage.",
         "skill": {
             "name": "Infusion Needle",
-            "description": "After picking up an Elemental Orb/Particle, Normal and Charged Attacks deal additional DMG equal to <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span> of ATK for 5s."
+            "description": "After picking up an Elemental Orb, Particle, Normal and Charged Attacks deal additional DMG equal to <span style=\"color: #99FFFFFF;\">20, 25, 30, 35, 40<, span> of ATK for 5s."
         },
         "secondary": {
             "name": "physicalDamage",
@@ -126,7 +126,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A weapon made of blackcliff and aerosiderite. There is a dark crimson glow on its cold black sheen.",
         "skill": {
             "name": "Press the Advantage",
-            "description": "After defeating an enemy, ATK is increased by <span style=\"color: #99FFFFFF;\">12%/15%/18%/21%/24%</span> for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others."
+            "description": "After defeating an enemy, ATK is increased by <span style=\"color: #99FFFFFF;\">12, 15, 18, 21, 24<, span> for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others."
         },
         "secondary": {
             "name": "critDamage",
@@ -141,7 +141,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A sharp crimson polearm that was once a gladiator's priceless treasure. Its awl has been stained by the blood of countless beasts and men.",
         "skill": {
             "name": "Gladiator",
-            "description": "If there are at least 2 opponents nearby, ATK is increased by <span style=\"color: #99FFFFFF;\">16%/20%/24%/28%/32%</span> and DEF is increased by <span style=\"color: #99FFFFFF;\">16%/20%/24%/28%/32%</span>. If there are fewer than 2 opponents nearby, ATK is increased by <span style=\"color: #99FFFFFF;\">24%/30%/36%/42%/48%</span>."
+            "description": "If there are at least 2 opponents nearby, ATK is increased by <span style=\"color: #99FFFFFF;\">16, 20, 24, 28, 32<, span> and DEF is increased by <span style=\"color: #99FFFFFF;\">16, 20, 24, 28, 32<, span>. If there are fewer than 2 opponents nearby, ATK is increased by <span style=\"color: #99FFFFFF;\">24, 30, 36, 42, 48<, span>."
         },
         "secondary": {
             "name": "critRate",
@@ -156,7 +156,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A spear forged from the rocks of the Guyun Stone Forest. Its hardness knows no equal.",
         "skill": {
             "name": "Lithic Axiom: Unity",
-            "description": "For every character in the party who hails from Liyue, the character who equips this weapon gains a <span style=\"color: #99FFFFFF;\">7%/8%/9%/10%/11%</span> ATK increase and a <span style=\"color: #99FFFFFF;\">3%/4%/5%/6%/7%</span> CRIT Rate increase. This effect stacks up to 4 times."
+            "description": "For every character in the party who hails from Liyue, the character who equips this weapon gains a <span style=\"color: #99FFFFFF;\">7, 8, 9, 10, 11<, span> ATK increase and a <span style=\"color: #99FFFFFF;\">3, 4, 5, 6, 7<, span> CRIT Rate increase. This effect stacks up to 4 times."
         },
         "secondary": {
             "name": "atkPercent",
@@ -171,7 +171,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A polearm made in the style of the Knights of Favonius. Its shaft is straight, and its tip flows lightly like the wind.",
         "skill": {
             "name": "Windfall",
-            "description": "CRIT Hits have a <span style=\"color: #99FFFFFF;\">60%/70%/80%/90%/100%</span> chance to generate a small amount of Elemental Particles, which will regenerate 6 Energy for the character. Can only occur once every <span style=\"color: #99FFFFFF;\">12/10.5/9/7.5/6</span>s."
+            "description": "CRIT Hits have a <span style=\"color: #99FFFFFF;\">60, 70, 80, 90, 100<, span> chance to generate a small amount of Elemental Particles, which will regenerate 6 Energy for the character. Can only occur once every <span style=\"color: #99FFFFFF;\">12, 10.5, 9, 7.5, 6<, span>s."
         },
         "secondary": {
             "name": "er",
@@ -186,7 +186,7 @@ export const polearm_data = {
         "rarity": 4, "description": "This polearm was once cherished by a member of the old nobility that governed Mondstadt long ago. Although it has never seen the light of day, it is still incomparably sharp.",
         "skill": {
             "name": "Focus",
-            "description": "Upon damaging an opponent, increases CRIT Rate by <span style=\"color: #99FFFFFF;\">8%/10%/12%/14%/16%</span>. Max 5 stacks. A CRIT Hit removes all stacks."
+            "description": "Upon damaging an opponent, increases CRIT Rate by <span style=\"color: #99FFFFFF;\">8, 10, 12, 14, 16<, span>. Max 5 stacks. A CRIT Hit removes all stacks."
         },
         "secondary": {
             "name": "atkPercent",
@@ -201,7 +201,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A spear created from the fang of a dragon. It is oddly warm to the touch.",
         "skill": {
             "name": "Frost Burial",
-            "description": "Hitting an opponent with Normal and Charged Attacks has a <span style=\"color: #99FFFFFF;\">60%/70%/80%/90%/100%</span> chance of forming and dropping an Everfrost Icicle above them, dealing AoE DMG equal to <span style=\"color: #99FFFFFF;\">80%/95%/110%/125%/140%</span> of ATK. Opponents affected by Cryo are instead dealt DMG equal to <span style=\"color: #99FFFFFF;\">200%/240%/280%/320%/360%</span> of ATK. Can only occur once every 10s."
+            "description": "Hitting an opponent with Normal and Charged Attacks has a <span style=\"color: #99FFFFFF;\">60, 70, 80, 90, 100<, span> chance of forming and dropping an Everfrost Icicle above them, dealing AoE DMG equal to <span style=\"color: #99FFFFFF;\">80, 95, 110, 125, 140<, span> of ATK. Opponents affected by Cryo are instead dealt DMG equal to <span style=\"color: #99FFFFFF;\">200, 240, 280, 320, 360<, span> of ATK. Can only occur once every 10s."
         },
         "secondary": {
             "name": "physicalDamage",
@@ -216,7 +216,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A special lance that was once used by a famed warrior who guarded the Tatarigami on Yashiori Island.",
         "skill": {
             "name": "Samurai Conduct",
-            "description": "Increases Elemental Skill DMG by <span style=\"color: #99FFFFFF;\">6%/7.5%/9%/10.5%/12%</span>. After Elemental Skill hits an opponent, the character loses 3 Energy but regenerates <span style=\"color: #99FFFFFF;\">3/3.5/4/4.5/5</span> Energy every 2s for the next 6s. This effect can occur once every 10s. Can be triggered even when the character is not on the field."
+            "description": "Increases Elemental Skill DMG by <span style=\"color: #99FFFFFF;\">6, 7.5, 9, 10.5, 12<, span>. After Elemental Skill hits an opponent, the character loses 3 Energy but regenerates <span style=\"color: #99FFFFFF;\">3, 3.5, 4, 4.5, 5<, span> Energy every 2s for the next 6s. This effect can occur once every 10s. Can be triggered even when the character is not on the field."
         },
         "secondary": {
             "name": "em",
@@ -231,7 +231,7 @@ export const polearm_data = {
         "rarity": 4, "description": "In the distant past, this was the beloved spear of a famed Inazuman bandit.",
         "skill": {
             "name": "Shanty",
-            "description": "Increases Elemental Burst DMG by <span style=\"color: #99FFFFFF;\">16%/20%/24%/28%/32%</span> and Elemental Burst CRIT Rate by <span style=\"color: #99FFFFFF;\">6%/7.5%/9%/10.5%/12%</span>."
+            "description": "Increases Elemental Burst DMG by <span style=\"color: #99FFFFFF;\">16, 20, 24, 28, 32<, span> and Elemental Burst CRIT Rate by <span style=\"color: #99FFFFFF;\">6, 7.5, 9, 10.5, 12<, span>."
         },
         "secondary": {
             "name": "er",
@@ -246,7 +246,7 @@ export const polearm_data = {
         "rarity": 4, "description": "A naginata forged from luminescent material deep in the ocean depths. It was once the possession of the tengu race.",
         "skill": {
             "name": "Watatsumi Wavewalker",
-            "description": "For every point of the entire party's combined maximum Energy capacity, the Elemental Burst DMG of the character equipping this weapon is increased by <span style=\"color: #99FFFFFF;\">0.12%/0.15%/0.18%/0.21%/0.24%</span>. A maximum of <span style=\"color: #99FFFFFF;\">40%/50%/60%/70%/80%</span> increased Elemental Burst DMG can be achieved this way."
+            "description": "For every point of the entire party's combined maximum Energy capacity, the Elemental Burst DMG of the character equipping this weapon is increased by <span style=\"color: #99FFFFFF;\">0.12, 0.15, 0.18, 0.21, 0.24<, span>. A maximum of <span style=\"color: #99FFFFFF;\">40, 50, 60, 70, 80<, span> increased Elemental Burst DMG can be achieved this way."
         },
         "secondary": {
             "name": "atkPercent",
@@ -261,7 +261,7 @@ export const polearm_data = {
         "rarity": 5, "description": "A \"firewood staff\" that was once used in ancient and long-lost rituals.",
         "skill": {
             "name": "Reckless Cinnabar",
-            "description": "HP increased by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span>. Additionally, provides an ATK Bonus based on <span style=\"color: #99FFFFFF;\">0.8%/1%/1.2%/1.4%/1.6%</span> of the wielder's Max HP. When the wielder's HP is less than 50%, this ATK Bonus is increased by an additional <span style=\"color: #99FFFFFF;\">1%/1.2%/1.4%/1.6%/1.8%</span> of Max HP."
+            "description": "HP increased by <span style=\"color: #99FFFFFF;\">20, 25, 30, 35, 40<, span>. Additionally, provides an ATK Bonus based on <span style=\"color: #99FFFFFF;\">0.8, 1, 1.2, 1.4, 1.6<, span> of the wielder's Max HP. When the wielder's HP is less than 50, this ATK Bonus is increased by an additional <span style=\"color: #99FFFFFF;\">1, 1.2, 1.4, 1.6, 1.8<, span> of Max HP."
         },
         "secondary": {
             "name": "critDamage",
@@ -276,7 +276,7 @@ export const polearm_data = {
         "rarity": 5, "description": "A polearm that symbolizes Dvalin's firm resolve. The upright shaft of this weapon points towards the heavens, clad in the might of sky and wind.",
         "skill": {
             "name": "Black Wing",
-            "description": "Increases CRIT Rate by <span style=\"color: #99FFFFFF;\">8%/10%/12%/14%/16%</span> and increases Normal ATK SPD by <span style=\"color: #99FFFFFF;\">12%/12%/12%/12%/12%</span>. Additionally, Normal and Charged Attacks hits on opponents have a <span style=\"color: #99FFFFFF;\">50%/50%/50%/50%/50%</span> chance to trigger a vacuum blade that deals <span style=\"color: #99FFFFFF;\">40%/55%/70%/85%/100%</span> of ATK as DMG in a small AoE. This effect can occur no more than once every 2s."
+            "description": "Increases CRIT Rate by <span style=\"color: #99FFFFFF;\">8, 10, 12, 14, 16<, span> and increases Normal ATK SPD by <span style=\"color: #99FFFFFF;\">12, 12, 12, 12, 12<, span>. Additionally, Normal and Charged Attacks hits on opponents have a <span style=\"color: #99FFFFFF;\">50, 50, 50, 50, 50<, span> chance to trigger a vacuum blade that deals <span style=\"color: #99FFFFFF;\">40, 55, 70, 85, 100<, span> of ATK as DMG in a small AoE. This effect can occur no more than once every 2s."
         },
         "secondary": {
             "name": "er",
@@ -291,7 +291,7 @@ export const polearm_data = {
         "rarity": 5, "description": "This sharp polearm can seemingly pierce through anything. When swung, one can almost see the rift it tears in the air.",
         "skill": {
             "name": "Golden Majesty",
-            "description": "Increases Shield Strength by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span>. Scoring hits on opponents increases ATK by <span style=\"color: #99FFFFFF;\">4%/5%/6%/7%/8%</span> for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%."
+            "description": "Increases Shield Strength by <span style=\"color: #99FFFFFF;\">20, 25, 30, 35, 40<, span>. Scoring hits on opponents increases ATK by <span style=\"color: #99FFFFFF;\">4, 5, 6, 7, 8<, span> for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100."
         },
         "secondary": {
             "name": "atkPercent",
@@ -306,7 +306,7 @@ export const polearm_data = {
         "rarity": 5, "description": "A jade polearm made by the archons, capable of slaying ancient beasts.",
         "skill": {
             "name": "Eagle Spear of Justice",
-            "description": "On hit, increases ATK by <span style=\"color: #99FFFFFF;\">3.2%/3.9%/4.6%/5.3%/6%</span> for 6s. Max 7 stacks. This effect can only occur once every 0.3s. While in possession of the maximum possible stacks, DMG dealt is increased by <span style=\"color: #99FFFFFF;\">12%/15%/18%/21%/24%</span>."
+            "description": "On hit, increases ATK by <span style=\"color: #99FFFFFF;\">3.2, 3.9, 4.6, 5.3, 6<, span> for 6s. Max 7 stacks. This effect can only occur once every 0.3s. While in possession of the maximum possible stacks, DMG dealt is increased by <span style=\"color: #99FFFFFF;\">12, 15, 18, 21, 24<, span>."
         },
         "secondary": {
             "name": "critRate",
@@ -321,7 +321,7 @@ export const polearm_data = {
         "rarity": 5, "description": "A naginata used to \"cut grass.\" Any army that stands before this weapon will probably be likewise cut down...",
         "skill": {
             "name": "Timeless Dream: Eternal Stove",
-            "description": "ATK increased by <span style=\"color: #99FFFFFF;\">28%/35%/42%/49%/56%</span> of Energy Recharge over the base 100%. You can gain a maximum bonus of <span style=\"color: #99FFFFFF;\">80%/90%/100%/110%/120%</span> ATK. Gain <span style=\"color: #99FFFFFF;\">30%/35%/40%/45%/50%</span> Energy Recharge for 12s after using an Elemental Burst."
+            "description": "ATK increased by <span style=\"color: #99FFFFFF;\">28, 35, 42, 49, 56<, span> of Energy Recharge over the base 100. You can gain a maximum bonus of <span style=\"color: #99FFFFFF;\">80, 90, 100, 110, 120<, span> ATK. Gain <span style=\"color: #99FFFFFF;\">30, 35, 40, 45, 50<, span> Energy Recharge for 12s after using an Elemental Burst."
         },
         "secondary": {
             "name": "er",

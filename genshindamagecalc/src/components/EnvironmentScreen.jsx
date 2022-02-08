@@ -5,7 +5,9 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel"
+
 import calcUtils from "../utils/calcUtils";
+import Trigger from "../utils/trigger";
 
 import "../css/EnvironmentScreenStyling.css";
 
@@ -124,7 +126,6 @@ class EnvironmentScreen extends React.Component{
     }
 
     renderCharacterModalBody(){
-        console.log(this.storageUtils.characterData[this.state.selectedCharData[this.currentlyEditedCharacter]])
         let notTaken = [...Array(this.storageUtils.characterData.length).keys()]
             .filter(e => !this.state.selectedCharData.includes(e) 
                 && (!this.state.selectedCharData.map(e => this.storageUtils.characterData[e] !== undefined ? this.storageUtils.characterData[e].name : "").includes(this.storageUtils.characterData[e].name)

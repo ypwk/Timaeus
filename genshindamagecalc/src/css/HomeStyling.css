@@ -6,6 +6,13 @@
     background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), 70% , rgba(255, 255, 255, 0));
 }
 
+.home-image-container {
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
 .unselectable{
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -16,12 +23,10 @@
     -o-user-drag: none; 
 }
 
-.image {
-    z-index:-1;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    overflow: hidden;
+.home-image {
+    zoom: 5;
+    width: 100%;
+    height: auto;
 }
 
 .title-text {

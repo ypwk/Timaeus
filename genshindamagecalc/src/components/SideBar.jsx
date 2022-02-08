@@ -31,6 +31,12 @@ class SideBar extends React.Component{
                         Environment
                       </Link>
                     </li>
+                    <li
+                    >
+                      <Link className="nav-link" to="/calc/">
+                        DMG
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>

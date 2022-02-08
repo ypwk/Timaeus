@@ -6,13 +6,15 @@ class Home extends React.Component{
     render(){
         return(
             <div className='home-container unselectable'>
-                <img
-                    className="image"
-                    src={
-                        process.env.PUBLIC_URL + "/images/title.png"
-                    }
-                    alt="timaeus"
-                />
+                <div className='home-image-container'>
+                    <img
+                        className="home-image"
+                        src={
+                            process.env.PUBLIC_URL + "/images/title.png"
+                        }
+                        alt="timaeus"
+                    />
+                </div>
                 <div className='title-text'>
                     <h1 class="display-1">
                         Timaeus

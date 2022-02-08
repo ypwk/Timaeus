@@ -3,15 +3,22 @@
  * from a weapon effect, or from a character's passive or constellations. 
  */
  class Stack{
+    static AffectedChars = {
+        Self: "Self",
+        Team: "Team",
+        SameElement: "SameElement"
+    }
     /**
-     * @param {number} startInterval - The beginning of the buff's duration, measured in milliseconds.
-     * @param {number} endInterval - The end of the buff's duration, measured in milliseconds. 
-     * @param {Array} affectedChars - An array containing the IDs of the characters in the party that the buff affects.  
-     * @param {Array} values - An array containing duples of values, the first being the number of the buff given, and the 
-     * second being the numerical value of the buff given. 
+     * @param {list} triggers - A list of triggers
+     * @param {list} durations - A list of stack durations
+     * @param {Array} affectedChars - An AffectedChars value 
+     * @param {list of list} values - a list of list of values denoting the buff conferred at the specific stack number.
      */
-    constructor(startInterval, endInterval, affectedChars, values){
-
+    constructor(triggers, durations, affectedChars, values){
+        this.triggers = triggers;
+        this.durations = durations;
+        this.affectedChars = affectedChars;
+        this.values = values;
     }
 }
 
