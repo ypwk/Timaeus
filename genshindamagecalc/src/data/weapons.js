@@ -1,6 +1,7 @@
 import Trigger from "../utils/trigger";
 import Buff from "../utils/buff";
 import Stack from "../utils/stack";
+import Reaction from "../utils/reaction";
 import calcUtils from "../utils/calcUtils";
 import { data_names } from "../data/character/character_name_index";
 
@@ -35,8 +36,7 @@ export const weaponsData = {
                 let buffVals = [12, 15, 18, 21, 24]; //damage%
                 let buffs = [
                     Buff(Trigger(Trigger.Type.Instant.OnAttackAffected, 
-                            [Element.Hydro, Element.Cryo], 
-                            undefined), 
+                            [Element.Hydro, Element.Cryo]), 
                         Buff.AffectedChars.Self, 
                         [43, buffVals[charDat.weapon.refine]], undefined)
                     ];
@@ -61,8 +61,7 @@ export const weaponsData = {
                 let buffVals = [14, 17.5, 21, 24.5, 28];
                 let buffs = [
                     Buff(Trigger(Trigger.Type.Conditional.HPThreshold,
-                            90,
-                            undefined),
+                            90),
                         Buff.AffectedChars.Self,
                         [8, buffVals[charDat.weapon.refine]], undefined)
                 ];
@@ -86,12 +85,11 @@ export const weaponsData = {
             "value": function(charStat, charDat) {
                 let buffVals = [1, 1.25, 1.5, 1.75, 2]; //% healing
                 let buffs = [
-                    Buff(Trigger(Trigger.Type.Instant.OnPickUpEnergy,
-                        undefined,
-                        undefined),
+                    Buff(Trigger(Trigger.Type.Instant.OnPickUpEnergy),
                         Buff.AffectedChars.Self,
                         [Buff.Effect.HealPercent, buffVals[charDat.weapon.refine]], undefined)
-                ]
+                ];
+                return buffs;
             }
         },
         "secondary": {
@@ -107,7 +105,18 @@ export const weaponsData = {
         "rarity": 3, "description": "A perfectly ordinary iron sword, just slightly darker than most.",
         "skill": {
             "name": "Overloaded",
-            "description": "Upon causing an Overloaded, Superconduct, Electro-Charged, or an Electro-infused Swirl reaction, ATK is increased by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span> for 12s."
+            "description": "Upon causing an Overloaded, Superconduct, Electro-Charged, or an Electro-infused Swirl reaction, ATK is increased by <span style=\"color: #99FFFFFF;\">20%/25%/30%/35%/40%</span> for 12s.",
+            "value": function(charStat, charDat) {
+                let buffVals = [20, 25, 30, 35, 40]; //% attack
+                let buffs = [
+                    Buff(Trigger(Trigger.Type.Instant.OnCausedReaction,
+                        [Reaction.Overload, Reaction.Superconduct, Reaction.Electrocharged, Reaction.Swirl.Electro],
+                        undefined),
+                        Buff.AffectedChars.Self,
+                        [3, buffVals[charDat.weapon.refine]], undefined)
+                ];
+                return buffs;
+            }
         },
         "secondary": {
             "name": "em",
@@ -122,7 +131,18 @@ export const weaponsData = {
         "rarity": 3, "description": "A sharp filleting knife. The blade is long, thin, and incredibly sharp.",
         "skill": {
             "name": "Gash",
-            "description": "On hit, has a 50% chance to deal <span style=\"color: #99FFFFFF;\">240%/280%/320%/360%/400%</span> ATK DMG to a single opponent. Can only occur once every <span style=\"color: #99FFFFFF;\">15/14/13/12/11</span>s."
+            "description": "On hit, has a 50% chance to deal <span style=\"color: #99FFFFFF;\">240%/280%/320%/360%/400%</span> ATK DMG to a single opponent. Can only occur once every <span style=\"color: #99FFFFFF;\">15/14/13/12/11</span>s.",
+            "value": function(charStat, charDat) {
+                let buffVals = [20, 25, 30, 35, 40]; //% attack
+                let buffs = [
+                    Buff(Trigger(Trigger.Type.Instant.OnDealDMG,
+                        50, //50% chance
+                        undefined),
+                        Buff.AffectedChars.Self,
+                        [3, buffVals[charDat.weapon.refine]], undefined)
+                ];
+                return buffs;
+            }
         },
         "secondary": {
             "name": "atkPercent",

@@ -8,11 +8,12 @@
 class Trigger {
     static Type = {
         Instant: {
-            OnDealDMG : "OnDealDMG",
-            OnElemDMG : "OnElemDMG",
+            OnDealDMG : "OnDealDMG", // On deal damage
+            OnElemDMG : "OnElemDMG", // On deal elemental damage
             OnAttackAffected : "OnAttackAffected",
-            OnHitNA : "OnHitNA",
-            OnHitCA : "OnHitCA",
+            OnHitA : "OnHitA", // On hit normal attack or charged attack
+            OnHitNA : "OnHitNA", // On hit normal attack
+            OnHitCA : "OnHitCA",// On hit charged attack
             OnCastSkill : "OnCastSkill",
             OnHitSkill : "OnHitSkill",
             OnCastBurst : "OnCastBurst",
@@ -39,19 +40,21 @@ class Trigger {
             TeamElement : "TeamElement",
             TeamCountry : "TeamCountry",
             UseWeapon : "UseWeapon",
-            NearbyEnemies : "NearbyEnemies"
+            NearbyEnemies : "NearbyEnemies",
+            StackCount : "StackCount"
         }
     }
 
     /**
      * Constructor for Triggers. 
-     * - Type.Instant Triggers have one option
-     * - Type.Conditional Triggers have two options. 
+     * - Type.Instant Triggers have three options - the second option indicates the chance of the buff occuring. 
+     * - Type.Conditional Triggers have three options. 
      * @param {Type} type 
      * @param {Integer} value 
      * @param {Integer} valid_chars
+     * @param {Integer} cooldown
      */
-    constructor(type, value, valid_chars){
+    constructor(type, value, valid_chars, cooldown){
         if(Trigger.Type.Passive[type] !== undefined) {
             this.type = "passive";
         } else if(Trigger.Type.Conditional[type] !== undefined) {
@@ -62,6 +65,7 @@ class Trigger {
         this.action = type;
         this.value = value;
         this.valid_chars = valid_chars;
+        this.cooldown = cooldown;
     }
 }
 

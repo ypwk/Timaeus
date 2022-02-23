@@ -18,7 +18,8 @@ class Buff{
      */
     static Effect = {
         HealPercent: "healPercent",
-        HealFlat: "healFlat"
+        HealFlat: "healFlat",
+        Damage: "damage" //requires a stat and a percentage
     }
 
     /**

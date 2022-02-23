@@ -444,7 +444,7 @@ export const artifact_set_data = {
       "Anemo DMG Bonus +15%",
       "Increases Swirl DMG by 60%. Decreases opponent's Elemental RES to the element infused in the Swirl by 40% for 10s.",
     ],
-    rarity: [14, 15],
+    rarity: [4, 5],
     domain: "valley_of_remembrance",
   },
   "wanderers_troupe": {
